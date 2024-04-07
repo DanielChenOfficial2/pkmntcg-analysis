@@ -92,21 +92,50 @@ def scrape_pokemon_info(url):
       "Name": pkmn_name,
       "Name w/ Set": pkmn_name_with_set,
       "Evolution Stage": pkmn_evo_stage,
-      "Type": pkmn_type,
       "HP": pkmn_hp,
       "Weakness": pkmn_weakness,
       "Resistance": pkmn_resistance,
       "Retreat Cost": pkmn_retreat_cost,
-      "English Expansion": pkmn_english_expansion,
-      "Rarity": pkmn_rarity,
-      "Card No": pkmn_card_no,
       "Moves": pkmn_moves,
   }
 
-# Example usage
-url = "https://bulbapedia.bulbagarden.net/wiki/Scyther_(Temporal_Forces_1)"
+
+expansion_url = "https://bulbapedia.bulbagarden.net/wiki/Temporal_Forces_(TCG)"
+response = requests.get(expansion_url)
+html_soup = BeautifulSoup(response.content, 'html.parser')
+card_list_rows = html_soup.select('#Card_lists')[0].parent.find_next_sibling().find('table', class_='roundy').find('tbody').find_all('tr', recursive=False)[1].find('td').find('table').find('tbody').find_all('tr', recursive=False)
+
+# skip the first row
+all_pkmn_cards = []
+for i in range(1, len(card_list_rows) - 1):
+  print(card_list_rows[i].find('th').get_text())
+  if card_list_rows[i].find('th', style='background:#FFFFFF;'):
+    pkmn_card_type = card_list_rows[i].find('th').find('img').attrs['alt']
+  else:
+    continue
+
+  card_list_row_info = card_list_rows[i].find_all('td', recursive=False)
+  pkmn_card_no = card_list_row_info[0].get_text()
+  pkmn_card_mark = card_list_row_info[1].find('a').attrs['title']
+  pkmn_card_link = card_list_row_info[2].find('a').attrs['href']
+  pkmn_card_rarity = card_list_row_info[3].find('a').attrs['title']
+  
+  print(pkmn_card_link)
+
+  # pkmn_data = scrape_pokemon_info('https://bulbapedia.bulbagarden.net' + str(pkmn_card_link))
+  # pkmn_data['Card No'] = pkmn_card_no
+  # pkmn_data['Card Mark'] = pkmn_card_mark
+  # pkmn_data['Card Rarity'] = pkmn_card_rarity
+
+  # print(pkmn_data)
+  # all_pkmn_cards.append(pkmn_data)
+
+# print(all_pkmn_cards)
+
+# print(len(card_list))
+# url = "https://bulbapedia.bulbagarden.net/wiki/Scyther_(Temporal_Forces_1)"
 # url = "https://bulbapedia.bulbagarden.net/wiki/Torterra_ex_(Temporal_Forces_12)"
-pokemon_data = scrape_pokemon_info(url)
+# pokemon_data = scrape_pokemon_info(url)
 
 # Print information
-print(pokemon_data)
+# print(pokemon_data)

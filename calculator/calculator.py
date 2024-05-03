@@ -1,6 +1,8 @@
 import pandas as pd
 import ast
 import csv
+import json
+import math
 
 test = False
 
@@ -23,12 +25,10 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
   cur_pkmn_one_shots['Pkmn Name w/ Set'] = pkmn_data['Name w/ Set']
   cur_pkmn_one_shots['Pkmn HP'] = pkmn_data['HP']
   cur_pkmn_one_shots['Pkmn Weakness'] = pkmn_data['Weakness']
-  cur_pkmn_one_shots['Pkmn Resistance'] = pkmn_data['Resistance']
+  cur_pkmn_one_shots['Pkmn Resistance'] = pkmn_data['Resistance'] if pkmn_data['Resistance'] != 'nan' else "None"
   one_shot_by = []
   
   for index, enemy_pkmn in all_pkmn_data.iterrows():
-    if pkmn_data['Name w/ Set'] == enemy_pkmn['Name w/ Set']:
-      continue
     
     # If enemy pokemon has same type as current pokemon weakness, damage x2
     # If enemy pokemon has same type as current pokemon resistsance, damage - 30
@@ -75,13 +75,14 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
 
           one_shot_by.append(cur_one_shot_by)
   cur_pkmn_one_shots['Pkmn Gets One Shot By'] = one_shot_by  
-  print(cur_pkmn_one_shots)
+  # print(cur_pkmn_one_shots)
+  # print('\n')
   return cur_pkmn_one_shots
 
-print("CSV file created successfully: pokemon_data.csv")
+# print("CSV file created successfully: pokemon_data.csv")
 
 # Read the CSV file into a DataFrame
-df = pd.read_csv('../webscrape/pokemon_data.csv')
+df = pd.read_csv('../webscraper/pokemon_data.csv')
 
 # Index(['Name', 'Name w/ Set', 'Evolution Stage', 'Previous Evolution',
 #       'Ability', 'HP', 'Type', 'Weakness', 'Resistance', 'Retreat Cost',
@@ -106,11 +107,23 @@ else:
       pkmn_one_shots.append(calc_one_shot(row, df))
 
 keys = list(pkmn_one_shots[0].keys())
-with open('pokemon_data.csv', 'w', newline='') as csvfile:
+with open('pkmn_data.csv', 'w', newline='') as csvfile:
   # Create a CSV writer object
   writer = csv.DictWriter(csvfile, fieldnames=keys)
   # Write the header row
   writer.writeheader()
   # Write each dictionary as a row in the CSV
   for item in pkmn_one_shots:
-    writer.writerow(item)  
+    writer.writerow(item)
+
+with open('pkmn_data.csv', newline='') as csvfile:
+  reader = csv.DictReader(csvfile)
+  data = [row for row in reader]  # List of dictionaries  
+
+with open('pkmn_data.json', 'w', newline='') as jsonfile:
+  json.dump(data, jsonfile, indent=4)  # Pretty-printed JSON output
+
+with open('pkmn_data2.json', "w") as file:
+  file.write(str(pkmn_one_shots).replace("'", '"'))
+
+print(pkmn_one_shots)

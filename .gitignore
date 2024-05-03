@@ -1,0 +1,13 @@
+calculator/*.txt
+calculator/*.json
+
+img/*
+
+webscraper/*.csv
+
+website/tf/scyther_test.json
+website/index.html
+website/index.js
+website/pkmn_data.json
+website/style.css
+website/test.json

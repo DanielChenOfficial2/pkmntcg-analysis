@@ -1,3 +1,3 @@
 #!/bin/bash
-cd ../webscrape
-python3 webscrape.py
+cd ../webscraper
+python3 webscraper.py

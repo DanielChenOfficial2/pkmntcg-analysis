@@ -1,0 +1,23 @@
+.rowFlex {
+  display: flex;
+  column-gap: 10px;
+  /* align-items: center; */
+  justify-content: center;
+}
+tr {
+  border: solid;
+}
+
+td {
+  border: solid;
+}
+
+th {
+  border: solid;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}

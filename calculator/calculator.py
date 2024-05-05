@@ -4,7 +4,7 @@ import csv
 import json
 import math
 
-test = False
+test = True
 
 def can_use_poketool(pkmn_data, enemy_pkmn, poketool_condition):
   is_condition_fulfilled = True
@@ -36,10 +36,6 @@ def can_use_poketool(pkmn_data, enemy_pkmn, poketool_condition):
     elif key == 'Rule Box':
       rulebox_eligible = ['ex', 'V', 'VMAX', 'VSTAR']
       for pkmn_card_type in ast.literal_eval(pkmn_data['Card Type']):
-        # print(pkmn_data['Name'])
-        # print(rulebox_eligible)
-        # print(pkmn_card_type)
-        # print('\n')
         if pkmn_card_type in rulebox_eligible:
           if value == 'None':
             is_condition_fulfilled = False
@@ -52,11 +48,6 @@ def can_use_poketool(pkmn_data, enemy_pkmn, poketool_condition):
       if value != pkmn_data['Evolution Stage']:
         is_condition_fulfilled = False
         break
-      # print(pkmn_data['Name'])
-      # print(poketool['Item Name'])
-      # print(value)
-      # print(pkmn_data['Evolution Stage'])
-      # print('\n')
       continue
     elif key == 'Type':
       if value != pkmn_data['Type']:
@@ -101,16 +92,20 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
   cur_pkmn_one_shots['Pkmn HP'] = pkmn_data['HP']
   cur_pkmn_one_shots['Pkmn Weakness'] = pkmn_data['Weakness']
   cur_pkmn_one_shots['Pkmn Resistance'] = pkmn_data['Resistance'] if pkmn_data['Resistance'] != 'nan' else "None"
-  cur_pkmn_one_shots['Pkmn Eligible Defensive Items'] = []
+  cur_pkmn_one_shots['Pkmn Gets One Shot By'] = []
+  # cur_pkmn_one_shots['Pkmn Eligible Defensive Items'] = []
 
+  defensive_poketool_eligible_list = []
   for i in range(len(defensive_poketools_df)):
     defensive_poketool = defensive_poketools_df.iloc[i]
     if not isinstance(defensive_poketool['Condition'], float): # indicates nan, meaning no condition
       defensive_poketool_isEligible = can_use_poketool(pkmn_data, None, ast.literal_eval(defensive_poketool['Condition']))
       if defensive_poketool_isEligible[0] == True:
-        cur_pkmn_one_shots['Pkmn Eligible Defensive Items'].append(defensive_poketool)
+        # cur_pkmn_one_shots['Pkmn Eligible Defensive Items'].append(defensive_poketool['Item Name'])
+        defensive_poketool_eligible_list.append(defensive_poketool)
     else:
-      cur_pkmn_one_shots['Pkmn Eligible Defensive Items'].append(defensive_poketool)
+      # cur_pkmn_one_shots['Pkmn Eligible Defensive Items'].append(defensive_poketool['Item Name'])
+      defensive_poketool_eligible_list.append(defensive_poketool)
   # print(cur_pkmn_one_shots['Pkmn Name'])
   # print(cur_pkmn_one_shots['Pkmn Eligible Defensive Items'])
   # print('\n')
@@ -143,8 +138,8 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
           offensive_poketool_eligible_list.append(offensive_poketool)
       else:
         offensive_poketool_eligible_list.append(offensive_poketool)
-    # print(pkmn_data)
-    # print(enemy_pkmn)
+      
+    # print(enemy_pkmn['Name'])
     # print(offensive_poketool_eligible_list)
     # print('\n')
 
@@ -153,8 +148,8 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
       cur_one_shot_by = {}
       enemy_move = enemy_pkmn_moves[j]
 
-      for k in range(len(offensive_poketools_df)):
-        offensive_poketool = offensive_poketools_df.iloc[k]
+      for k in range(len(offensive_poketool_eligible_list)):
+        offensive_poketool = offensive_poketool_eligible_list[k]
         dmg_dealt_add = 0
         weakness_multiplier = original_weakness_multiplier
         resistance_sub = original_resistance_sub
@@ -179,8 +174,10 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
         #   if not isinstance(poketool['Condition'], float): # indicates nan, meaning no condition
             # print(poketool['Condition'])
             # print(can_equip_item(pkmn_data, enemy_pkmn, condition))
-        for m, defensive_poketool in enumerate(cur_pkmn_one_shots['Pkmn Eligible Defensive Items']):
-          cur_one_shot_by['Pkmn Item'] = defensive_poketool
+        for m, defensive_poketool in enumerate(defensive_poketool_eligible_list):
+          # print(offensive_poketool['Item Name'])
+          # print(defensive_poketool['Item Name'])
+          # print('\n')
           is_special_condition_immune = False
           is_enemy_supporter_immune = False      
           is_weakness = is_original_weakness
@@ -226,6 +223,9 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
 
             if damage >= hp:
               cur_one_shot_by['Oneshot String 1'] = enemy_pkmn['Name'] + ' using ' + enemy_move['Move Name'] + ' with ' + offensive_poketool['Item Name'] + ' one shots ' + pkmn_data['Name'] + ' with ' + defensive_poketool['Item Name']
+              if offensive_poketool['Item Name'] == 'Defiance Band':
+                cur_one_shot_by['Oneshot String 1'] = cur_one_shot_by['Oneshot String 1'] + " when the opposing pokemon's player has more prize cards remaining than this pokemon's player"
+              
               cur_one_shot_by['Oneshot String 2'] = pkmn_data['Name'] + ' has ' + str(hp) + ' HP'
               # print(enemy_pkmn['Name'] + ' one shots ' + pkmn_data['Name'] + ' with ' + enemy_move['Move Name'])
               # print(pkmn_data['Name'] + ' has ' + str(pkmn_data['HP']) + ' HP')
@@ -262,14 +262,21 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
               cur_one_shot_by['Enemy Pokemon Type'] = enemy_pkmn['Type']
               cur_one_shot_by['Enemy Pokemon Move Name'] = enemy_move['Move Name']
               cur_one_shot_by['Enemy Pokemon Move Damage'] = enemy_move['Move Damage']
-
-              print(cur_one_shot_by['Oneshot String 1'])
-              print(cur_one_shot_by['Oneshot String 2'])
-              print(cur_one_shot_by['Oneshot String 3'])
+              
+              cur_one_shot_by['Poketool'] = defensive_poketool['Item Name']
+              cur_one_shot_by['Enemy Poketool'] = offensive_poketool['Item Name']
+              # print(cur_one_shot_by['Oneshot String 1'])
+              # print(cur_one_shot_by['Oneshot String 2'])
+              # print(cur_one_shot_by['Oneshot String 3'])
+              # print('\n')
+              new_dict = cur_one_shot_by.copy()
+              cur_pkmn_one_shots['Pkmn Gets One Shot By'].append(new_dict)
+              # print(cur_pkmn_one_shots['Pkmn Gets One Shot By'])
+              # print(offensive_poketool['Item Name'])
+              # print(defensive_poketool['Item Name'])
+              # print(cur_one_shot_by['Oneshot String 1'])
               print('\n')
-
-              one_shot_by.append(cur_one_shot_by)
-  cur_pkmn_one_shots['Pkmn Gets One Shot By'] = one_shot_by  
+  # print(one_shot_by)        
   # print(cur_pkmn_one_shots)
   # print('\n')
   return cur_pkmn_one_shots
@@ -295,13 +302,13 @@ if test == False:
     pkmn_one_shots.append(calc_one_shot(row, df))
 else:
   for index, row in df.iterrows():
-    # print(row['Name'])
-    if row['Name'] == 'Mr. Mime':
+    if row['Name'] == 'Scyther':
       pkmn_one_shots.append(calc_one_shot(row, df))
+      break
 
 keys = list(pkmn_one_shots[0].keys())
 
-with open('pkmn_data_temp.csv', 'w', newline='') as csvfile:
+with open('calc_data.csv', 'w', newline='') as csvfile:
   # Create a CSV writer object
   writer = csv.DictWriter(csvfile, fieldnames=keys)
   # Write the header row
@@ -310,14 +317,15 @@ with open('pkmn_data_temp.csv', 'w', newline='') as csvfile:
   for item in pkmn_one_shots:
     writer.writerow(item)
 
-with open('pkmn_data.csv', newline='') as csvfile:
+csv.field_size_limit(1000000000000000)
+with open('calc_data.csv', newline='') as csvfile:
   reader = csv.DictReader(csvfile)
   data = [row for row in reader]  # List of dictionaries  
 
-with open('pkmn_data.json', 'w', newline='') as jsonfile:
+with open('scyther.json', 'w', newline='') as jsonfile:
   json.dump(data, jsonfile, indent=4)  # Pretty-printed JSON output
 
-with open('pkmn_data2.json', "w") as file:
-  file.write(str(pkmn_one_shots).replace("'", '"'))
+# with open('pkmn_data2.json', "w") as file:
+#   file.write(str(pkmn_one_shots).replace("'", '"'))
 
 # print(pkmn_one_shots)

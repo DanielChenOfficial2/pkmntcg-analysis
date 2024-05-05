@@ -21,3 +21,7 @@ main {
   flex-direction: column;
   row-gap: 10px;
 }
+
+table#oneShotBy tbody tr:nth-child(odd) {
+  background-color: #cccccc; /* Light gray for odd rows */
+}

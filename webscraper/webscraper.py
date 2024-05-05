@@ -82,6 +82,22 @@ def scrape_pokemon_info(url):
   pkmn_type = pkmn_info_table_rows[2].find('td').text.strip()
   pkmn_hp = pkmn_info_table_rows[3].find('td').text.strip()
 
+  # Calculate card type information
+  pkmn_card_type = []
+  ancient_pkmn_list = ['Great Tusk', 'Scream Tail', 'Brute Bonnet', 'Flutter Mane', 'Slither Wing', 'Sandy Shocks', 'Roaring Moon', 'Koraidon', 'Walking Wake', 'Gouging Fire', 'Raging Bolt']
+  future_pkmn_list = ['Iron Treads', 'Iron Bundle', 'Iron Hands', 'Iron Jugulis', 'Iron Moth', 'Iron Thorns', 'Iron Valiant', 'Miraidon', 'Iron Leaves', 'Iron Boulder', 'Iron Crown']
+  if '-ex' in pkmn_name:
+    pkmn_card_type.append('ex')
+  
+  for ancient_pkmn in ancient_pkmn_list:
+    if ancient_pkmn in pkmn_name:
+      pkmn_card_type.append('Ancient')
+      break
+
+  for future_pkmn in future_pkmn_list:
+    if future_pkmn in pkmn_name:
+      pkmn_card_type.append('Future')
+
   # Extract weakness, resistance, retreat cost
   # Laughably bad website design so there is a one row table in the overall table w/ pokemon info
   # Also very painful to extract weakness resistance and retreat cost due to no direct text, so need to put guardrails in case any of these don't exist
@@ -214,6 +230,7 @@ def scrape_pokemon_info(url):
   return {
       "Name": pkmn_name,
       "Name w/ Set": pkmn_name_with_set,
+      "Card Type": pkmn_card_type,
       "Evolution Stage": pkmn_evo_stage,
       "Previous Evolution": pkmn_prev_evo,
       "Ability": pkmn_ability,
@@ -262,11 +279,7 @@ if test != True:
     print(pkmn_data)
     all_pkmn_cards.append(pkmn_data)
 else:
-  pkmn_data = scrape_pokemon_info('https://bulbapedia.bulbagarden.net/wiki/Iron_Leaves_ex_(Temporal_Forces_25)')
-  print(pkmn_data)
-  all_pkmn_cards.append(pkmn_data)
-
-  pkmn_data = scrape_pokemon_info('https://bulbapedia.bulbagarden.net/wiki/Iron_Valiant_(Temporal_Forces_80)')
+  pkmn_data = scrape_pokemon_info('https://bulbapedia.bulbagarden.net/wiki/Scovillain_ex_(Temporal_Forces_22)')
   print(pkmn_data)
   all_pkmn_cards.append(pkmn_data)
 
@@ -274,7 +287,7 @@ else:
 keys = list(all_pkmn_cards[0].keys())
 
 # Open a CSV file for writing
-with open('pokemon_data.csv', 'w', newline='') as csvfile:
+with open('pkmn_data.csv', 'w', newline='') as csvfile:
   # Create a CSV writer object
   writer = csv.DictWriter(csvfile, fieldnames=keys)
   # Write the header row
@@ -283,7 +296,7 @@ with open('pokemon_data.csv', 'w', newline='') as csvfile:
   for item in all_pkmn_cards:
     writer.writerow(item)
 
-print("CSV file created successfully: pokemon_data.csv")
+print("CSV file created successfully: pkmn_data.csv")
 
 # print(all_pkmn_cards)
 

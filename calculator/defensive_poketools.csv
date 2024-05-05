@@ -1,0 +1,15 @@
+Item Name,Item Name w/ Set,Modifier,Condition,Card Mark
+No Poketool,,,,
+Ancient Booster Energy Capsule,"Ancient Booster Energy Capsule (Paradox Rift 159, Temporal Forces 140)","[{'hp_add': 60}, {'special_conditions': 'immune'}]",{'Pkmn Card Type': 'Ancient'},G
+Future Booster Energy Capsule,"Future Booster Energy Capsule (Paradox Rift 164, Temporal Forces 149)","[{'retreat': 0}, {'dmg_dealt_add': 20}]",{'Pkmn Card Type': 'Future'},G
+Hero's Cape,Hero's Cape (Temporal Forces 152),[{'hp_add': 100}],,H
+Rescue Board,Rescue Board (Temporal Forces 159),[{'retreat_sub': 1}],,H
+Defiance Vest,Defiance Vest (Paradox Rift 162),[{'dmg_taken_sub': 40}],{'Prize Cards': 'more'},G
+Luxurious Cape,Luxurious Cape (Paradox Rift 166),[{'hp_add': 100}],{'Rule Box': 'None'},G
+Big Air Balloon,Big Air Balloon (Pokemon 151 155),[{'retreat': 0}],{'Evolution': 'Stage 2'},G
+Protective Goggles,Protective Goggles (Pokemon 151 164),[{'weakness': 'None'}],{'Evolution': 'Basic'},G
+Rigid Band,Rigid Band (Pokemon 151 159),[{'dmg_taken_sub': 30}],{'Evolution': 'Stage 1'},G
+Bravery Charm,Bravery Charm (Paldea Evolved 173),[{'hp_add': 50}],{'Evolution': 'Basic'},G
+Rock Chestplate,Rock Chestplate (Scarlet & Violet 192),[{'dmg_taken_sub': 30}],{'Type': 'Fighting'},G
+Leafy Camo Poncho,Leafy Camo Poncho (Silver Tempest 160),[{'enemy_supporter_effects': 'None'}],"{'Enemy Pkmn Card Type': ['VSTAR', 'VMAX']}",F
+Pot Helmet,Pot Helmet (Brilliant Stars 146),[{'dmg_taken_sub': 30}],{'Rule Box': 'None'},F

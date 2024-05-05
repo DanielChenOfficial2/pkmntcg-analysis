@@ -1,0 +1,9 @@
+Item Name,Item Name w/ Set,Modifier,Condition,Card Mark
+No Poketool,,,,
+Future Booster Energy Capsule,"Future Booster Energy Capsule (Paradox Rift 164, Temporal Forces 149)","[{'retreat': 0}, {'dmg_dealt_add': 20}]",{'Pkmn Card Type': 'Future'},G
+Maximum Belt,Maximum Belt (Temporal Forces 154),[{'dmg_dealt_add': 50}],{'Enemy Pkmn Card Type': ['ex']},H
+Choice Belt,"Choice Belt (Brilliant Stars 135, Astral Radiance 211, Paldea Evolved 176)",[{'dmg_dealt_add': 30}],{'Enemy Pkmn Card Type': ['V']},F
+Defiance Band,Defiance Band (Scarlet & Violet 169),[{'dmg_dealt_add': 30}],{'Prize Cards': 'more'},G
+Vitality Band,"Vitality Band (Sword & Shield 185, Scarlet & Violet 197)",[{'dmg_dealt_add': 10}],,G
+Supereffective Glasses,Supereffective Glasses (Astral Radiance 152),[{'weakness_multiplier_dealt': 3}],,F
+Cleansing Gloves,Cleansing Gloves (Brilliant Stars 136),[{'dmg_dealt_add': 30}],{'Enemy Pkmn Type': 'Psychic'},F

@@ -1,10 +1,14 @@
+calculator/calc_data.csv
 calculator/*.txt
 calculator/*.json
 
 img/*
 
+scripts/*.txt
+
 webscraper/*.csv
 
+website/tf/scyther.json
 website/tf/scyther_test.json
 website/index.html
 website/index.js

@@ -3,8 +3,9 @@ import ast
 import csv
 import json
 import math
+import re
 
-test = True
+test = False
 
 def can_use_poketool(pkmn_data, enemy_pkmn, poketool_condition):
   is_condition_fulfilled = True
@@ -259,6 +260,7 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
               # print('\n')
               
               cur_one_shot_by['Enemy Pokemon Name'] = enemy_pkmn['Name']
+              cur_one_shot_by['Enemy Pokemon Name w/ Set'] = enemy_pkmn['Name w/ Set']
               cur_one_shot_by['Enemy Pokemon Type'] = enemy_pkmn['Type']
               cur_one_shot_by['Enemy Pokemon Move Name'] = enemy_move['Move Name']
               cur_one_shot_by['Enemy Pokemon Move Damage'] = enemy_move['Move Damage']
@@ -275,11 +277,88 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
               # print(offensive_poketool['Item Name'])
               # print(defensive_poketool['Item Name'])
               # print(cur_one_shot_by['Oneshot String 1'])
-              print('\n')
+              # print('\n')
   # print(one_shot_by)        
   # print(cur_pkmn_one_shots)
   # print('\n')
   return cur_pkmn_one_shots
+
+def format_img_num(num):
+    if 1 <= num <= 9:
+        return f"00{num}"
+    elif 10 <= num <= 99:
+        return f"0{num}"
+    elif 100 <= num <= 999:
+        return str(num)
+    else:
+        return "Number out of range"
+
+def remove_text_between_strings(input_string, start_string, end_string):
+    pattern = re.compile(re.escape(start_string) + '.*?' + re.escape(end_string), re.DOTALL)
+    return re.sub(pattern, f'{start_string}{end_string}', input_string)
+
+def file_processing(poke_no, pkmn_one_shots):
+  keys = list(pkmn_one_shots[0].keys())
+
+  with open('calc_data.csv', 'w', newline='') as csvfile:
+    # Create a CSV writer object
+    writer = csv.DictWriter(csvfile, fieldnames=keys)
+    # Write the header row
+    writer.writeheader()
+    # Write each dictionary as a row in the CSV
+    for item in pkmn_one_shots:
+      writer.writerow(item)
+
+  csv.field_size_limit(1000000000000000)
+  with open('calc_data.csv', newline='') as csvfile:
+    reader = csv.DictReader(csvfile)
+    data = [row for row in reader]  # List of dictionaries  
+  
+  with open('temp.json', 'w', newline='') as jsonfile:
+    json.dump(data, jsonfile, indent=4)  # Pretty-printed JSON output
+  
+  file = open('temp.json', 'r')
+  json_content = file.read()
+  updated_json_content = json_content.replace("'", '"')
+  updated_json_content = updated_json_content.replace('\\"', '"')
+  updated_json_content = updated_json_content[1:-1]
+  updated_json_content = updated_json_content.replace('pokemon"s', "pokemon's")
+  updated_json_content = updated_json_content.replace('Hero"s Cape', "Hero's Cape")
+
+  # Use sub to perform the replacement with capture groups
+  updated_json_content = re.sub(r'"\[{(.*?)}\]"', r'[{ \1 }]', updated_json_content)
+  # print(updated_json_content)
+
+  file = open('template/template.html', 'r')
+  html_template = file.read()
+  updated_html_template = html_template.replace('{pkmn_name_with_set}', pkmn_one_shots[0]['Pkmn Name w/ Set'])
+  updated_html_template = updated_html_template.replace('{num}', str(poke_no + 1))
+  updated_html_template = updated_html_template.replace('{img_num}', format_img_num(poke_no + 1))
+
+  file = open('../website/tf/' + str(poke_no + 1) + '.html', 'w')
+  file.write(updated_html_template)
+  
+  file = open('template/template.js', 'r')
+  js_template = file.read()
+  updated_js_template = js_template.replace('{data}', updated_json_content)
+
+  file = open('../website/tf/' + str(poke_no + 1) + '.js', 'w')
+  file.write(updated_js_template)
+
+  file = open('../website/tf/index.html', 'r')
+  index_template = file.read()
+
+  li_template = '<li class="mb-2"><a class="text-lg text-blue-500 hover:text-blue-700 underline" href="{num}.html">{pkmn_name}</a></li>'
+  updated_li_template = li_template.replace('{num}', str(poke_no + 1))
+  updated_li_template = updated_li_template.replace('{pkmn_name}', pkmn_one_shots[0]['Pkmn Name'])
+
+  insert_position = index_template.find('</ol')
+  updated_index_template = index_template[:insert_position] + updated_li_template + index_template[insert_position:]
+  # print(updated_index_template)
+  # print('\n')
+
+  file = open('../website/tf/index.html', 'w')
+  file.write(updated_index_template)
 
 # Read the CSV file into a DataFrame
 df = pd.read_csv('../webscraper/pkmn_data.csv')
@@ -296,34 +375,19 @@ column_names = df.columns
 #   # Access elements by column names
 #   print(row['Name'], row['Name w/ Set'], "...")
 
-pkmn_one_shots = []
+
 if test == False:
   for index, row in df.iterrows():
+    pkmn_one_shots = []
     pkmn_one_shots.append(calc_one_shot(row, df))
+    file_processing(index, pkmn_one_shots)
 else:
   for index, row in df.iterrows():
     if row['Name'] == 'Scyther':
+      pkmn_one_shots = []
       pkmn_one_shots.append(calc_one_shot(row, df))
+      file_processing(index, pkmn_one_shots)
       break
-
-keys = list(pkmn_one_shots[0].keys())
-
-with open('calc_data.csv', 'w', newline='') as csvfile:
-  # Create a CSV writer object
-  writer = csv.DictWriter(csvfile, fieldnames=keys)
-  # Write the header row
-  writer.writeheader()
-  # Write each dictionary as a row in the CSV
-  for item in pkmn_one_shots:
-    writer.writerow(item)
-
-csv.field_size_limit(1000000000000000)
-with open('calc_data.csv', newline='') as csvfile:
-  reader = csv.DictReader(csvfile)
-  data = [row for row in reader]  # List of dictionaries  
-
-with open('scyther.json', 'w', newline='') as jsonfile:
-  json.dump(data, jsonfile, indent=4)  # Pretty-printed JSON output
 
 # with open('pkmn_data2.json', "w") as file:
 #   file.write(str(pkmn_one_shots).replace("'", '"'))

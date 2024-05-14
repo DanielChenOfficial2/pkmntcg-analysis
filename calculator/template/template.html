@@ -18,25 +18,29 @@
       </picture>
       <table>
         <tr>
-          <td>HP</td>
-          <td id="hpVal"></td>
+          <td class="table_row_color1">HP</td>
+          <td class="table_row_color1">{pkmn_hp}</td>
         </tr>
         <tr>
-          <td>Weakness</td>
-          <td id="weaknessVal"></td>
+          <td class="table_row_color2">Weakness</td>
+          <td class="table_row_color2">{pkmn_weakness}</td>
         </tr>
         <tr>
-          <td>Resistance</td>
-          <td id="resistanceVal"></td>
+          <td class="table_row_color1">Resistance</td>
+          <td class="table_row_color1">{pkmn_resistance}</td>
         </tr>
+        <tr>
+          <td class="table_row_color2">Effective Defensive Items</td>
+        </tr>
+        {effective_defensive_items}
       </table>
     </div>
     <table id="oneShotBy" class="rowFlex">
       <tr>
         <th scope="col">Opposing Pokemon</th>
+        <th scope="col">Opposing Pokemon's Move</th>
         <th scope="col">Opposing Pokemon's Poketool</th>
         <th scope="col">This Pokemon's Poketool</th>
-        <th scope="col">Move</th>
         <th scope="col">Damage Calculation</th>
       </tr>
     </table>

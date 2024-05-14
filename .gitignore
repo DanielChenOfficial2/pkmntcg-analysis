@@ -4,6 +4,8 @@ calculator/*.json
 
 img/*
 
+reference/*
+
 scripts/*.txt
 
 webscraper/*.csv

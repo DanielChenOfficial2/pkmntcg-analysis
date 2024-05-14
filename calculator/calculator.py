@@ -4,6 +4,7 @@ import csv
 import json
 import math
 import re
+from bs4 import BeautifulSoup
 
 test = False
 
@@ -12,11 +13,6 @@ def can_use_poketool(pkmn_data, enemy_pkmn, poketool_condition):
   condition_string = ''
   for key, value in poketool_condition.items():
     if key == 'Pkmn Card Type':
-      
-      # print(pkmn_data['Name'])
-      # print(poketool_condition)
-      # print(pkmn_data['Card Type'])
-      # print('\n')
       if value in ast.literal_eval(pkmn_data['Card Type']):
         continue
       is_condition_fulfilled = False
@@ -84,6 +80,11 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
   #     enemy_pkmn_move_name: enemy_pkmn_move_name
   #     enemy_pkmn_move_damage: enemy_pkmn_move_damage
   #     oneshot_string: oneshot_string
+
+  # If an offensive poketool for a move oneshots regardless of the defensive item, copy the first oneshot of the offensive poketool, rename offensive poketool to "Any Poketool," and delete oneshot strings
+  # If all offensive poketools have the same oneshots for a given move, copy all oneshots of one offensive poketool and rename offensive poketool to "Any Poketool," and delete oneshot strings
+
+
   offensive_poketools_df = pd.read_csv('offensive_poketools.csv')
   defensive_poketools_df = pd.read_csv('defensive_poketools.csv')
   
@@ -94,7 +95,7 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
   cur_pkmn_one_shots['Pkmn Weakness'] = pkmn_data['Weakness']
   cur_pkmn_one_shots['Pkmn Resistance'] = pkmn_data['Resistance'] if pkmn_data['Resistance'] != 'nan' else "None"
   cur_pkmn_one_shots['Pkmn Gets One Shot By'] = []
-  # cur_pkmn_one_shots['Pkmn Eligible Defensive Items'] = []
+  cur_pkmn_one_shots['Pkmn Eligible Defensive Items'] = []
 
   defensive_poketool_eligible_list = []
   for i in range(len(defensive_poketools_df)):
@@ -102,15 +103,12 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
     if not isinstance(defensive_poketool['Condition'], float): # indicates nan, meaning no condition
       defensive_poketool_isEligible = can_use_poketool(pkmn_data, None, ast.literal_eval(defensive_poketool['Condition']))
       if defensive_poketool_isEligible[0] == True:
-        # cur_pkmn_one_shots['Pkmn Eligible Defensive Items'].append(defensive_poketool['Item Name'])
+        cur_pkmn_one_shots['Pkmn Eligible Defensive Items'].append(defensive_poketool['Item Name'])
         defensive_poketool_eligible_list.append(defensive_poketool)
     else:
-      # cur_pkmn_one_shots['Pkmn Eligible Defensive Items'].append(defensive_poketool['Item Name'])
+      cur_pkmn_one_shots['Pkmn Eligible Defensive Items'].append(defensive_poketool['Item Name'])
       defensive_poketool_eligible_list.append(defensive_poketool)
-  # print(cur_pkmn_one_shots['Pkmn Name'])
-  # print(cur_pkmn_one_shots['Pkmn Eligible Defensive Items'])
-  # print('\n')
-  one_shot_by = []
+
   for index, enemy_pkmn in all_pkmn_data.iterrows():
     
     # If enemy pokemon has same type as current pokemon weakness, damage x2
@@ -139,15 +137,12 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
           offensive_poketool_eligible_list.append(offensive_poketool)
       else:
         offensive_poketool_eligible_list.append(offensive_poketool)
-      
-    # print(enemy_pkmn['Name'])
-    # print(offensive_poketool_eligible_list)
-    # print('\n')
 
     # Iterate over every move, then for every move iterate over every item to check oneshot
     for j in range(len(enemy_pkmn_moves)):
       cur_one_shot_by = {}
       enemy_move = enemy_pkmn_moves[j]
+      effective_offensive_poketool_oneshot_arr = []
 
       for k in range(len(offensive_poketool_eligible_list)):
         offensive_poketool = offensive_poketool_eligible_list[k]
@@ -169,16 +164,10 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
           weakness_multiplier = 3
         elif offensive_poketool['Item Name'] == 'Cleansing Gloves':
           dmg_dealt_add = dmg_dealt_add + 30
-        # is_condition_fulfilled = True
-        # condition_string = ''
-        # if poketool['Item Name'] != 'No Item':
-        #   if not isinstance(poketool['Condition'], float): # indicates nan, meaning no condition
-            # print(poketool['Condition'])
-            # print(can_equip_item(pkmn_data, enemy_pkmn, condition))
+
+        effective_against_defensive_poketool_arr = []
+        effective_against_defensive_poketool_counter = 0
         for m, defensive_poketool in enumerate(defensive_poketool_eligible_list):
-          # print(offensive_poketool['Item Name'])
-          # print(defensive_poketool['Item Name'])
-          # print('\n')
           is_special_condition_immune = False
           is_enemy_supporter_immune = False      
           is_weakness = is_original_weakness
@@ -228,8 +217,6 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
                 cur_one_shot_by['Oneshot String 1'] = cur_one_shot_by['Oneshot String 1'] + " when the opposing pokemon's player has more prize cards remaining than this pokemon's player"
               
               cur_one_shot_by['Oneshot String 2'] = pkmn_data['Name'] + ' has ' + str(hp) + ' HP'
-              # print(enemy_pkmn['Name'] + ' one shots ' + pkmn_data['Name'] + ' with ' + enemy_move['Move Name'])
-              # print(pkmn_data['Name'] + ' has ' + str(pkmn_data['HP']) + ' HP')
 
               # Move name + 
               base_damage_template = enemy_move['Move Name'] + ' does '
@@ -257,7 +244,6 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
                   cur_one_shot_by['Oneshot String 3'] = base_damage_template + ' = ' +  str((int(enemy_move['Move Damage']) + dmg_dealt_add - dmg_taken_sub)) + ' damage'
                 else:
                   cur_one_shot_by['Oneshot String 3'] = base_damage_template + ' damage'
-              # print('\n')
               
               cur_one_shot_by['Enemy Pokemon Name'] = enemy_pkmn['Name']
               cur_one_shot_by['Enemy Pokemon Name w/ Set'] = enemy_pkmn['Name w/ Set']
@@ -266,21 +252,86 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
               cur_one_shot_by['Enemy Pokemon Move Damage'] = enemy_move['Move Damage']
               
               cur_one_shot_by['Poketool'] = defensive_poketool['Item Name']
-              cur_one_shot_by['Enemy Poketool'] = offensive_poketool['Item Name']
-              # print(cur_one_shot_by['Oneshot String 1'])
-              # print(cur_one_shot_by['Oneshot String 2'])
-              # print(cur_one_shot_by['Oneshot String 3'])
-              # print('\n')
+              cur_one_shot_by['Enemy Pokemon Poketool'] = offensive_poketool['Item Name']
+
               new_dict = cur_one_shot_by.copy()
-              cur_pkmn_one_shots['Pkmn Gets One Shot By'].append(new_dict)
-              # print(cur_pkmn_one_shots['Pkmn Gets One Shot By'])
-              # print(offensive_poketool['Item Name'])
-              # print(defensive_poketool['Item Name'])
-              # print(cur_one_shot_by['Oneshot String 1'])
-              # print('\n')
-  # print(one_shot_by)        
-  # print(cur_pkmn_one_shots)
-  # print('\n')
+              effective_against_defensive_poketool_arr.append(new_dict)
+              effective_against_defensive_poketool_counter = effective_against_defensive_poketool_counter + 1
+        # if the current offensive poketool is effective against all defensive tools (only applies to one move)
+        if effective_against_defensive_poketool_counter == len(defensive_poketool_eligible_list):
+          merged_one_shot = effective_against_defensive_poketool_arr[0]
+          merged_one_shot['Poketool'] = 'Any/No Poketool'
+          merged_one_shot['Oneshot String 2'] = ''
+          merged_one_shot['Oneshot String 3'] = ''
+          effective_offensive_poketool_oneshot_arr.append(merged_one_shot)
+        else:
+          for index, potential_one_shot in enumerate(effective_against_defensive_poketool_arr):
+            effective_offensive_poketool_oneshot_arr.append(potential_one_shot)
+      # if the length of effective offensive poketools is the length of the offensive poketool eligible list
+      # - get the first poketool
+      # - add all defensive poketools it oneshots to an array
+      # if all remaining poketools oneshot exactly the same defensive poketools:
+      # - change all offensive poketool names for the first poketool's oneshots to "Any Poketool"
+      # - only add the first poketool's oneshots
+      # else:
+      # - add all oneshots normally
+      # for i in effective_offensive_poketool_oneshot_arr:
+      #   print(i)
+      # print('\n')
+      if len(effective_offensive_poketool_oneshot_arr) > 0:
+        first_effective_offensive_poketool_name = effective_offensive_poketool_oneshot_arr[0]['Enemy Pokemon Poketool']
+        temp_effective_against_defensive_poketool_arr = []
+        temp_effective_against_defensive_poketool_arr_validator_counter = 0
+        for temp_one_shot in effective_offensive_poketool_oneshot_arr:
+          if temp_one_shot['Enemy Pokemon Poketool'] == first_effective_offensive_poketool_name and temp_one_shot not in temp_effective_against_defensive_poketool_arr:
+            temp_effective_against_defensive_poketool_arr.append(temp_one_shot)
+          else:
+            break
+        # for i in temp_effective_against_defensive_poketool_arr:
+        #   print(i)
+        # print('\n')
+        confirmed_offensive_poketools = []
+        cur_defensive_poketool_index = 0
+        cur_offensive_poketool = first_effective_offensive_poketool_name
+        for index, temp_one_shot in enumerate(effective_offensive_poketool_oneshot_arr):
+          if temp_one_shot['Enemy Pokemon Poketool'] != cur_offensive_poketool:
+            if cur_defensive_poketool_index == len(temp_effective_against_defensive_poketool_arr):
+              confirmed_offensive_poketools.append(cur_offensive_poketool)
+            cur_offensive_poketool = temp_one_shot['Enemy Pokemon Poketool']
+            cur_defensive_poketool_index = 0
+          if temp_one_shot['Enemy Pokemon Poketool'] == cur_offensive_poketool and cur_defensive_poketool_index < len(temp_effective_against_defensive_poketool_arr):
+            if temp_one_shot['Poketool'] == temp_effective_against_defensive_poketool_arr[cur_defensive_poketool_index]['Poketool']:
+              cur_defensive_poketool_index = cur_defensive_poketool_index + 1
+            else: 
+              cur_defensive_poketool_index = 99
+          elif cur_defensive_poketool_index >= len(temp_effective_against_defensive_poketool_arr):
+            cur_defensive_poketool_index = 99
+          if index == len(effective_offensive_poketool_oneshot_arr) - 1:
+            if cur_defensive_poketool_index == len(temp_effective_against_defensive_poketool_arr):
+              confirmed_offensive_poketools.append(cur_offensive_poketool)
+        
+        is_summarize_offensive_poketools = True
+        for i in range(len(confirmed_offensive_poketools)):
+          if confirmed_offensive_poketools[i] != offensive_poketool_eligible_list[i]['Item Name']:
+            is_summarize_offensive_poketools = False
+            break
+
+        if is_summarize_offensive_poketools:
+          for i in temp_effective_against_defensive_poketool_arr:
+            i['Enemy Pokemon Poketool'] = 'Any/No Poketool'
+            i['Oneshot String 2'] = ''
+            i['Oneshot String 3'] = ''
+            cur_pkmn_one_shots['Pkmn Gets One Shot By'].append(i)
+        else:
+          for i in effective_offensive_poketool_oneshot_arr:
+            cur_pkmn_one_shots['Pkmn Gets One Shot By'].append(i)
+
+
+        # Iterate over all other poketools. If the pokemon or move changes and we haven
+        cur_enemy_pokemon = effective_offensive_poketool_oneshot_arr[0]['Enemy Pokemon Name']
+        cur_enemy_move = effective_offensive_poketool_oneshot_arr[0]['Enemy Pokemon Move Name']
+          
+      
   return cur_pkmn_one_shots
 
 def format_img_num(num):
@@ -324,26 +375,201 @@ def file_processing(poke_no, pkmn_one_shots):
   updated_json_content = updated_json_content[1:-1]
   updated_json_content = updated_json_content.replace('pokemon"s', "pokemon's")
   updated_json_content = updated_json_content.replace('Hero"s Cape', "Hero's Cape")
-
   # Use sub to perform the replacement with capture groups
   updated_json_content = re.sub(r'"\[{(.*?)}\]"', r'[{ \1 }]', updated_json_content)
   # print(updated_json_content)
 
+  with open('temp.json', 'w', newline='') as jsonfile:
+    jsonfile.write(updated_json_content)  # Pretty-printed JSON output
+
+  # get the opposing pokemon name
+  # find if there are any duplicate entries for opposing pokemon
+  # - if there are, then have a rowspan for the first row and none of that column for the remaining elements
+  # - if there aren't, then just put one row
+  # rest of finds are all limited from the beginning to the end of one pokemon's entries
+  # find if there are any duplicate entries for opposing pokemon's poketools
+  # - if there are, then find the amount of duplicates, then have a rowspan for the first occuring row and none of that column for the corresponding rows
+  # repeat this for pkmn poketool, move, etc.
+  # ensure that merged rows don't overlap past opposing pokemon name and that counters are reset between opposing pokemon
+  table_row_template = ""
+  # print(pkmn_one_shots[0]['Pkmn Gets One Shot By'])
+
+  cur_enemy_pkmn_skip_until_index = 0
+  cur_enemy_poketool_skip_until_index = 0
+  cur_enemy_pkmn_move_skip_until_index = 0
+  cur_poketool_skip_until_index = 0
+  cur_oneshot_skip_until_index = 0
+
+  is_cur_enemy_pkmn_color1 = True
+  is_cur_enemy_poketool_color1 = True
+  is_cur_enemy_pkmn_move_color1 = True
+  is_cur_poketool_color1 = True
+  is_cur_oneshot_color1 = True
+
+  for index, cur_one_shot in enumerate(pkmn_one_shots[0]['Pkmn Gets One Shot By']):
+    cur_table_row_template = "<tr>"
+
+    # print(cur_one_shot)
+    # print('\n')
+    cur_enemy_pkmn = cur_one_shot['Enemy Pokemon Name w/ Set']
+    cur_enemy_poketool = cur_one_shot['Enemy Pokemon Poketool']
+    cur_poketool = cur_one_shot['Poketool']
+    cur_enemy_pkmn_move = cur_one_shot['Enemy Pokemon Move Name']
+    cur_oneshot2 = cur_one_shot['Oneshot String 2']
+    cur_oneshot3 = cur_one_shot['Oneshot String 3']
+    
+    enemy_pkmn_name_template = '<td>' + cur_enemy_pkmn + '</td>'
+    enemy_poketool_template = '<td>' + cur_enemy_poketool + '</td>'
+    poketool_template = '<td>' + cur_poketool + '</td>'
+    enemy_pkmn_move_template = '<td>' + cur_enemy_pkmn_move + '</td>'
+    
+    # Example: 3 ways for Scyther to one shot Scyther
+    # expected output is '<td rowspan=3>Scyther</td>' and the next check is skipped until...
+    # index=3 if index=0
+    # index=4 if index=1
+    # but index 0 always needs to be checked
+
+    ####################################### BEGIN CURRENT POKEMON NAME CHECKS ##############################################
+    if index >= cur_enemy_pkmn_skip_until_index:
+      cur_enemy_pkmn_counter = 0
+      for index2, one_shot2 in enumerate(pkmn_one_shots[0]['Pkmn Gets One Shot By'][index:], index): # find duplicate entries
+        if one_shot2['Enemy Pokemon Name w/ Set'] == cur_enemy_pkmn:
+          cur_enemy_pkmn_counter = cur_enemy_pkmn_counter + 1
+        else:
+          break
+      cur_enemy_pkmn_skip_until_index = cur_enemy_pkmn_skip_until_index + cur_enemy_pkmn_counter
+
+      if is_cur_enemy_pkmn_color1:
+        enemy_pkmn_name_template = '<td class="table_row_color1" rowspan=' + str(cur_enemy_pkmn_counter) + '>' + cur_enemy_pkmn + '</td>'
+        is_cur_enemy_pkmn_color1 = False
+      else:
+        enemy_pkmn_name_template = '<td class="table_row_color2" rowspan=' + str(cur_enemy_pkmn_counter) + '>' + cur_enemy_pkmn + '</td>'
+        is_cur_enemy_pkmn_color1 = True
+      cur_table_row_template = cur_table_row_template + enemy_pkmn_name_template
+    ####################################### END CURRENT POKEMON NAME CHECKS ################################################
+    
+        ####################################### BEGIN CURRENT ENEMY POKEMON MOVE NAME CHECKS ###################################
+    if index >= cur_enemy_pkmn_move_skip_until_index:
+      cur_enemy_pkmn_move_counter = 0
+      for index2, one_shot2 in enumerate(pkmn_one_shots[0]['Pkmn Gets One Shot By'][index:], index): # find duplicate entries
+        if one_shot2['Enemy Pokemon Move Name'] == cur_enemy_pkmn_move and index2 < cur_enemy_pkmn_skip_until_index:
+          cur_enemy_pkmn_move_counter = cur_enemy_pkmn_move_counter + 1
+        else:
+          break
+      cur_enemy_pkmn_move_skip_until_index = cur_enemy_pkmn_move_skip_until_index + cur_enemy_pkmn_move_counter
+
+      if is_cur_enemy_pkmn_move_color1:
+        enemy_pkmn_move_template = '<td class="table_row_color1" rowspan=' + str(cur_enemy_pkmn_move_counter) + '>' + cur_enemy_pkmn_move + '</td>'
+        is_cur_enemy_pkmn_move_color1 = False
+      else:
+        enemy_pkmn_move_template = '<td class="table_row_color2" rowspan=' + str(cur_enemy_pkmn_move_counter) + '>' + cur_enemy_pkmn_move + '</td>'
+        is_cur_enemy_pkmn_move_color1 = True
+      cur_table_row_template = cur_table_row_template + enemy_pkmn_move_template
+    ####################################### END CURRENT ENEMY POKEMON MOVE NAME CHECKS #####################################
+
+    ####################################### BEGIN CURRENT ENEMY POKETOOL NAME CHECKS #######################################
+    if index >= cur_enemy_poketool_skip_until_index:
+      cur_enemy_poketool_counter = 0
+      for index2, one_shot2 in enumerate(pkmn_one_shots[0]['Pkmn Gets One Shot By'][index:], index): # find duplicate entries
+        if one_shot2['Enemy Pokemon Poketool'] == cur_enemy_poketool and index2 < cur_enemy_pkmn_skip_until_index:
+          cur_enemy_poketool_counter = cur_enemy_poketool_counter + 1
+        else:
+          break
+      cur_enemy_poketool_skip_until_index = cur_enemy_poketool_skip_until_index + cur_enemy_poketool_counter
+
+      if is_cur_enemy_poketool_color1:
+        enemy_poketool_template = '<td class="table_row_color1" rowspan=' + str(cur_enemy_poketool_counter) + '>' + cur_enemy_poketool + '</td>'
+        is_cur_enemy_poketool_color1 = False
+      else:
+        enemy_poketool_template = '<td class="table_row_color2" rowspan=' + str(cur_enemy_poketool_counter) + '>' + cur_enemy_poketool + '</td>'
+        is_cur_enemy_poketool_color1 = True
+      cur_table_row_template = cur_table_row_template + enemy_poketool_template
+    ####################################### END CURRENT ENEMY POKETOOL NAME CHECKS #########################################
+
+    ####################################### BEGIN CURRENT POKETOOL NAME CHECKS #############################################
+    if index >= cur_poketool_skip_until_index:
+      cur_poketool_counter = 0
+      for index2, one_shot2 in enumerate(pkmn_one_shots[0]['Pkmn Gets One Shot By'][index:], index): # find duplicate entries
+        if one_shot2['Poketool'] == cur_poketool and index2 < cur_enemy_pkmn_skip_until_index:
+          cur_poketool_counter = cur_poketool_counter + 1
+        else:
+          break
+      cur_poketool_skip_until_index = cur_poketool_skip_until_index + cur_poketool_counter
+
+      if is_cur_poketool_color1:
+        poketool_template = '<td class="table_row_color1" rowspan=' + str(cur_poketool_counter) + '>' + cur_poketool + '</td>'
+        is_cur_poketool_color1 = False
+      else:
+        poketool_template = '<td class="table_row_color2" rowspan=' + str(cur_poketool_counter) + '>' + cur_poketool + '</td>'
+        is_cur_poketool_color1 = True
+      cur_table_row_template = cur_table_row_template + poketool_template
+    ####################################### END CURRENT POKETOOL NAME CHECKS ###############################################
+
+    ####################################### BEGIN ONESHOT CHECKS ###################################
+    if index >= cur_oneshot_skip_until_index:
+      cur_oneshot_counter = 0
+      for index2, one_shot2 in enumerate(pkmn_one_shots[0]['Pkmn Gets One Shot By'][index:], index): # find duplicate entries
+        if one_shot2['Oneshot String 2'] == cur_oneshot2 and one_shot2['Oneshot String 3'] == cur_oneshot3 and index2 < cur_enemy_pkmn_skip_until_index:
+          cur_oneshot_counter = cur_oneshot_counter + 1
+        else:
+          break
+      cur_oneshot_skip_until_index = cur_oneshot_skip_until_index + cur_oneshot_counter
+
+      if is_cur_oneshot_color1:
+        if len(cur_oneshot2) > 0:
+          oneshot_template = '<td class="table_row_color1" rowspan=' + str(cur_oneshot_counter) + '>' + cur_oneshot2 + '. ' + cur_oneshot3 + '.</td>'
+        else:
+          oneshot_template = '<td class="table_row_color1" rowspan=' + str(cur_oneshot_counter) + '></td>'
+        is_cur_oneshot_color1 = False
+      else:
+        if len(cur_oneshot2) > 0:
+          oneshot_template = '<td class="table_row_color2" rowspan=' + str(cur_oneshot_counter) + '>' + cur_oneshot2 + '. ' + cur_oneshot3 + '.</td>'
+        else:
+          oneshot_template = '<td class="table_row_color2" rowspan=' + str(cur_oneshot_counter) + '></td>'
+        is_cur_oneshot_color1 = True
+      cur_table_row_template = cur_table_row_template + oneshot_template
+    ####################################### END ONESHOT CHECKS #####################################
+    
+    cur_table_row_template = cur_table_row_template + '</tr>'
+    table_row_template = table_row_template + cur_table_row_template
+    
   file = open('template/template.html', 'r')
   html_template = file.read()
   updated_html_template = html_template.replace('{pkmn_name_with_set}', pkmn_one_shots[0]['Pkmn Name w/ Set'])
   updated_html_template = updated_html_template.replace('{num}', str(poke_no + 1))
   updated_html_template = updated_html_template.replace('{img_num}', format_img_num(poke_no + 1))
+  updated_html_template = updated_html_template.replace('{pkmn_hp}', str(pkmn_one_shots[0]['Pkmn HP']))
+  if isinstance(pkmn_one_shots[0]['Pkmn Weakness'], str):
+    updated_html_template = updated_html_template.replace('{pkmn_weakness}', pkmn_one_shots[0]['Pkmn Weakness'])
+  else:
+    updated_html_template = updated_html_template.replace('{pkmn_weakness}', 'None')
+  if isinstance(pkmn_one_shots[0]['Pkmn Resistance'], str):
+    updated_html_template = updated_html_template.replace('{pkmn_resistance}', pkmn_one_shots[0]['Pkmn Resistance'])
+  else:
+    updated_html_template = updated_html_template.replace('{pkmn_resistance}', 'None')
+
+  effective_defensive_items_template = ''
+  for index, effective_defense_item in enumerate(pkmn_one_shots[0]['Pkmn Eligible Defensive Items']):
+    if index % 2 == 0:
+      effective_defensive_items_template = effective_defensive_items_template + '<tr><td class="table_row_color2">' + effective_defense_item + '</td></tr>'
+    else:
+      effective_defensive_items_template = effective_defensive_items_template + '<tr><td class="table_row_color1">' + effective_defense_item + '</td></tr>'
+  updated_html_template = updated_html_template.replace('{effective_defensive_items}', effective_defensive_items_template)
+  updated_html_template = updated_html_template.replace('<td class="table_row_color2">Effective Defensive Items', '<td class="table_row_color2" rowspan=' + str(len(pkmn_one_shots[0]['Pkmn Eligible Defensive Items']) + 1) + '>Effective Defense Items (Total: ' + str(len(pkmn_one_shots[0]['Pkmn Eligible Defensive Items'])) + ')')
+
+  first_table_index = updated_html_template.find('</table>')
+  second_table_index = updated_html_template.find('</table>', first_table_index + 1)
+  updated_html_template = updated_html_template[:second_table_index] + table_row_template + updated_html_template[second_table_index:]
 
   file = open('../website/tf/' + str(poke_no + 1) + '.html', 'w')
   file.write(updated_html_template)
   
-  file = open('template/template.js', 'r')
-  js_template = file.read()
-  updated_js_template = js_template.replace('{data}', updated_json_content)
+  # file = open('template/template.js', 'r')
+  # js_template = file.read()
+  # updated_js_template = js_template.replace('{data}', updated_json_content)
 
-  file = open('../website/tf/' + str(poke_no + 1) + '.js', 'w')
-  file.write(updated_js_template)
+  # file = open('../website/tf/' + str(poke_no + 1) + '.js', 'w')
+  # file.write(updated_js_template)
 
   file = open('../website/tf/index.html', 'r')
   index_template = file.read()
@@ -374,7 +600,6 @@ column_names = df.columns
 # for index, row in df.iterrows():
 #   # Access elements by column names
 #   print(row['Name'], row['Name w/ Set'], "...")
-
 
 if test == False:
   for index, row in df.iterrows():

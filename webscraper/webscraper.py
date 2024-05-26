@@ -3,6 +3,7 @@ import bs4
 from bs4 import BeautifulSoup
 import re
 import csv
+import pandas as pd
 
 test = False
 
@@ -64,9 +65,13 @@ def scrape_pokemon_info(url):
   """Scrapes Pokemon information from a Bulbapedia page."""
   response = requests.get(url)
   html_soup = BeautifulSoup(response.content, 'html.parser')
-
+  # print(url)
   # Extract basic information
   pkmn_name_with_set = html_soup.select('h1#firstHeading span.mw-page-title-main')[0].get_text()
+  if '♂' in pkmn_name_with_set:
+    pkmn_name_with_set = pkmn_name_with_set.replace('♂', '-M')
+  elif '♀'in pkmn_name_with_set:
+    pkmn_name_with_set = pkmn_name_with_set.replace('♀', '-F')
 
   pkmn_info_table_rows = html_soup.select('div#mw-content-text table tr:nth-child(3) > td > table > tbody > tr') 
   pkmn_evo_stage = extract_pkmn_evo_stage(pkmn_info_table_rows[0].find('td').text.strip())
@@ -78,7 +83,17 @@ def scrape_pokemon_info(url):
     end_index = start_index + len('Evolves from ')
     pkmn_prev_evo = dirty_prev_evo_stage[end_index:].strip()
   
+    if '♂' in pkmn_prev_evo:
+      pkmn_prev_evo = pkmn_prev_evo.replace('♂', '-M')
+    elif '♀'in pkmn_prev_evo:
+      pkmn_prev_evo = pkmn_prev_evo.replace('♀', '-F')
+  
   pkmn_name = pkmn_info_table_rows[1].find('td').text.strip().replace("\xa0", "-")
+  if '♂' in pkmn_name:
+    pkmn_name = pkmn_name.replace('♂', '-M')
+  elif '♀'in pkmn_name:
+    pkmn_name = pkmn_name.replace('♀', '-F')
+
   pkmn_type = pkmn_info_table_rows[2].find('td').text.strip()
   pkmn_hp = pkmn_info_table_rows[3].find('td').text.strip()
 
@@ -88,7 +103,13 @@ def scrape_pokemon_info(url):
   future_pkmn_list = ['Iron Treads', 'Iron Bundle', 'Iron Hands', 'Iron Jugulis', 'Iron Moth', 'Iron Thorns', 'Iron Valiant', 'Miraidon', 'Iron Leaves', 'Iron Boulder', 'Iron Crown']
   if '-ex' in pkmn_name:
     pkmn_card_type.append('ex')
-  
+  if '-VSTAR' in pkmn_name:
+    pkmn_card_type.append('VSTAR')
+  elif '-VMAX' in pkmn_name:
+    pkmn_card_type.append('VMAX')
+  elif '-V' in pkmn_name:
+    pkmn_card_type.append('V')
+   
   for ancient_pkmn in ancient_pkmn_list:
     if ancient_pkmn in pkmn_name:
       pkmn_card_type.append('Ancient')
@@ -123,10 +144,6 @@ def scrape_pokemon_info(url):
   pkmn_ability = None
   skip_row_one = False
   skip_row_two = False
-  # for idx in range(0, len(moves_info_table_rows)):
-  #   print(idx)
-  #   print(moves_info_table_rows[idx])
-  #   print('\n')
   """
   Breakdown of move parsing rules
   Each move has 2 rows, one for non description and one for description. If there is no description, the row is hidden.
@@ -138,7 +155,6 @@ def scrape_pokemon_info(url):
   if moves_info_table_rows:
     idx = 0
     while idx < len(moves_info_table_rows):
-      # print(idx)
       if moves_info_table_rows[idx].find('img', alt='Future paradox') != None: # for some reason this also seems to work on Ancient
         idx = idx + 1
         skip_row_one = True
@@ -153,6 +169,7 @@ def scrape_pokemon_info(url):
         pkmn_ability_name = extract_english_text(move_info_wo_desc.find('td', style='text-align: center; color:#7E0A0E;').get_text(), False).replace('\n', '')
         pkmn_ability_desc = extract_english_text(moves_info_table_rows[idx + 1].get_text(), True).replace('\n', '')
         pkmn_ability = { 'Ability Name': pkmn_ability_name, 'Ability Desc': pkmn_ability_desc }
+        print(pkmn_ability)
         idx = idx + 2
         skip_row_two = True
         continue
@@ -180,12 +197,10 @@ def scrape_pokemon_info(url):
             energy_cur_count = move_cost[energy_type]
 
         move_cost[energy_type] = energy_cur_count + 1
-      # print(move_cost)
       cur_pkmn_move['Move Cost'] = move_cost
       dirty_move_name = []
       dirty_move_name_test = move_info_wo_desc.find('th', class_='roundyleft') 
 
-      # print(move_info_wo_desc)
       if dirty_move_name_test is not None:  # Check for existence of the target tag
         dirty_move_name = move_info_wo_desc.find('th', class_='roundyleft').find_next_sibling().get_text()
       else:
@@ -197,6 +212,7 @@ def scrape_pokemon_info(url):
         dirty_move_damage = move_info_wo_desc.find('th', class_='roundyright').get_text().replace(' \n', '')
         multiplier_index = dirty_move_damage.find('×')
         add_index = dirty_move_damage.find('+')
+        sub_index = dirty_move_damage.find('−')
 
         if multiplier_index >= 0:
           cur_pkmn_move['Move Damage'] = dirty_move_damage[:multiplier_index]
@@ -208,21 +224,21 @@ def scrape_pokemon_info(url):
           cur_pkmn_move['Move Damage Modifier'] = ('add', dirty_move_damage[:add_index])
           cur_pkmn_move['Move Damage Maximum Procs'] = 'TOFILL'
           cur_pkmn_move['Move Damage Modifier Template'] = 'TOFILL'
+        elif sub_index >= 0:
+          cur_pkmn_move['Move Damage'] = dirty_move_damage[:sub_index]
+          cur_pkmn_move['Move Damage Modifier'] = ('sub', dirty_move_damage[:sub_index])
+          cur_pkmn_move['Move Damage Maximum Procs'] = 'TOFILL'
+          cur_pkmn_move['Move Damage Modifier Template'] = 'TOFILL'
         else:
           cur_pkmn_move['Move Damage'] = dirty_move_damage.replace('\n', '')
           cur_pkmn_move['Move Damage Modifier'] = None
       else:
         cur_pkmn_move['Move Damage'] = None
         cur_pkmn_move['Move Damage Modifier'] = None
-      # print(idx)
-      # print(moves_info_table_rows[idx+5])
-      # print(type(moves_info_table_rows[idx+5]))
       if idx + 1 < len(moves_info_table_rows) and isinstance(moves_info_table_rows[idx + 1], bs4.element.Tag):
-        # print(moves_info_table_rows[idx+5])
         cur_pkmn_move['Move Effect'] = moves_info_table_rows[idx + 1].get_text().replace('\n', '')
       else:
         cur_pkmn_move['Move Effect'] = None
-      # print(cur_pkmn_move)
       pkmn_moves.append(cur_pkmn_move)
       idx = idx + 2
 
@@ -249,57 +265,146 @@ def scrape_pokemon_info(url):
 # fill in missing/incorrect information
 # convert to database and make sample query
 
-expansion_url = "https://bulbapedia.bulbagarden.net/wiki/Temporal_Forces_(TCG)"
-response = requests.get(expansion_url)
-html_soup = BeautifulSoup(response.content, 'html.parser')
-card_list_rows = html_soup.select('#Card_lists')[0].parent.find_next_sibling().find('table', class_='roundy').find('tbody').find_all('tr', recursive=False)[1].find('td').find('table').find('tbody').find_all('tr', recursive=False)
+expansion_url_arr = [
+  "https://bulbapedia.bulbagarden.net/wiki/Brilliant_Stars_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Astral_Radiance_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_GO_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Lost_Origin_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Silver_Tempest_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Crown_Zenith_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Scarlet_%26_Violet_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Paldea_Evolved_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Obsidian_Flames_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/151_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Paradox_Rift_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Paldean_Fates_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Temporal_Forces_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Twilight_Masquerade_(TCG)",]
+  # "https://bulbapedia.bulbagarden.net/wiki/SWSH_Black_Star_Promos_(TCG)",
+  # "https://bulbapedia.bulbagarden.net/wiki/SVP_Black_Star_Promos_(TCG)",
+  # "https://bulbapedia.bulbagarden.net/wiki/McDonald%27s_Collection_2023_(TCG)"]
 
-# skip the first row
-all_pkmn_cards = []
-if test != True: 
-  for i in range(1, len(card_list_rows) - 1):
-  # for i in range(1, 5):
-    # print(card_list_rows[i].find('th').get_text())
-    if card_list_rows[i].find('th', style='background:#FFFFFF;'):
-      pkmn_card_type = card_list_rows[i].find('th').find('img').attrs['alt']
+set_lists_id = [
+  "Set_list",
+  "Set_lists",
+  "Set_lists",
+  "Set_list",
+  "Set_list",
+  "Set_list",
+  "Set_lists",
+  "Card_lists",
+  "Card_lists",
+  "Set_list",
+  "Card_lists",
+  "Set_list",
+  "Card_lists",
+  "Card_lists",]
+  # "Card_list",
+  # "Card_list",
+  # "Set list"]]
+
+expansion_csv_name = [
+  "bs.csv",
+  "ar.csv",
+  "pg.csv",
+  "lo.csv",
+  "st.csv",
+  "cz.csv",
+  "sv.csv",
+  "pe.csv",
+  "of.csv",
+  "151.csv",
+  "pr.csv",
+  "pf.csv",
+  "tf.csv",
+  "tm.csv"
+]
+
+if test != True:   
+  for index, expansion_url in enumerate(expansion_url_arr):
+    print(expansion_url)
+    response = requests.get(expansion_url)
+    html_soup = BeautifulSoup(response.content, 'html.parser')
+    card_list_rows = html_soup.select(f'#{set_lists_id[index]}')[0].parent.find_next_sibling().find('table', class_='roundy').find('tbody').find_all('tr', recursive=False)[1].find('td').find('table').find('tbody').find_all('tr', recursive=False)
+    # card_list_rows = html_soup.select('#Set_lists')[0].parent.find_next_sibling().find('table', class_='roundy').find('tbody').find_all('tr', recursive=False)[1].find('td').find('table').find('tbody').find_all('tr', recursive=False)
+    # skip the first row
+    all_pkmn_cards = []
+    if test != True: 
+      for i in range(1, len(card_list_rows) - 1):
+        if card_list_rows[i].find('th', style='background:#FFFFFF;'):
+          pkmn_card_type = card_list_rows[i].find('th').find('img').attrs['alt']
+        else:
+          break
+
+        card_list_row_info = card_list_rows[i].find_all('td', recursive=False)
+        pkmn_card_no = card_list_row_info[0].get_text().replace('\n', '')
+        pkmn_card_mark = card_list_row_info[1].find('a').attrs['title']
+        pkmn_card_link = card_list_row_info[2].find('a').attrs['href']
+        pkmn_card_rarity = card_list_row_info[3].find('a').attrs['title']
+
+        pkmn_data = scrape_pokemon_info('https://bulbapedia.bulbagarden.net' + str(pkmn_card_link))
+        pkmn_data['Card No'] = pkmn_card_no
+        pkmn_data['Card Mark'] = pkmn_card_mark
+        pkmn_data['Card Rarity'] = pkmn_card_rarity
+
+        all_pkmn_cards.append(pkmn_data)
+
+    # Get all keys from the first dictionary (assuming all dictionaries have the same keys)
+    df = pd.read_csv(f'../data/pkmn_data.csv')
+    keys = list(all_pkmn_cards[0].keys())
+
+    if index == 0:
+      # Write to csv file with all pkmn info
+      with open('../data/pkmn_data.csv', 'w', newline='') as csvfile:
+        # Create a CSV writer object
+        writer = csv.DictWriter(csvfile, fieldnames=keys)
+        # Write the header row
+        writer.writeheader()
+        # Write each dictionary as a row in the CSV
+        for item in all_pkmn_cards:
+          writer.writerow(item)
+      print("CSV file created successfully: data/pkmn_data.csv")
     else:
-      break
+      # Write to csv file with all pkmn info
+      with open('../data/pkmn_data.csv', 'a', newline='') as csvfile:
+        # Create a CSV writer object
+        writer = csv.DictWriter(csvfile, fieldnames=keys)
 
-    card_list_row_info = card_list_rows[i].find_all('td', recursive=False)
-    pkmn_card_no = card_list_row_info[0].get_text().replace('\n', '')
-    pkmn_card_mark = card_list_row_info[1].find('a').attrs['title']
-    pkmn_card_link = card_list_row_info[2].find('a').attrs['href']
-    pkmn_card_rarity = card_list_row_info[3].find('a').attrs['title']
+        # Write each dictionary as a row in the CSV
+        for item in all_pkmn_cards:
+          if item['Name w/ Set'] not in df['Name w/ Set'].values:
+            writer.writerow(item)
+          else:
+            print(f"Duplicate found for {item['Name w/ Set']}. Row not inserted.")
+      print("CSV file updated successfully: data/pkmn_data.csv")
 
-    pkmn_data = scrape_pokemon_info('https://bulbapedia.bulbagarden.net' + str(pkmn_card_link))
-    pkmn_data['Card No'] = pkmn_card_no
-    pkmn_data['Card Mark'] = pkmn_card_mark
-    pkmn_data['Card Rarity'] = pkmn_card_rarity
-
-    print(pkmn_data)
-    all_pkmn_cards.append(pkmn_data)
+    # Write to csv file with only this expansion's pkmn info (no duplicate check)
+    with open(f'../data/{expansion_csv_name[index]}', 'w', newline='') as csvfile:
+      # Create a CSV writer object
+      writer = csv.DictWriter(csvfile, fieldnames=keys)
+      # Write the header row
+      writer.writeheader()
+      # Write each dictionary as a row in the CSV
+      for item in all_pkmn_cards:
+        writer.writerow(item)
+    print(f"CSV file created successfully: data/{expansion_csv_name[index]}")
 else:
-  pkmn_data = scrape_pokemon_info('https://bulbapedia.bulbagarden.net/wiki/Scovillain_ex_(Temporal_Forces_22)')
+  all_pkmn_cards = []
+  pkmn_data = scrape_pokemon_info('https://bulbapedia.bulbagarden.net/wiki/Registeel_(Astral_Radiance_108)')
   print(pkmn_data)
   all_pkmn_cards.append(pkmn_data)
 
-# Get all keys from the first dictionary (assuming all dictionaries have the same keys)
-keys = list(all_pkmn_cards[0].keys())
+  # Get all keys from the first dictionary (assuming all dictionaries have the same keys)
+  keys = list(all_pkmn_cards[0].keys())
 
-# Open a CSV file for writing
-with open('pkmn_data.csv', 'w', newline='') as csvfile:
-  # Create a CSV writer object
-  writer = csv.DictWriter(csvfile, fieldnames=keys)
-  # Write the header row
-  writer.writeheader()
-  # Write each dictionary as a row in the CSV
-  for item in all_pkmn_cards:
-    writer.writerow(item)
+  # Open a CSV file for writing
+  with open('../data/pkmn_data_temp.csv', 'a', newline='') as csvfile:
+    # Create a CSV writer object
+    writer = csv.DictWriter(csvfile, fieldnames=keys)
+    # Write the header row
+    writer.writeheader()
+    # Write each dictionary as a row in the CSV
+    for item in all_pkmn_cards:
+      writer.writerow(item)
 
-print("CSV file created successfully: pkmn_data.csv")
-
-# print(all_pkmn_cards)
-
-# print(len(card_list))
-# url = "https://bulbapedia.bulbagarden.net/wiki/Scyther_(Temporal_Forces_1)"
-# url = "https://bulbapedia.bulbagarden.net/wiki/Torterra_ex_(Temporal_Forces_12)"
+  print("CSV file created successfully: pkmn_data.csv")

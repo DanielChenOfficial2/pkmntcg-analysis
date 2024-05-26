@@ -6,15 +6,35 @@
   <title>{pkmn_name_with_set} OHKOs</title>
   <link rel="stylesheet" href="../common.css">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script type="text/javascript" src="{num}.js"></script>
 </head>
 <body>
+  <nav class="bg-blue-900">
+    <div class="container mx-auto">
+        <ul class="flex flex-wrap justify-center">
+          <li><a href="../index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">All Expansions</a></li>
+          <li><a href="../bs/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Brilliant Stars</a></li>
+          <li><a href="../ar/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Astral Radiance</a></li>
+          <li><a href="../pg/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Pokemon Go</a></li>
+          <li><a href="../lo/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Lost Origin</a></li>
+          <li><a href="../st/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Silver Tempest</a></li>
+          <li><a href="../cz/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Crown Zenith</a></li>
+          <li><a href="../sv/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Scarlet and Violet</a></li>
+          <li><a href="../pe/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Paldea Evolved</a></li>
+          <li><a href="../of/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Obsidian Flames</a></li>
+          <li><a href="../151/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">151</a></li>
+          <li><a href="../pr/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Paradox Rift</a></li>
+          <li><a href="../pf/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Paldean Fates</a></li>
+          <li><a href="../tf/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Temporal Forces</a></li>
+          <li><a href="../tm/index.html" class="text-white hover:bg-blue-500 px-4 py-2 rounded flex items-center justify-center text-center">Twilight Masquerade</a></li>
+        </ul>
+    </div>
+  </nav>
   <h1 class="text-3xl font-bold text-center mb-4">{pkmn_name_with_set} OHKOed By</h1>
   <main>
     <div class="rowFlex">
       <picture>
-        <source srcset="TEF_{img_num}_R_EN_SM.png" media="(orientation: portrait)" />
-        <img src="TEF_{img_num}_R_EN_SM.png">
+        <source srcset="{img_prefix}_{img_num}_R_EN_SM.png" media="(orientation: portrait)" alt="Card image of {pkmn_name_with_set}" />
+        <img src="{img_prefix}_{img_num}_R_EN_SM.png" alt="Card image of {pkmn_name_with_set}">
       </picture>
       <table>
         <tr>
@@ -30,7 +50,7 @@
           <td class="table_row_color1">{pkmn_resistance}</td>
         </tr>
         <tr>
-          <td class="table_row_color2">Effective Defensive Items</td>
+          <td class="table_row_color2">Effective Defensive Poketools</td>
         </tr>
         {effective_defensive_items}
       </table>

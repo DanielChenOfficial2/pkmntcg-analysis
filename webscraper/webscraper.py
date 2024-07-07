@@ -118,6 +118,7 @@ def scrape_pokemon_info(url):
   for future_pkmn in future_pkmn_list:
     if future_pkmn in pkmn_name:
       pkmn_card_type.append('Future')
+      break
 
   # Extract weakness, resistance, retreat cost
   # Laughably bad website design so there is a one row table in the overall table w/ pokemon info
@@ -206,7 +207,10 @@ def scrape_pokemon_info(url):
       else:
         idx = idx + 1
         continue
-      cur_pkmn_move['Move Name'] = extract_english_text(dirty_move_name, False).replace(' \n', '')
+      cur_pkmn_move['Move Name'] = extract_english_text(dirty_move_name, True).replace(' \n', '')
+      print(f'old move name: {dirty_move_name}')
+      print(f'new move name: {cur_pkmn_move["Move Name"]}')
+      print('\n')
 
       if move_info_wo_desc.find('th', class_='roundyright').get_text() != '\n':
         dirty_move_damage = move_info_wo_desc.find('th', class_='roundyright').get_text().replace(' \n', '')

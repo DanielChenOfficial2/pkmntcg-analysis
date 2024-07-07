@@ -1,0 +1,4 @@
+Supporter Name,Modifier,Condition,Card Mark
+No Supporter,,,
+Kieran,[{'dmg_dealt_add': 30}],"{'Enemy Pkmn Type': ['ex', 'V']",Kieran
+Grant,[{'dmg_dealt_add': 30}],{'Pkmn Type': 'Fighting'},F

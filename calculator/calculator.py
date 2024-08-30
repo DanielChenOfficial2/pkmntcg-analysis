@@ -278,10 +278,12 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
       if not isinstance(defensive_supporter['Condition'], float): # indicates nan, meaning no condition\)
         defensive_supporter_isEligible = can_use_card_test(pkmn_data, enemy_pkmn, ast.literal_eval(defensive_supporter['Condition']))
         if defensive_supporter_isEligible[0] == True:
-          cur_pkmn_one_shots['Pkmn Eligible Defensive Supporters'].append(defensive_supporter['Supporter Name'])
+          if defensive_supporter['Supporter Name'] not in cur_pkmn_one_shots['Pkmn Eligible Defensive Supporters']:
+            cur_pkmn_one_shots['Pkmn Eligible Defensive Supporters'].append(defensive_supporter['Supporter Name'])
           defensive_supporter_eligible_list.append(defensive_supporter)
       else:
-        cur_pkmn_one_shots['Pkmn Eligible Defensive Supporters'].append(defensive_supporter['Supporter Name'])
+        if defensive_supporter['Supporter Name'] not in cur_pkmn_one_shots['Pkmn Eligible Defensive Supporters']:
+            cur_pkmn_one_shots['Pkmn Eligible Defensive Supporters'].append(defensive_supporter['Supporter Name'])
         defensive_supporter_eligible_list.append(defensive_supporter)
     # If enemy pokemon has same type as current pokemon weakness, damage x2
     # If enemy pokemon has same type as current pokemon resistsance, damage - 30
@@ -813,6 +815,15 @@ def file_processing(pkmn_one_shots, expansion_no, poke_no):
         effective_defensive_items_template = effective_defensive_items_template + '<tr><td class="table_row_color1">' + effective_defense_item + '</td></tr>'
     updated_html_template = updated_html_template.replace('{effective_defensive_items}', effective_defensive_items_template)
     updated_html_template = updated_html_template.replace('<td class="table_row_color2">Effective Defensive Poketools', '<td class="table_row_color2" rowspan=' + str(len(pkmn_one_shots[0]['Pkmn Eligible Defensive Items']) + 1) + '>Effective Defense Poketools (Total: ' + str(len(pkmn_one_shots[0]['Pkmn Eligible Defensive Items'])) + ')')
+
+    effective_defensive_supporters_template = ''
+    for index, effective_defense_supporter in enumerate(pkmn_one_shots[0]['Pkmn Eligible Defensive Supporters']):
+      if index % 2 == 0:
+        effective_defensive_supporters_template = effective_defensive_supporters_template + '<tr><td class="table_row_color2">' + effective_defense_supporter + '</td></tr>'
+      else:
+        effective_defensive_supporters_template = effective_defensive_supporters_template + '<tr><td class="table_row_color1">' + effective_defense_supporter + '</td></tr>'
+    updated_html_template = updated_html_template.replace('{effective_defensive_supporters}', effective_defensive_supporters_template)
+    updated_html_template = updated_html_template.replace('<td class="table_row_color2">Effective Defensive Supporters', '<td class="table_row_color2" rowspan=' + str(len(pkmn_one_shots[0]['Pkmn Eligible Defensive Supporters']) + 1) + '>Effective Defense Supporters (Total: ' + str(len(pkmn_one_shots[0]['Pkmn Eligible Defensive Supporters'])) + ')')
 
     first_table_index = updated_html_template.find('</table>')
     second_table_index = updated_html_template.find('</table>', first_table_index + 1)

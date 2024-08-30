@@ -6,4 +6,4 @@ Choice Belt,"Choice Belt (Brilliant Stars 135, Astral Radiance 211, Paldea Evolv
 Defiance Band,Defiance Band (Scarlet & Violet 169),[{'dmg_dealt_add': 30}],{'Prize Cards': 'more'},G
 Vitality Band,"Vitality Band (Sword & Shield 185, Scarlet & Violet 197)",[{'dmg_dealt_add': 10}],,G
 Supereffective Glasses,Supereffective Glasses (Astral Radiance 152),[{'weakness_multiplier_dealt': 3}],,F
-Cleansing Gloves,Cleansing Gloves (Brilliant Stars 136),[{'dmg_dealt_add': 30}],{'Enemy Pkmn Type': 'Psychic'},F
+Cleansing Gloves,Cleansing Gloves (Brilliant Stars 136),[{'dmg_dealt_add': 30}],{'Enemy Pkmn Type': ['Psychic']},F

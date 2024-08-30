@@ -1,0 +1,3 @@
+Supporter Name,Modifier,Condition,Card Mark
+No Supporter,,,
+Fantina,[{'dmg_taken_sub': 120}],"{'Lost Zone Min Cards': 10, 'Enemy Pkmn Card Type': ['V', 'VSTAR', 'VMAX']}",F

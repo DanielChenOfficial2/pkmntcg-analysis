@@ -82,24 +82,30 @@ expansion_img_prefix_arr = [
   "TWM"
 ]
 
-# Verify conditions of poketool or supporter to see if it can be used in the current conditions of pkmn and enemy_pkmn
-def can_use_card(pkmn_data, enemy_pkmn, card_condition):
+def can_use_card_test(pkmn_data, enemy_pkmn, card_condition):
   is_condition_fulfilled = True
   condition_string = ''
+  # print(card_condition.items())
   for key, value in card_condition.items():
     if key == 'Pkmn Card Type':
-      if value in ast.literal_eval(pkmn_data['Card Type']):
-        continue
-      is_condition_fulfilled = False
+      isEligible = False
+      for pkmn_card_type in ast.literal_eval(pkmn_data['Card Type']):
+        if pkmn_card_type in value:
+          isEligible = True
+          break
+      is_condition_fulfilled = isEligible
       break
     elif key == 'Enemy Pkmn Card Type':
       if not isinstance(enemy_pkmn, pd.Series):
         is_condition_fulfilled = False
         break
-  
-      if value in ast.literal_eval(enemy_pkmn['Card Type']):
-        continue
-      is_condition_fulfilled = False
+      isEligible = False
+      for enemy_pkmn_card_type in ast.literal_eval(enemy_pkmn['Card Type']):
+        if enemy_pkmn_card_type in value: 
+          isEligible = True
+          break
+      # print("Detected Card Name:", enemy_pkmn['Name'], "Detected Card Type:", value, "isEligible", isEligible) 
+      is_condition_fulfilled = isEligible
       break
     elif key == 'Prize Cards':
       if value == 'more':
@@ -132,6 +138,73 @@ def can_use_card(pkmn_data, enemy_pkmn, card_condition):
         break
 
       if value != enemy_pkmn['Type']:
+        is_condition_fulfilled = False
+        break
+      continue
+    elif key == 'Lost Zone Min Cards':
+      is_condition_fulfilled = True
+      condition_string = condition_string + f' and you have at least {value} cards in your Lost Zone'
+    else:
+      raise ValueError('key not found')
+  
+  return (is_condition_fulfilled, condition_string)
+
+# Verify conditions of poketool or supporter to see if it can be used in the current conditions of pkmn and enemy_pkmn
+def can_use_card(pkmn_data, enemy_pkmn, card_condition):
+  is_condition_fulfilled = True
+  condition_string = ''
+  for key, value in card_condition.items():
+    if key == 'Pkmn Card Type':
+      isEligible = False
+      for pkmn_card_type in ast.literal_eval(pkmn_data['Card Type']):
+        if pkmn_card_type in value:
+          isEligible = True
+          break
+      is_condition_fulfilled = isEligible
+      break
+    elif key == 'Enemy Pkmn Card Type':
+      if not isinstance(enemy_pkmn, pd.Series):
+        is_condition_fulfilled = False
+        break
+      isEligible = False
+      for enemy_pkmn_card_type in ast.literal_eval(enemy_pkmn['Card Type']):
+        if enemy_pkmn_card_type in value: 
+          isEligible = True
+          break
+      # print("Detected Card Name:", enemy_pkmn['Name'], "Detected Card Type:", value, "isEligible", isEligible) 
+      is_condition_fulfilled = isEligible
+      break
+    elif key == 'Prize Cards':
+      if value == 'more':
+        condition_string = condition_string + " and this card's player have more prize cards than the opposing card's player"
+      continue  
+    elif key == 'Rule Box':
+      rulebox_eligible = ['ex', 'V', 'VMAX', 'VSTAR']
+      for pkmn_card_type in ast.literal_eval(pkmn_data['Card Type']):
+        if pkmn_card_type in rulebox_eligible:
+          if value == 'None':
+            is_condition_fulfilled = False
+            break
+      if is_condition_fulfilled: 
+        continue
+      else:
+        break
+    elif key == 'Evolution':
+      if value != pkmn_data['Evolution Stage']:
+        is_condition_fulfilled = False
+        break
+      continue
+    elif key == 'Type':
+      if value != pkmn_data['Type']:
+        is_condition_fulfilled = False
+        break
+      continue
+    elif key == 'Enemy Pkmn Type':
+      if not isinstance(enemy_pkmn, pd.Series):
+        is_condition_fulfilled = False
+        break
+
+      if enemy_pkmn['Type'] not in value:
         is_condition_fulfilled = False
         break
       continue
@@ -198,23 +271,18 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
     else:
       cur_pkmn_one_shots['Pkmn Eligible Defensive Items'].append(defensive_poketool['Item Name'])
       defensive_poketool_eligible_list.append(defensive_poketool)
-  
-  defensive_supporter_eligible_list = []
-  for i in range(len(defensive_supporters_df)):
-    defensive_supporter = defensive_supporters_df.iloc[i]
-    # print(defensive_supporter)
-    # print(defensive_supporter['Condition'])
-    if not isinstance(defensive_supporter['Condition'], float): # indicates nan, meaning no condition
-      defensive_supporter_isEligible = can_use_card(pkmn_data, None, ast.literal_eval(defensive_supporter['Condition']))
-      if defensive_supporter_isEligible[0] == True:
+  for index, enemy_pkmn in all_pkmn_data.iterrows():
+    defensive_supporter_eligible_list = []
+    for i in range(len(defensive_supporters_df)):
+      defensive_supporter = defensive_supporters_df.iloc[i]
+      if not isinstance(defensive_supporter['Condition'], float): # indicates nan, meaning no condition\)
+        defensive_supporter_isEligible = can_use_card_test(pkmn_data, enemy_pkmn, ast.literal_eval(defensive_supporter['Condition']))
+        if defensive_supporter_isEligible[0] == True:
+          cur_pkmn_one_shots['Pkmn Eligible Defensive Supporters'].append(defensive_supporter['Supporter Name'])
+          defensive_supporter_eligible_list.append(defensive_supporter)
+      else:
         cur_pkmn_one_shots['Pkmn Eligible Defensive Supporters'].append(defensive_supporter['Supporter Name'])
         defensive_supporter_eligible_list.append(defensive_supporter)
-    else:
-      cur_pkmn_one_shots['Pkmn Eligible Defensive Supporters'].append(defensive_supporter['Supporter Name'])
-      defensive_supporter_eligible_list.append(defensive_supporter)
-
-  for index, enemy_pkmn in all_pkmn_data.iterrows():
-    
     # If enemy pokemon has same type as current pokemon weakness, damage x2
     # If enemy pokemon has same type as current pokemon resistsance, damage - 30
     # If damage dealt by any enemy pokemon move >= current pokemon HP, KO
@@ -246,9 +314,9 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
     for j in range(len(enemy_pkmn_moves)):
       cur_one_shot_by = {}
       enemy_move = enemy_pkmn_moves[j]
-      effective_offensive_poketool_oneshot_arr = []
-
+      effective_supporter_oneshot_arr = []
       for p, defensive_supporter in enumerate(defensive_supporter_eligible_list):
+        effective_offensive_poketool_oneshot_arr = []
         base_dmg_taken_sub = 0
         if defensive_supporter['Supporter Name'] == 'Fantina':
           base_dmg_taken_sub = base_dmg_taken_sub + 120
@@ -343,7 +411,7 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
                 #  11. "move does base_damage + damage_dealt_add - resistance_sub"
                 #  12. "move does base_damage + damage_dealt_add - resistance_sub - dmg_taken_sub"
                 base_damage_template = enemy_move['Move Name'] + ' does '
-                if dmg_taken_sub == 0 and not is_weakness and not is_resistance: # case 1
+                if dmg_taken_sub == 0 and not is_weakness and not is_resistance and dmg_dealt_add != 0: # case 1
                   cur_one_shot_by['Oneshot String 3'] = base_damage_template + str(damage) + ' damage'
                 else: # cases 2-12
                   if dmg_dealt_add == 0: # cases 2-6
@@ -369,6 +437,7 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
                 cur_one_shot_by['Enemy Pokemon Type'] = enemy_pkmn['Type']
                 cur_one_shot_by['Enemy Pokemon Move Name'] = enemy_move['Move Name']
                 cur_one_shot_by['Enemy Pokemon Move Damage'] = enemy_move['Move Damage']
+                cur_one_shot_by['Enemy Supporter'] = 'No Supporter'
                 
                 cur_one_shot_by['Poketool'] = defensive_poketool['Item Name']
                 cur_one_shot_by['Enemy Pokemon Poketool'] = offensive_poketool['Item Name']
@@ -378,6 +447,7 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
                 effective_against_defensive_poketool_arr.append(new_dict)
                 effective_against_defensive_poketool_counter = effective_against_defensive_poketool_counter + 1
           # if the current offensive poketool is effective against all defensive tools (only applies to one move)
+          # print("defensive poketool eligible list length", len(defensive_poketool_eligible_list))
           if effective_against_defensive_poketool_counter == len(defensive_poketool_eligible_list):
             merged_one_shot = effective_against_defensive_poketool_arr[0]
             merged_one_shot['Poketool'] = 'Any/No Poketool'
@@ -385,67 +455,89 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
             merged_one_shot['Oneshot String 3'] = ''
             effective_offensive_poketool_oneshot_arr.append(merged_one_shot)
           else:
-            for index, potential_one_shot in enumerate(effective_against_defensive_poketool_arr):
-              # print(potential_one_shot)
+            for _i, potential_one_shot in enumerate(effective_against_defensive_poketool_arr):
               effective_offensive_poketool_oneshot_arr.append(potential_one_shot)
-      # if the length of effective offensive poketools is the length of the offensive poketool eligible list
-      # - get the first poketool
-      # - add all defensive poketools it oneshots to an array
-      # if all remaining poketools oneshot exactly the same defensive poketools:
-      # - change all offensive poketool names for the first poketool's oneshots to "Any Poketool"
-      # - only add the first poketool's oneshots
+        # if the length of effective offensive poketools is the length of the offensive poketool eligible list
+        # - get the first poketool
+        # - add all defensive poketools it oneshots to an array
+        # if all remaining poketools oneshot exactly the same defensive poketools:
+        # - change all offensive poketool names for the first poketool's oneshots to "Any Poketool"
+        # - only add the first poketool's oneshots
+        # else:
+        # - add all oneshots normally
+        if len(effective_offensive_poketool_oneshot_arr) > 0:
+          first_effective_offensive_poketool_name = effective_offensive_poketool_oneshot_arr[0]['Enemy Pokemon Poketool']
+          temp_effective_against_defensive_poketool_arr = []
+          temp_effective_against_defensive_poketool_arr_validator_counter = 0
+          for temp_one_shot in effective_offensive_poketool_oneshot_arr:
+            if temp_one_shot['Enemy Pokemon Poketool'] == first_effective_offensive_poketool_name and temp_one_shot not in temp_effective_against_defensive_poketool_arr:
+              temp_effective_against_defensive_poketool_arr.append(temp_one_shot)
+            else:
+              break
+          confirmed_offensive_poketools = []
+          cur_defensive_poketool_index = 0
+          cur_offensive_poketool = first_effective_offensive_poketool_name
+          for index2, temp_one_shot in enumerate(effective_offensive_poketool_oneshot_arr):
+            if temp_one_shot['Enemy Pokemon Poketool'] != cur_offensive_poketool:
+              if cur_defensive_poketool_index == len(temp_effective_against_defensive_poketool_arr):
+                confirmed_offensive_poketools.append(cur_offensive_poketool)
+              cur_offensive_poketool = temp_one_shot['Enemy Pokemon Poketool']
+              cur_defensive_poketool_index = 0
+            if temp_one_shot['Enemy Pokemon Poketool'] == cur_offensive_poketool and cur_defensive_poketool_index < len(temp_effective_against_defensive_poketool_arr):
+              if temp_one_shot['Poketool'] == temp_effective_against_defensive_poketool_arr[cur_defensive_poketool_index]['Poketool']:
+                cur_defensive_poketool_index = cur_defensive_poketool_index + 1
+              else: 
+                cur_defensive_poketool_index = 99
+            elif cur_defensive_poketool_index >= len(temp_effective_against_defensive_poketool_arr):
+              cur_defensive_poketool_index = 99
+            if index2 == len(effective_offensive_poketool_oneshot_arr) - 1:
+              if cur_defensive_poketool_index == len(temp_effective_against_defensive_poketool_arr):
+                confirmed_offensive_poketools.append(cur_offensive_poketool)
+          
+          is_summarize_offensive_poketools = True
+          for i in range(len(confirmed_offensive_poketools)):
+            if confirmed_offensive_poketools[i] != offensive_poketool_eligible_list[i]['Item Name']:
+              is_summarize_offensive_poketools = False
+              break
+
+          if is_summarize_offensive_poketools:
+            for i in temp_effective_against_defensive_poketool_arr:
+              i['Enemy Pokemon Poketool'] = 'Any/No Poketool'
+              i['Oneshot String 2'] = ''
+              i['Oneshot String 3'] = ''
+              effective_supporter_oneshot_arr.append(i)
+          else:
+            for i in effective_offensive_poketool_oneshot_arr:
+              effective_supporter_oneshot_arr.append(i)
+
+      # if the length of supporters is the length of defensive supporter eligible list
+      # - get the first supporter
+      # - check if it works for all offensive/defensive poketools
+      # if all supporters work for all offensive/defensive poketools:
+      # - change all supporter names for the first move's oneshots to "Any/No Supporter"
+      # - only add the first move's oneshots
       # else:
       # - add all oneshots normally
-      if len(effective_offensive_poketool_oneshot_arr) > 0:
-        first_effective_offensive_poketool_name = effective_offensive_poketool_oneshot_arr[0]['Enemy Pokemon Poketool']
-        temp_effective_against_defensive_poketool_arr = []
-        temp_effective_against_defensive_poketool_arr_validator_counter = 0
-        for temp_one_shot in effective_offensive_poketool_oneshot_arr:
-          if temp_one_shot['Enemy Pokemon Poketool'] == first_effective_offensive_poketool_name and temp_one_shot not in temp_effective_against_defensive_poketool_arr:
-            temp_effective_against_defensive_poketool_arr.append(temp_one_shot)
-          else:
+      # print(enemy_pkmn["Name"])  
+      # print(len(effective_supporter_oneshot_arr))
+      # print(len(defensive_supporter_eligible_list))
+      is_summarize_supporter = True
+      if len(effective_supporter_oneshot_arr) == len(defensive_supporter_eligible_list) and len(defensive_supporter_eligible_list) != 1:
+        for temp_one_shot in effective_supporter_oneshot_arr:
+          if temp_one_shot['Poketool'] != 'Any/No Poketool' or temp_one_shot['Enemy Pokemon Poketool'] != 'Any/No Poketool':
+            is_summarize_supporter = False
             break
-        confirmed_offensive_poketools = []
-        cur_defensive_poketool_index = 0
-        cur_offensive_poketool = first_effective_offensive_poketool_name
-        for index, temp_one_shot in enumerate(effective_offensive_poketool_oneshot_arr):
-          if temp_one_shot['Enemy Pokemon Poketool'] != cur_offensive_poketool:
-            if cur_defensive_poketool_index == len(temp_effective_against_defensive_poketool_arr):
-              confirmed_offensive_poketools.append(cur_offensive_poketool)
-            cur_offensive_poketool = temp_one_shot['Enemy Pokemon Poketool']
-            cur_defensive_poketool_index = 0
-          if temp_one_shot['Enemy Pokemon Poketool'] == cur_offensive_poketool and cur_defensive_poketool_index < len(temp_effective_against_defensive_poketool_arr):
-            if temp_one_shot['Poketool'] == temp_effective_against_defensive_poketool_arr[cur_defensive_poketool_index]['Poketool']:
-              cur_defensive_poketool_index = cur_defensive_poketool_index + 1
-            else: 
-              cur_defensive_poketool_index = 99
-          elif cur_defensive_poketool_index >= len(temp_effective_against_defensive_poketool_arr):
-            cur_defensive_poketool_index = 99
-          if index == len(effective_offensive_poketool_oneshot_arr) - 1:
-            if cur_defensive_poketool_index == len(temp_effective_against_defensive_poketool_arr):
-              confirmed_offensive_poketools.append(cur_offensive_poketool)
-        
-        is_summarize_offensive_poketools = True
-        for i in range(len(confirmed_offensive_poketools)):
-          if confirmed_offensive_poketools[i] != offensive_poketool_eligible_list[i]['Item Name']:
-            is_summarize_offensive_poketools = False
-            break
-
-        if is_summarize_offensive_poketools:
-          for i in temp_effective_against_defensive_poketool_arr:
-            i['Enemy Pokemon Poketool'] = 'Any/No Poketool'
-            i['Oneshot String 2'] = ''
-            i['Oneshot String 3'] = ''
-            cur_pkmn_one_shots['Pkmn Gets One Shot By'].append(i)
-        else:
-          for i in effective_offensive_poketool_oneshot_arr:
-            cur_pkmn_one_shots['Pkmn Gets One Shot By'].append(i)
-
-
-        # Iterate over all other poketools. If the pokemon or move changes and we haven
-        cur_enemy_pokemon = effective_offensive_poketool_oneshot_arr[0]['Enemy Pokemon Name']
-        cur_enemy_move = effective_offensive_poketool_oneshot_arr[0]['Enemy Pokemon Move Name']
-          
+      else:
+        is_summarize_supporter = False
+      if is_summarize_supporter:
+        first_oneshot = effective_supporter_oneshot_arr[0]
+        first_oneshot["Supporter"] ='Any/No Supporter'
+        first_oneshot['Oneshot String 2'] = ''
+        first_oneshot['Oneshot String 3'] = ''
+        cur_pkmn_one_shots['Pkmn Gets One Shot By'].append(first_oneshot)
+      else:
+        for temp_one_shot in effective_supporter_oneshot_arr:
+          cur_pkmn_one_shots['Pkmn Gets One Shot By'].append(temp_one_shot)
       
   return cur_pkmn_one_shots
 
@@ -514,31 +606,39 @@ def file_processing(pkmn_one_shots, expansion_no, poke_no):
     # print(pkmn_one_shots[0]['Pkmn Gets One Shot By'])
 
     cur_enemy_pkmn_skip_until_index = 0
-    cur_enemy_poketool_skip_until_index = 0
     cur_enemy_pkmn_move_skip_until_index = 0
+    cur_enemy_poketool_skip_until_index = 0
+    cur_enemy_supporter_skip_until_index = 0
     cur_poketool_skip_until_index = 0
+    cur_supporter_skip_until_index = 0
     cur_oneshot_skip_until_index = 0
 
     is_cur_enemy_pkmn_color1 = True
-    is_cur_enemy_poketool_color1 = True
     is_cur_enemy_pkmn_move_color1 = True
+    is_cur_enemy_supporter_color1 = True
+    is_cur_enemy_poketool_color1 = True
     is_cur_poketool_color1 = True
+    is_cur_supporter_color1 = True
     is_cur_oneshot_color1 = True
 
     for index, cur_one_shot in enumerate(pkmn_one_shots[0]['Pkmn Gets One Shot By']):
       cur_table_row_template = "<tr>"
 
       cur_enemy_pkmn = cur_one_shot['Enemy Pokemon Name w/ Set']
-      cur_enemy_poketool = cur_one_shot['Enemy Pokemon Poketool']
-      cur_poketool = cur_one_shot['Poketool']
       cur_enemy_pkmn_move = cur_one_shot['Enemy Pokemon Move Name']
+      cur_enemy_poketool = cur_one_shot['Enemy Pokemon Poketool']
+      cur_enemy_supporter = cur_one_shot['Enemy Supporter']
+      cur_poketool = cur_one_shot['Poketool']
+      cur_supporter = cur_one_shot['Supporter']
       cur_oneshot2 = cur_one_shot['Oneshot String 2']
       cur_oneshot3 = cur_one_shot['Oneshot String 3']
       
       enemy_pkmn_name_template = '<td>' + cur_enemy_pkmn + '</td>'
-      enemy_poketool_template = '<td>' + cur_enemy_poketool + '</td>'
-      poketool_template = '<td>' + cur_poketool + '</td>'
       enemy_pkmn_move_template = '<td>' + cur_enemy_pkmn_move + '</td>'
+      enemy_poketool_template = '<td>' + cur_enemy_poketool + '</td>'
+      enemy_supporter_template = '<td>' + cur_enemy_supporter + '</td>'
+      supporter_template = '<td>' + cur_supporter + '</td>'
+      poketool_template = '<td>' + cur_poketool + '</td>'
       
       # Example: 3 ways for Scyther to one shot Scyther
       # expected output is '<td rowspan=3>Scyther</td>' and the next check is skipped until...
@@ -621,6 +721,44 @@ def file_processing(pkmn_one_shots, expansion_no, poke_no):
           is_cur_poketool_color1 = True
         cur_table_row_template = cur_table_row_template + poketool_template
       ####################################### END CURRENT POKETOOL NAME CHECKS ###############################################
+      
+      ####################################### BEGIN CURRENT ENEMY SUPPORTER NAME CHECKS #############################################
+      if index >= cur_enemy_supporter_skip_until_index:
+        cur_enemy_supporter_counter = 0
+        for index2, one_shot2 in enumerate(pkmn_one_shots[0]['Pkmn Gets One Shot By'][index:], index): # find duplicate entries
+          if one_shot2['Enemy Supporter'] == cur_enemy_supporter and index2 < cur_enemy_pkmn_skip_until_index:
+            cur_enemy_supporter_counter = cur_enemy_supporter_counter + 1
+          else:
+            break
+        cur_enemy_supporter_skip_until_index = cur_enemy_supporter_skip_until_index + cur_enemy_supporter_counter
+
+        if is_cur_enemy_supporter_color1:
+          enemy_supporter_template = '<td class="table_row_color1" rowspan=' + str(cur_enemy_supporter_counter) + '>' + cur_enemy_supporter + '</td>'
+          is_cur_enemy_supporter_color1 = False
+        else:
+          enemy_supporter_template = '<td class="table_row_color2" rowspan=' + str(cur_enemy_supporter_counter) + '>' + cur_enemy_supporter + '</td>'
+          is_cur_enemy_supporter_color1 = True
+        cur_table_row_template = cur_table_row_template + enemy_supporter_template
+      ####################################### END CURRENT ENEMY SUPPORTER NAME CHECKS #############################################
+
+      ####################################### BEGIN CURRENT SUPPORTER NAME CHECKS #############################################
+      if index >= cur_supporter_skip_until_index:
+        cur_supporter_counter = 0
+        for index2, one_shot2 in enumerate(pkmn_one_shots[0]['Pkmn Gets One Shot By'][index:], index): # find duplicate entries
+          if one_shot2['Supporter'] == cur_supporter and index2 < cur_enemy_pkmn_skip_until_index:
+            cur_supporter_counter = cur_supporter_counter + 1
+          else:
+            break
+        cur_supporter_skip_until_index = cur_supporter_skip_until_index + cur_supporter_counter
+
+        if is_cur_supporter_color1:
+          supporter_template = '<td class="table_row_color1" rowspan=' + str(cur_supporter_counter) + '>' + cur_supporter + '</td>'
+          is_cur_supporter_color1 = False
+        else:
+          supporter_template = '<td class="table_row_color2" rowspan=' + str(cur_supporter_counter) + '>' + cur_supporter + '</td>'
+          is_cur_supporter_color1 = True
+        cur_table_row_template = cur_table_row_template + supporter_template
+      ####################################### END CURRENT SUPPORTER NAME CHECKS ###############################################
 
       ####################################### BEGIN ONESHOT CHECKS ###################################
       if index >= cur_oneshot_skip_until_index:

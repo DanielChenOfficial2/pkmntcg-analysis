@@ -1,6 +1,6 @@
 # Capacitor setup
 
-Capacitor packages the existing static site in `website/`; it does not introduce a framework or a second copy of the web assets. `webDir` in `capacitor.config.json` points directly to that directory, which contains the root `index.html`. The pages, card images, and relative navigation links are copied unchanged into the native app.
+Capacitor packages the existing static site in `website/`; it does not introduce a framework or a second copy of the web assets. `webDir` in `capacitor.config.json` points directly to that directory, which contains the root `index.html`. Native platform projects live in `build/android/` and `build/ios/`. The pages, card images, and relative navigation links are copied unchanged into the native app.
 
 Tailwind is compiled locally from the classes in the HTML pages. The generated `website/tailwind.css` is checked in so the browser site works without a build step or a Tailwind CDN connection. `npm run build` converts any remaining Tailwind CDN references throughout `website/`, then regenerates the stylesheet from the classes in every page. Run it after generating or changing pages:
 
@@ -36,7 +36,7 @@ npm run cap:add:android
 npm run cap:open:android
 ```
 
-The first command builds the local stylesheet and creates the native `android/` project. To copy subsequent web changes into the native project, run `npm run cap:sync:android`.
+The first command builds the local stylesheet and creates the native `build/android/` project. To copy subsequent web changes into the native project, run `npm run cap:sync:android`.
 
 ## iOS
 
@@ -48,7 +48,7 @@ npm run cap:add:ios
 npm run cap:open:ios
 ```
 
-The first command builds the local stylesheet and creates the native `ios/` project. To copy subsequent web changes into the native project, run `npm run cap:sync:ios`.
+The first command builds the local stylesheet and creates the native `build/ios/` project. To copy subsequent web changes into the native project, run `npm run cap:sync:ios`.
 
 `npm run cap:sync` rebuilds the stylesheet and syncs every platform already added to the project. Generated native project files should be committed when they are created so platform-specific configuration is preserved.
 

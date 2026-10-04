@@ -7,6 +7,12 @@ import re
 from bs4 import BeautifulSoup
 import os
 import sys
+from pathlib import Path
+
+CALCULATOR_DIR = Path(__file__).resolve().parent
+DATA_DIR = CALCULATOR_DIR.parent / "data"
+WEBSITE_DIR = CALCULATOR_DIR.parents[2] / "website"
+TEMPLATE_DIR = CALCULATOR_DIR / "template"
 
 test = False
 
@@ -244,10 +250,10 @@ def calc_one_shot(pkmn_data, all_pkmn_data):
   # If an offensive poketool for a move oneshots regardless of the defensive item, copy the first oneshot of the offensive poketool, rename offensive poketool to "Any Poketool," and delete oneshot strings
   # If all offensive poketools have the same oneshots for a given move, copy all oneshots of one offensive poketool and rename offensive poketool to "Any Poketool," and delete oneshot strings
 
-  offensive_poketools_df = pd.read_csv('offensive_poketools.csv')
-  defensive_poketools_df = pd.read_csv('defensive_poketools.csv')
-  offensive_supporters_df = pd.read_csv('offensive_supporters.csv')
-  defensive_supporters_df = pd.read_csv('defensive_supporters.csv')
+  offensive_poketools_df = pd.read_csv(CALCULATOR_DIR / 'offensive_poketools.csv')
+  defensive_poketools_df = pd.read_csv(CALCULATOR_DIR / 'defensive_poketools.csv')
+  offensive_supporters_df = pd.read_csv(CALCULATOR_DIR / 'offensive_supporters.csv')
+  defensive_supporters_df = pd.read_csv(CALCULATOR_DIR / 'defensive_supporters.csv')
   
   cur_pkmn_one_shots = {}
   # print(pkmn_data)
@@ -802,7 +808,7 @@ def file_processing(pkmn_one_shots, expansion_no, poke_no):
       cur_table_row_template = cur_table_row_template + '</tr>'
       table_row_template = table_row_template + cur_table_row_template
     
-    file = open('template/template.html', 'r')
+    file = open(TEMPLATE_DIR / 'template.html', 'r')
     html_template = file.read()
     updated_html_template = html_template.replace(f'../{expansion_two_letters_arr[expansion_no]}/index.html', 'index.html')
     updated_html_template = updated_html_template.replace('{pkmn_name_with_set}', pkmn_one_shots[0]['Pkmn Name w/ Set'])
@@ -841,8 +847,9 @@ def file_processing(pkmn_one_shots, expansion_no, poke_no):
     second_table_index = updated_html_template.find('</table>', first_table_index + 1)
     updated_html_template = updated_html_template[:second_table_index] + table_row_template + updated_html_template[second_table_index:]
 
-    print(f'../website/{subdirectory_name}/' + str(poke_no + 1) + '.html')
-    file = open(f'../website/{subdirectory_name}/' + str(poke_no + 1) + '.html', 'w')
+    output_path = WEBSITE_DIR / subdirectory_name / f'{poke_no + 1}.html'
+    print(output_path)
+    file = open(output_path, 'w')
     file.write(updated_html_template)
     
     # file = open('template/template.js', 'r')
@@ -852,7 +859,7 @@ def file_processing(pkmn_one_shots, expansion_no, poke_no):
     # file = open('../website/tf/' + str(poke_no + 1) + '.js', 'w')
     # file.write(updated_js_template)
 
-    file = open(f'../website/{subdirectory_name}/index.html', 'r')
+    file = open(WEBSITE_DIR / subdirectory_name / 'index.html', 'r')
     index_template = file.read()
 
     li_template = '<li class="mb-2"><a class="text-lg text-blue-500 hover:text-blue-700 underline" href="{num}.html">{pkmn_name_with_set}</a></li>'
@@ -863,17 +870,18 @@ def file_processing(pkmn_one_shots, expansion_no, poke_no):
     updated_index_template = index_template[:insert_position] + updated_li_template + index_template[insert_position:]
     updated_index_template = updated_index_template.replace('{expansion_name}', expansion_name)
 
-    file = open(f'../website/{subdirectory_name}/index.html', 'w')
+    file = open(WEBSITE_DIR / subdirectory_name / 'index.html', 'w')
     file.write(updated_index_template)
   else:
-    file = open('template/invalid_template.html', 'r')
+    file = open(TEMPLATE_DIR / 'invalid_template.html', 'r')
     html_template = file.read()
     updated_html_template = html_template.replace('{pkmn_name_with_set}', pkmn_one_shots[0]['Pkmn Name w/ Set'])
     updated_html_template = updated_html_template.replace('{img_prefix}', expansion_img_prefix)
     updated_html_template = updated_html_template.replace('{img_num}', format_img_num(poke_no + 1))
 
-    print(f'../website/{subdirectory_name}/' + str(poke_no + 1) + '.html')
-    file = open(f'../website/{subdirectory_name}/' + str(poke_no + 1) + '.html', 'w')
+    output_path = WEBSITE_DIR / subdirectory_name / f'{poke_no + 1}.html'
+    print(output_path)
+    file = open(output_path, 'w')
     file.write(updated_html_template)
     
     # file = open('template/template.js', 'r')
@@ -883,7 +891,7 @@ def file_processing(pkmn_one_shots, expansion_no, poke_no):
     # file = open('../website/tf/' + str(poke_no + 1) + '.js', 'w')
     # file.write(updated_js_template)
 
-    file = open(f'../website/{subdirectory_name}/index.html', 'r')
+    file = open(WEBSITE_DIR / subdirectory_name / 'index.html', 'r')
     index_template = file.read()
 
     li_template = '<li class="mb-2"><a class="text-lg text-blue-500 hover:text-blue-700 underline" href="{num}.html">{pkmn_name_with_set}</a></li>'
@@ -894,18 +902,18 @@ def file_processing(pkmn_one_shots, expansion_no, poke_no):
     updated_index_template = index_template[:insert_position] + updated_li_template + index_template[insert_position:]
     updated_index_template = updated_index_template.replace('{expansion_name}', expansion_name)
 
-    file = open(f'../website/{subdirectory_name}/index.html', 'w')
+    file = open(WEBSITE_DIR / subdirectory_name / 'index.html', 'w')
     file.write(updated_index_template)
 
 # Read the CSV file into a DataFrame
 if test == False:
-  if os.path.exists('../website/index.html'):
-    os.remove('../website/index.html')
+  if os.path.exists(WEBSITE_DIR / 'index.html'):
+    os.remove(WEBSITE_DIR / 'index.html')
   for index, expansion_csv_filename in enumerate(expansion_csv_filename_arr):
-    if os.path.exists('../website/index.html'):
-      file = open('../website/index.html', 'r')
+    if os.path.exists(WEBSITE_DIR / 'index.html'):
+      file = open(WEBSITE_DIR / 'index.html', 'r')
     else:
-      file = open('template/root_index_template.html', 'r')
+      file = open(TEMPLATE_DIR / 'root_index_template.html', 'r')
     index_template = file.read()
 
     li_template = '<li class="mb-2"><a class="text-lg text-blue-500 hover:text-blue-700 underline" href="{expansion_two_letters}/index.html">{expansion_name}</a></li>'
@@ -914,24 +922,24 @@ if test == False:
 
     insert_position = index_template.find('</ul>', index_template.find('</ul>') + len('</ul>'))
     updated_index_template = index_template[:insert_position] + updated_li_template + index_template[insert_position:]
-    file = open('../website/index.html', 'w')
+    file = open(WEBSITE_DIR / 'index.html', 'w')
     file.write(updated_index_template)
 
-    if os.path.exists(f'../website/{expansion_two_letters_arr[index]}/index.html'):
-      os.remove(f'../website/{expansion_two_letters_arr[index]}/index.html')
+    if os.path.exists(WEBSITE_DIR / expansion_two_letters_arr[index] / 'index.html'):
+      os.remove(WEBSITE_DIR / expansion_two_letters_arr[index] / 'index.html')
       
-    file = open('template/expansion_index_template.html', 'r')
+    file = open(TEMPLATE_DIR / 'expansion_index_template.html', 'r')
     index_template = file.read()
     updated_index_template = index_template.replace(f'../{expansion_two_letters_arr[index]}/index.html', '#')
   
-    file = open(f'../website/{expansion_two_letters_arr[index]}/index.html', 'w')
+    file = open(WEBSITE_DIR / expansion_two_letters_arr[index] / 'index.html', 'w')
     file.write(updated_index_template)
 
-    file = open(f'../website/{expansion_two_letters_arr[index]}/index.html', 'r')
+    file = open(WEBSITE_DIR / expansion_two_letters_arr[index] / 'index.html', 'r')
 
-    expansion_df = pd.read_csv(f'../data/{expansion_csv_filename}')
+    expansion_df = pd.read_csv(DATA_DIR / expansion_csv_filename)
     expansion_two_letters = expansion_two_letters_arr[index]
-    all_pkmn_df = pd.read_csv(f'../data/pkmn_data.csv')
+    all_pkmn_df = pd.read_csv(DATA_DIR / 'pkmn_data.csv')
     # Index(['Name', 'Name w/ Set', 'Evolution Stage', 'Previous Evolution',
     #       'Ability', 'HP', 'Type', 'Weakness', 'Resistance', 'Retreat Cost',
     #       'Moves', 'Card No', 'Card Mark', 'Card Rarity'],
@@ -955,7 +963,7 @@ if test == False:
         })
       file_processing(pkmn_one_shots, index, index2)      
 else:
-  df = pd.read_csv(f'../data/tf.csv')
+  df = pd.read_csv(DATA_DIR / 'tf.csv')
   for index, row in df.iterrows():
     if row['Name'] == 'Scyther':
       pkmn_one_shots = []

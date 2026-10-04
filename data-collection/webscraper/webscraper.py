@@ -4,6 +4,9 @@ from bs4 import BeautifulSoup
 import re
 import csv
 import pandas as pd
+from pathlib import Path
+
+DATA_DIR = Path(__file__).resolve().parent / "data-analysis" / "data"
 
 test = False
 
@@ -354,12 +357,12 @@ if test != True:
         all_pkmn_cards.append(pkmn_data)
 
     # Get all keys from the first dictionary (assuming all dictionaries have the same keys)
-    df = pd.read_csv(f'../data/pkmn_data.csv')
+    df = pd.read_csv(DATA_DIR / 'pkmn_data.csv')
     keys = list(all_pkmn_cards[0].keys())
 
     if index == 0:
       # Write to csv file with all pkmn info
-      with open('../data/pkmn_data.csv', 'w', newline='') as csvfile:
+      with open(DATA_DIR / 'pkmn_data.csv', 'w', newline='') as csvfile:
         # Create a CSV writer object
         writer = csv.DictWriter(csvfile, fieldnames=keys)
         # Write the header row
@@ -367,10 +370,10 @@ if test != True:
         # Write each dictionary as a row in the CSV
         for item in all_pkmn_cards:
           writer.writerow(item)
-      print("CSV file created successfully: data/pkmn_data.csv")
+      print(f"CSV file created successfully: {DATA_DIR / 'pkmn_data.csv'}")
     else:
       # Write to csv file with all pkmn info
-      with open('../data/pkmn_data.csv', 'a', newline='') as csvfile:
+      with open(DATA_DIR / 'pkmn_data.csv', 'a', newline='') as csvfile:
         # Create a CSV writer object
         writer = csv.DictWriter(csvfile, fieldnames=keys)
 
@@ -380,10 +383,10 @@ if test != True:
             writer.writerow(item)
           else:
             print(f"Duplicate found for {item['Name w/ Set']}. Row not inserted.")
-      print("CSV file updated successfully: data/pkmn_data.csv")
+      print(f"CSV file updated successfully: {DATA_DIR / 'pkmn_data.csv'}")
 
     # Write to csv file with only this expansion's pkmn info (no duplicate check)
-    with open(f'../data/{expansion_csv_name[index]}', 'w', newline='') as csvfile:
+    with open(DATA_DIR / expansion_csv_name[index], 'w', newline='') as csvfile:
       # Create a CSV writer object
       writer = csv.DictWriter(csvfile, fieldnames=keys)
       # Write the header row
@@ -391,7 +394,7 @@ if test != True:
       # Write each dictionary as a row in the CSV
       for item in all_pkmn_cards:
         writer.writerow(item)
-    print(f"CSV file created successfully: data/{expansion_csv_name[index]}")
+    print(f"CSV file created successfully: {DATA_DIR / expansion_csv_name[index]}")
 else:
   all_pkmn_cards = []
   pkmn_data = scrape_pokemon_info('https://bulbapedia.bulbagarden.net/wiki/Registeel_(Astral_Radiance_108)')
@@ -402,7 +405,7 @@ else:
   keys = list(all_pkmn_cards[0].keys())
 
   # Open a CSV file for writing
-  with open('../data/pkmn_data_temp.csv', 'a', newline='') as csvfile:
+  with open(DATA_DIR / 'pkmn_data_temp.csv', 'a', newline='') as csvfile:
     # Create a CSV writer object
     writer = csv.DictWriter(csvfile, fieldnames=keys)
     # Write the header row

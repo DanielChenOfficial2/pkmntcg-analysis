@@ -1,7 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
-const webRoot = fs.realpathSync(path.resolve(__dirname, "..", "website"));
+const webRoot = fs.realpathSync(path.resolve(__dirname, "..", "..", "website"));
 const inputs = process.argv.slice(2);
 const requestedPaths = inputs.length > 0 ? inputs : [webRoot];
 const htmlFiles = new Set();

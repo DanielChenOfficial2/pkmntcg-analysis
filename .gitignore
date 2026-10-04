@@ -1,20 +1,20 @@
-calculator/calc_data.csv
-calculator/*.txt
-calculator/*.json
+webscraping/data-analysis/calculator/calc_data.csv
+webscraping/data-analysis/calculator/*.txt
+webscraping/data-analysis/calculator/*.json
 
 img/*
 
-reference/*
+webscraping/data-analysis/reference/*
 
-scripts/*.txt
+webscraping/scripts/*.txt
 
-webscraper/*.csv
+webscraping/*.csv
 
 node_modules/
-android/.gradle/
-android/local.properties
-ios/App/Pods/
-ios/App/App/public/
+build/android/.gradle/
+build/android/local.properties
+build/ios/App/Pods/
+build/ios/App/App/public/
 
 website/tf/scyther.json
 website/tf/scyther_test.json

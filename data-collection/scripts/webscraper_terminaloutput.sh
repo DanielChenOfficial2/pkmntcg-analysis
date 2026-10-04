@@ -1,3 +1,3 @@
 #!/bin/bash
-cd ../webscraper
+cd "$(dirname "$0")/.." || exit
 python3 webscraper.py

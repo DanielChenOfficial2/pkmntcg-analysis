@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "prepare:capacitor": "node scripts/prepare-capacitor.js",
-    "build": "node scripts/prepare-capacitor.js && tailwindcss -c ./tailwind.config.js -i ./tailwind.input.css -o ./website/tailwind.css --minify",
+    "prepare:capacitor": "node build/scripts/prepare-capacitor.js",
+    "build": "node build/scripts/prepare-capacitor.js && tailwindcss -c ./build/tailwind.config.js -i ./build/tailwind.input.css -o ./website/tailwind.css --minify",
     "cap:add:android": "npm run build && cap add android",
     "cap:add:ios": "npm run build && cap add ios",
     "cap:sync": "npm run build && cap sync",

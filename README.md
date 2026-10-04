@@ -1,5 +1,7 @@
 # pokemon_tcg_ohko_calc
 
+[Capacitor setup for Android and iOS](CAPACITOR.md)
+
 
 
 ## Getting started

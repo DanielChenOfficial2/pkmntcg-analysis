@@ -10,6 +10,12 @@ scripts/*.txt
 
 webscraper/*.csv
 
+node_modules/
+android/.gradle/
+android/local.properties
+ios/App/Pods/
+ios/App/App/public/
+
 website/tf/scyther.json
 website/tf/scyther_test.json
 website/index.js

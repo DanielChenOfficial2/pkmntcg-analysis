@@ -59,19 +59,19 @@ class FakeResponse:
 
 class CardPipelineTests(unittest.TestCase):
     def test_missing_set_section_reports_page_and_selector(self):
-        page_url = "https://bulbapedia.bulbagarden.net/wiki/Missing_Set_(TCG)"
+        page_url = "https://limitlesstcg.com/cards/missing-set"
         with patch.object(
             webscraper,
             "_page_soup",
             return_value=BeautifulSoup("<html><body></body></html>", "html.parser"),
         ):
             with self.assertRaisesRegex(
-                ValueError, r"Missing_Set_\(TCG\).*#Set_list"
+                ValueError, r"missing-set.*#Set_list"
             ):
                 webscraper.scrape_expansion(page_url, "Set_list")
 
     def test_missing_expansion_selector_is_discovered(self):
-        page_url = "https://bulbapedia.bulbagarden.net/wiki/Latest_Set_(TCG)"
+        page_url = "https://limitlesstcg.com/cards/latest-set"
         html = """
         <div><h2 id="Card_lists">Card lists</h2></div>
         <div><table><tbody><tr><td>
@@ -91,7 +91,7 @@ class CardPipelineTests(unittest.TestCase):
     def test_scraper_json_builds_queryable_database_without_web_access(self):
         with patch.object(webscraper.requests, "get", return_value=FakeResponse()):
             card = webscraper.scrape_pokemon_info(
-                "https://bulbapedia.bulbagarden.net/wiki/Bulbasaur_(151_1)",
+                "https://limitlesstcg.com/cards/bulbasaur",
                 set_name="151",
             )
 

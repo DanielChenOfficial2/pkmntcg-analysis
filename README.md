@@ -5,8 +5,8 @@ one-hit knockouts.
 
 ## Repository layout
 
-- `webscraping/` contains the card-data scraper, generated-data inputs, analysis
-  calculator, and related scripts.
+- `data-building/` contains the card-data scraper and its launch scripts.
+- `data-analysis/` contains the analysis calculator and related scripts.
 - `capacitor/` contains the Capacitor Android and iOS projects and website build
   configuration.
 - `website/` contains the static site served by GitHub Pages and packaged by
@@ -29,7 +29,7 @@ iOS setup and sync instructions.
 
 The data pipeline separates web extraction from storage:
 
-1. `data-collection/webscraper/webscraper.py` scrapes Pokémon cards from
+1. `data-building/webscraper/webscraper.py` scrapes Pokémon cards from
    Bulbapedia and writes structured JSON to `data/raw/pokemon_cards.json`.
 2. `database/build_database.py` reads that local JSON and builds or updates
    `data/pokemon.db`. It makes no web requests. Its relational schema is in
@@ -40,9 +40,9 @@ Install the scraper's Python dependencies with
 or use the original single-card test page / a specific card page:
 
 ```sh
-python data-collection/webscraper/webscraper.py
-python data-collection/webscraper/webscraper.py --test
-python data-collection/webscraper/webscraper.py --card-url "https://bulbapedia.bulbagarden.net/wiki/Bulbasaur_(151_1)"
+python data-building/webscraper/webscraper.py
+python data-building/webscraper/webscraper.py --test
+python data-building/webscraper/webscraper.py --card-url "https://bulbapedia.bulbagarden.net/wiki/Bulbasaur_(151_1)"
 ```
 
 Build the database separately from the saved file (no network access needed):

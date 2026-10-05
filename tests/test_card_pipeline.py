@@ -9,7 +9,7 @@ from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "data-collection" / "webscraper"))
+sys.path.insert(0, str(ROOT / "data-building" / "webscraper"))
 sys.path.insert(0, str(ROOT / "database"))
 
 import build_database
@@ -69,6 +69,22 @@ class CardPipelineTests(unittest.TestCase):
                 ValueError, r"Missing_Set_\(TCG\).*#Set_list"
             ):
                 webscraper.scrape_expansion(page_url, "Set_list")
+
+    def test_missing_expansion_selector_is_discovered(self):
+        page_url = "https://bulbapedia.bulbagarden.net/wiki/Latest_Set_(TCG)"
+        html = """
+        <div><h2 id="Card_lists">Card lists</h2></div>
+        <table class="roundy"><tbody>
+          <tr></tr>
+          <tr><td><table><tbody><tr></tr><tr></tr></tbody></table></td></tr>
+        </tbody></table>
+        """
+        with patch.object(
+            webscraper,
+            "_page_soup",
+            return_value=BeautifulSoup(html, "html.parser"),
+        ):
+            self.assertEqual(webscraper.scrape_expansion(page_url, None), [])
 
     def test_scraper_json_builds_queryable_database_without_web_access(self):
         with patch.object(webscraper.requests, "get", return_value=FakeResponse()):

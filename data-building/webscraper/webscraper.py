@@ -20,21 +20,26 @@ DEFAULT_TEST_URL = (
 )
 
 EXPANSIONS = [
-    ("https://bulbapedia.bulbagarden.net/wiki/Brilliant_Stars_(TCG)", "Set_list"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Astral_Radiance_(TCG)", "Set_lists"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_GO_(TCG)", "Set_lists"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Lost_Origin_(TCG)", "Set_list"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Silver_Tempest_(TCG)", "Set_list"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Crown_Zenith_(TCG)", "Set_list"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Scarlet_%26_Violet_(TCG)", "Set_lists"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Paldea_Evolved_(TCG)", "Card_lists"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Obsidian_Flames_(TCG)", "Card_lists"),
-    ("https://bulbapedia.bulbagarden.net/wiki/151_(TCG)", "Set_list"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Paradox_Rift_(TCG)", "Card_lists"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Paldean_Fates_(TCG)", "Set_list"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Temporal_Forces_(TCG)", "Card_lists"),
-    ("https://bulbapedia.bulbagarden.net/wiki/Twilight_Masquerade_(TCG)", "Card_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Temporal_Forces_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Twilight_Masquerade_(TCG)", "Set_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Shrouded_Fable_(TCG)", "Set_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Stellar_Crown_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Surging_Sparks_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Prismatic_Evolutions_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Journey_Together_(TCG)", "Set_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Destined_Rivals_(TCG)", "Card_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Black_Bolt_%26_White_Flare_(TCG)", "Card_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Black_Bolt_%26_White_Flare_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Mega_Evolution_(TCG)", "Card_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Phantasmal_Flames_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Ascended_Heroes_(TCG)", "Card_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Perfect_Order_(TCG)", "Card_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Chaos_Rising_(TCG)", None),
+    ("https://bulbapedia.bulbagarden.net/wiki/Pitch_Black_(TCG)", None),
+    ("https://bulbapedia.bulbagarden.net/wiki/30th_Celebration_(TCG)", None),
+    ("https://bulbapedia.bulbagarden.net/wiki/Delta_Reign_(TCG)", None),
 ]
+SET_LIST_IDS = ("Set_list", "Set_lists", "Card_lists")
 
 ANCIENT_POKEMON = {
     "Great Tusk", "Scream Tail", "Brute Bonnet", "Flutter Mane", "Slither Wing",
@@ -297,6 +302,20 @@ def _set_name_from_url(url):
 def scrape_expansion(url, set_list_id):
     """Extract the Pokémon-card rows from one Bulbapedia set listing."""
     soup = _page_soup(url)
+    if set_list_id is None:
+        set_list_id = next(
+            (
+                candidate
+                for candidate in SET_LIST_IDS
+                if soup.select_one(f"#{candidate}") is not None
+            ),
+            None,
+        )
+        if set_list_id is None:
+            raise ValueError(
+                f"Bulbapedia set page {url} is missing a card list section; "
+                f"tried selectors {', '.join(f'#{item}' for item in SET_LIST_IDS)}"
+            )
     selector = f"#{set_list_id}"
     section = _required_one(soup, selector, "set card list section", url)
     list_table = section.parent.find_next_sibling()

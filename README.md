@@ -42,7 +42,7 @@ or use the original single-card test page / a specific card page:
 ```sh
 python data-building/webscraper/webscraper.py
 python data-building/webscraper/webscraper.py --test
-python data-building/webscraper/webscraper.py --card-url "https://limitlesstcg.com/cards/bulbasaur/"
+python data-building/webscraper/webscraper.py --card-url "https://limitlesstcg.com/cards/30C/1"
 ```
 
 Build the database separately from the saved file (no network access needed):

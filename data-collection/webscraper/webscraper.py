@@ -1,417 +1,436 @@
-import requests
-import bs4
-from bs4 import BeautifulSoup
+"""Scrape Pokémon card facts from Bulbapedia into a JSON interchange file."""
+
+import argparse
+import json
 import re
-import csv
-import pandas as pd
+import sys
 from pathlib import Path
+from urllib.parse import unquote
 
-DATA_DIR = Path(__file__).resolve().parent / "data-analysis" / "data"
+import requests
+from bs4 import BeautifulSoup
 
-test = False
 
-"""
-Extracts the Pokémon name from a string, stopping at "Basic" or "Stage 1".
-Args:
-    text: The string containing the Pokémon information.
-Returns:
-    The extracted Pokémon name (up to "Basic" or "Stage 1").
-"""
-def extract_pkmn_evo_stage(text):
-  stop_index = None
-  if text.find('Pokémon'):
-    stop_index = text.find('Pokémon')
-  # Extract the Pokémon name (up to the stop word)
-  if stop_index is not None:
-    pokemon_name = text[:stop_index].strip()
-  else:
-    pokemon_name = text  # No stop word found, return entire text
-  return pokemon_name
+REPOSITORY_ROOT = Path(__file__).resolve().parents[2]
+DEFAULT_OUTPUT = REPOSITORY_ROOT / "data" / "raw" / "pokemon_cards.json"
+BASE_URL = "https://bulbapedia.bulbagarden.net"
+DEFAULT_TEST_URL = (
+    "https://bulbapedia.bulbagarden.net/wiki/"
+    "Registeel_(Astral_Radiance_108)"
+)
 
-def extract_pkmn_prev_evo_stage(text):
-  stop_index = None
-  if text.find('Pokémon'):
-    stop_index = text.find('Pokémon')
-  # Extract the Pokémon name (up to the stop word)
-  if stop_index is not None:
-    pokemon_name = text[:stop_index].strip()
-  else:
-    pokemon_name = text  # No stop word found, return entire text
-  return pokemon_name  
-
-#---------------------------------BEGIN extract_english_text FUNCTION---------------------------------#
-def extract_english_text(text, keep_punc):
-  """
-  Extracts English text from a given string.
-
-  Args:
-      text: The string to extract English text from.
-
-  Returns:
-      A string containing only the English text from the input.
-  """
-  # Replace Japanese characters with an empty string
-  japanese_pattern = re.compile("[ぁ-んァ-ンﾞﾟー]")
-  english_text = japanese_pattern.sub('', text)
-
-  # Remove punctuation and special characters
-  if keep_punc != True:
-    punc_pattern = re.compile("[^\w\s]")
-    english_text = punc_pattern.sub('', english_text)
-
-  # Return the filtered English text
-  return english_text
-  #---------------------------------END extract_english_text FUNCTION---------------------------------#
-
-#---------------------------------BEGIN scrape_pokemon_info FUNCTION---------------------------------#
-def scrape_pokemon_info(url):
-  """Scrapes Pokemon information from a Bulbapedia page."""
-  response = requests.get(url)
-  html_soup = BeautifulSoup(response.content, 'html.parser')
-  # print(url)
-  # Extract basic information
-  pkmn_name_with_set = html_soup.select('h1#firstHeading span.mw-page-title-main')[0].get_text()
-  if '♂' in pkmn_name_with_set:
-    pkmn_name_with_set = pkmn_name_with_set.replace('♂', '-M')
-  elif '♀'in pkmn_name_with_set:
-    pkmn_name_with_set = pkmn_name_with_set.replace('♀', '-F')
-
-  pkmn_info_table_rows = html_soup.select('div#mw-content-text table tr:nth-child(3) > td > table > tbody > tr') 
-  pkmn_evo_stage = extract_pkmn_evo_stage(pkmn_info_table_rows[0].find('td').text.strip())
-  pkmn_prev_evo = None
-
-  if pkmn_info_table_rows[0].find('td').find('small') != None:
-    dirty_prev_evo_stage = pkmn_info_table_rows[0].find('td').find('small').get_text()
-    start_index = dirty_prev_evo_stage.find('Evolves from ')
-    end_index = start_index + len('Evolves from ')
-    pkmn_prev_evo = dirty_prev_evo_stage[end_index:].strip()
-  
-    if '♂' in pkmn_prev_evo:
-      pkmn_prev_evo = pkmn_prev_evo.replace('♂', '-M')
-    elif '♀'in pkmn_prev_evo:
-      pkmn_prev_evo = pkmn_prev_evo.replace('♀', '-F')
-  
-  pkmn_name = pkmn_info_table_rows[1].find('td').text.strip().replace("\xa0", "-")
-  if '♂' in pkmn_name:
-    pkmn_name = pkmn_name.replace('♂', '-M')
-  elif '♀'in pkmn_name:
-    pkmn_name = pkmn_name.replace('♀', '-F')
-
-  pkmn_type = pkmn_info_table_rows[2].find('td').text.strip()
-  pkmn_hp = pkmn_info_table_rows[3].find('td').text.strip()
-
-  # Calculate card type information
-  pkmn_card_type = []
-  ancient_pkmn_list = ['Great Tusk', 'Scream Tail', 'Brute Bonnet', 'Flutter Mane', 'Slither Wing', 'Sandy Shocks', 'Roaring Moon', 'Koraidon', 'Walking Wake', 'Gouging Fire', 'Raging Bolt']
-  future_pkmn_list = ['Iron Treads', 'Iron Bundle', 'Iron Hands', 'Iron Jugulis', 'Iron Moth', 'Iron Thorns', 'Iron Valiant', 'Miraidon', 'Iron Leaves', 'Iron Boulder', 'Iron Crown']
-  if '-ex' in pkmn_name:
-    pkmn_card_type.append('ex')
-  if '-VSTAR' in pkmn_name:
-    pkmn_card_type.append('VSTAR')
-  elif '-VMAX' in pkmn_name:
-    pkmn_card_type.append('VMAX')
-  elif '-V' in pkmn_name:
-    pkmn_card_type.append('V')
-   
-  for ancient_pkmn in ancient_pkmn_list:
-    if ancient_pkmn in pkmn_name:
-      pkmn_card_type.append('Ancient')
-      break
-
-  for future_pkmn in future_pkmn_list:
-    if future_pkmn in pkmn_name:
-      pkmn_card_type.append('Future')
-      break
-
-  # Extract weakness, resistance, retreat cost
-  # Laughably bad website design so there is a one row table in the overall table w/ pokemon info
-  # Also very painful to extract weakness resistance and retreat cost due to no direct text, so need to put guardrails in case any of these don't exist
-  # For retreat cost, each "1" retreat cost is represented by an image of a colorless energy, which is why the img count is used
-  weak_res_ret_table_rows = html_soup.select('div#mw-content-text table tr:nth-child(3) > td > table > tbody > tr:nth-child(5) td table tbody tr th') 
-  pkmn_weakness = weak_res_ret_table_rows[0].find('a').attrs['title'] if weak_res_ret_table_rows[0].find('a') else None
-  pkmn_resistance = weak_res_ret_table_rows[1].find('a').attrs['title'] if weak_res_ret_table_rows[1].find('a') else None
-  pkmn_retreat_cost = len(weak_res_ret_table_rows[2].find_all('img'))
-
-  # Extract English card details
-  pkmn_set_info_table_rows = html_soup.select('div#mw-content-text table tr:nth-child(3) > td > table:nth-child(2) > tbody > tr td:nth-child(2)') 
-  pkmn_english_expansion = pkmn_set_info_table_rows[0].text.strip()
-
-  # Extract move information
-  # First row is the move, second row is the move effect
-  # Iteration 0: targets rows 0 and 1
-  # Iteration 1: targets rows 2 and 3
-  # Iteration x: targets rows 2*x and 2*x+1
-  moves_info_table_rows = html_soup.select('#Card_text')[0].parent.find_next_sibling().find('tbody').find_all('tr', recursive=False)
-  # moves_info_table_rows = list(html_soup.select('div.mw-parser-output table.roundy')[0].find('tbody').children)
-
-  pkmn_moves = []
-  pkmn_ability = None
-  skip_row_one = False
-  skip_row_two = False
-  """
-  Breakdown of move parsing rules
-  Each move has 2 rows, one for non description and one for description. If there is no description, the row is hidden.
-  1. No ability or past/future
-     - start from 0 and go 2 by 2
-     - move nondescrip is on x
-     - move descrip is on x+1
-  """
-  if moves_info_table_rows:
-    idx = 0
-    while idx < len(moves_info_table_rows):
-      if moves_info_table_rows[idx].find('img', alt='Future paradox') != None: # for some reason this also seems to work on Ancient
-        idx = idx + 1
-        skip_row_one = True
-      '''
-      Find all moves on the current page
-      Note that in move_info_table_rows, the first row is all non effect info and the second row is effect info
-      If there is no effect, then the second row is hidden 
-      '''
-      cur_pkmn_move = {}
-      move_info_wo_desc = moves_info_table_rows[idx].find('td').find('table').find('tbody').find('tr')
-      if move_info_wo_desc.find(href=re.compile("Ability")):
-        pkmn_ability_name = extract_english_text(move_info_wo_desc.find('td', style='text-align: center; color:#7E0A0E;').get_text(), False).replace('\n', '')
-        pkmn_ability_desc = extract_english_text(moves_info_table_rows[idx + 1].get_text(), True).replace('\n', '')
-        pkmn_ability = { 'Ability Name': pkmn_ability_name, 'Ability Desc': pkmn_ability_desc }
-        print(pkmn_ability)
-        idx = idx + 2
-        skip_row_two = True
-        continue
-
-      dirty_move_cost = []
-      potential_nonuseless_info = move_info_wo_desc.find('th', class_='roundyleft') # useless info is the ex rule
-
-      if potential_nonuseless_info is not None:  # Check for existence of the target tag
-        has_anchor_descendants = any(descendant.name == 'a' for descendant in potential_nonuseless_info.descendants)
-        if has_anchor_descendants:
-          move_cost_links = potential_nonuseless_info.find_all('a')
-          dirty_move_cost.extend(move_cost_links)  # Add valid links to the list
-      '''
-      For each energy found in dirty_move_cost, retrieve the energy type
-      - If the energy type is not found, set the counter for corresponding energy type to 1
-      - If the energy type is found, increment the counter for corresponding energy type by 1
-      '''
-      move_cost = {}
-      for idx2 in range(len(dirty_move_cost)):
-        if dirty_move_cost[idx2] == None:
-          continue
-        energy_type = dirty_move_cost[idx2].attrs['title']
-        energy_cur_count = 0
-        if energy_type in move_cost:
-            energy_cur_count = move_cost[energy_type]
-
-        move_cost[energy_type] = energy_cur_count + 1
-      cur_pkmn_move['Move Cost'] = move_cost
-      dirty_move_name = []
-      dirty_move_name_test = move_info_wo_desc.find('th', class_='roundyleft') 
-
-      if dirty_move_name_test is not None:  # Check for existence of the target tag
-        dirty_move_name = move_info_wo_desc.find('th', class_='roundyleft').find_next_sibling().get_text()
-      else:
-        idx = idx + 1
-        continue
-      cur_pkmn_move['Move Name'] = extract_english_text(dirty_move_name, True).replace(' \n', '')
-      print(f'old move name: {dirty_move_name}')
-      print(f'new move name: {cur_pkmn_move["Move Name"]}')
-      print('\n')
-
-      if move_info_wo_desc.find('th', class_='roundyright').get_text() != '\n':
-        dirty_move_damage = move_info_wo_desc.find('th', class_='roundyright').get_text().replace(' \n', '')
-        multiplier_index = dirty_move_damage.find('×')
-        add_index = dirty_move_damage.find('+')
-        sub_index = dirty_move_damage.find('−')
-
-        if multiplier_index >= 0:
-          cur_pkmn_move['Move Damage'] = dirty_move_damage[:multiplier_index]
-          cur_pkmn_move['Move Damage Modifier'] = ('multiply', dirty_move_damage[:multiplier_index])
-          cur_pkmn_move['Move Damage Maximum Procs'] = 'TOFILL'
-          cur_pkmn_move['Move Damage Modifier Template'] = 'TOFILL'
-        elif add_index >= 0:
-          cur_pkmn_move['Move Damage'] = dirty_move_damage[:add_index]
-          cur_pkmn_move['Move Damage Modifier'] = ('add', dirty_move_damage[:add_index])
-          cur_pkmn_move['Move Damage Maximum Procs'] = 'TOFILL'
-          cur_pkmn_move['Move Damage Modifier Template'] = 'TOFILL'
-        elif sub_index >= 0:
-          cur_pkmn_move['Move Damage'] = dirty_move_damage[:sub_index]
-          cur_pkmn_move['Move Damage Modifier'] = ('sub', dirty_move_damage[:sub_index])
-          cur_pkmn_move['Move Damage Maximum Procs'] = 'TOFILL'
-          cur_pkmn_move['Move Damage Modifier Template'] = 'TOFILL'
-        else:
-          cur_pkmn_move['Move Damage'] = dirty_move_damage.replace('\n', '')
-          cur_pkmn_move['Move Damage Modifier'] = None
-      else:
-        cur_pkmn_move['Move Damage'] = None
-        cur_pkmn_move['Move Damage Modifier'] = None
-      if idx + 1 < len(moves_info_table_rows) and isinstance(moves_info_table_rows[idx + 1], bs4.element.Tag):
-        cur_pkmn_move['Move Effect'] = moves_info_table_rows[idx + 1].get_text().replace('\n', '')
-      else:
-        cur_pkmn_move['Move Effect'] = None
-      pkmn_moves.append(cur_pkmn_move)
-      idx = idx + 2
-
-  # Return extracted information
-  return {
-      "Name": pkmn_name,
-      "Name w/ Set": pkmn_name_with_set,
-      "Card Type": pkmn_card_type,
-      "Evolution Stage": pkmn_evo_stage,
-      "Previous Evolution": pkmn_prev_evo,
-      "Ability": pkmn_ability,
-      "HP": pkmn_hp,
-      'Type': pkmn_type,
-      "Weakness": pkmn_weakness,
-      "Resistance": pkmn_resistance,
-      "Retreat Cost": pkmn_retreat_cost,
-      "Moves": pkmn_moves,
-  }
-#---------------------------------END scrape_pokemon_info FUNCTION---------------------------------#
-
-# TODO: 
-# comment
-# correct bug with not retrieving moves for paradox monss
-# fill in missing/incorrect information
-# convert to database and make sample query
-
-expansion_url_arr = [
-  "https://bulbapedia.bulbagarden.net/wiki/Brilliant_Stars_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Astral_Radiance_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_GO_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Lost_Origin_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Silver_Tempest_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Crown_Zenith_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Scarlet_%26_Violet_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Paldea_Evolved_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Obsidian_Flames_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/151_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Paradox_Rift_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Paldean_Fates_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Temporal_Forces_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Twilight_Masquerade_(TCG)",]
-  # "https://bulbapedia.bulbagarden.net/wiki/SWSH_Black_Star_Promos_(TCG)",
-  # "https://bulbapedia.bulbagarden.net/wiki/SVP_Black_Star_Promos_(TCG)",
-  # "https://bulbapedia.bulbagarden.net/wiki/McDonald%27s_Collection_2023_(TCG)"]
-
-set_lists_id = [
-  "Set_list",
-  "Set_lists",
-  "Set_lists",
-  "Set_list",
-  "Set_list",
-  "Set_list",
-  "Set_lists",
-  "Card_lists",
-  "Card_lists",
-  "Set_list",
-  "Card_lists",
-  "Set_list",
-  "Card_lists",
-  "Card_lists",]
-  # "Card_list",
-  # "Card_list",
-  # "Set list"]]
-
-expansion_csv_name = [
-  "bs.csv",
-  "ar.csv",
-  "pg.csv",
-  "lo.csv",
-  "st.csv",
-  "cz.csv",
-  "sv.csv",
-  "pe.csv",
-  "of.csv",
-  "151.csv",
-  "pr.csv",
-  "pf.csv",
-  "tf.csv",
-  "tm.csv"
+EXPANSIONS = [
+    ("https://bulbapedia.bulbagarden.net/wiki/Brilliant_Stars_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Astral_Radiance_(TCG)", "Set_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_GO_(TCG)", "Set_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Lost_Origin_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Silver_Tempest_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Crown_Zenith_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Scarlet_%26_Violet_(TCG)", "Set_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Paldea_Evolved_(TCG)", "Card_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Obsidian_Flames_(TCG)", "Card_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/151_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Paradox_Rift_(TCG)", "Card_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Paldean_Fates_(TCG)", "Set_list"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Temporal_Forces_(TCG)", "Card_lists"),
+    ("https://bulbapedia.bulbagarden.net/wiki/Twilight_Masquerade_(TCG)", "Card_lists"),
 ]
 
-if test != True:   
-  for index, expansion_url in enumerate(expansion_url_arr):
-    print(expansion_url)
-    response = requests.get(expansion_url)
-    html_soup = BeautifulSoup(response.content, 'html.parser')
-    card_list_rows = html_soup.select(f'#{set_lists_id[index]}')[0].parent.find_next_sibling().find('table', class_='roundy').find('tbody').find_all('tr', recursive=False)[1].find('td').find('table').find('tbody').find_all('tr', recursive=False)
-    # card_list_rows = html_soup.select('#Set_lists')[0].parent.find_next_sibling().find('table', class_='roundy').find('tbody').find_all('tr', recursive=False)[1].find('td').find('table').find('tbody').find_all('tr', recursive=False)
-    # skip the first row
-    all_pkmn_cards = []
-    if test != True: 
-      for i in range(1, len(card_list_rows) - 1):
-        if card_list_rows[i].find('th', style='background:#FFFFFF;'):
-          pkmn_card_type = card_list_rows[i].find('th').find('img').attrs['alt']
+ANCIENT_POKEMON = {
+    "Great Tusk", "Scream Tail", "Brute Bonnet", "Flutter Mane", "Slither Wing",
+    "Sandy Shocks", "Roaring Moon", "Koraidon", "Walking Wake", "Gouging Fire",
+    "Raging Bolt",
+}
+FUTURE_POKEMON = {
+    "Iron Treads", "Iron Bundle", "Iron Hands", "Iron Jugulis", "Iron Moth",
+    "Iron Thorns", "Iron Valiant", "Miraidon", "Iron Leaves", "Iron Boulder",
+    "Iron Crown",
+}
+
+
+def clean_text(value):
+    """Normalize visible Bulbapedia text without interpreting its meaning."""
+    return re.sub(r"\s+", " ", value or "").strip()
+
+
+def normalize_pokemon_name(value):
+    return clean_text(value).replace("♂", "-M").replace("♀", "-F")
+
+
+def extract_english_text(value, keep_punctuation=True):
+    """Keep the scraper's existing English-facing name cleanup behavior."""
+    value = re.sub(r"[ぁ-んァ-ンﾞﾟー]", "", value or "")
+    if not keep_punctuation:
+        value = re.sub(r"[^\w\s]", "", value)
+    return value
+
+
+def _required_one(soup, selector, description, page_url):
+    result = soup.select_one(selector)
+    if result is None:
+        raise ValueError(
+            f"Bulbapedia page {page_url} is missing {description}; "
+            f"tried selector {selector!r}"
+        )
+    return result
+
+
+def _page_soup(url):
+    try:
+        response = requests.get(url, timeout=30)
+        response.raise_for_status()
+    except requests.RequestException as error:
+        raise ValueError(f"Could not fetch Bulbapedia page {url}: {error}") from error
+    return BeautifulSoup(response.content, "html.parser")
+
+
+def _extract_card_variants(name):
+    variants = []
+    if "-ex" in name:
+        variants.append("ex")
+    if "-VSTAR" in name:
+        variants.append("VSTAR")
+    elif "-VMAX" in name:
+        variants.append("VMAX")
+    elif "-V" in name:
+        variants.append("V")
+    if any(pokemon in name for pokemon in ANCIENT_POKEMON):
+        variants.append("Ancient")
+    if any(pokemon in name for pokemon in FUTURE_POKEMON):
+        variants.append("Future")
+    return variants
+
+
+def _parse_damage(damage_text):
+    """Split numeric damage from its literal modifier; do not infer mechanics."""
+    if not damage_text:
+        return None, None
+    match = re.match(r"^\s*(\d+)(.*)$", damage_text)
+    if match is None:
+        return None, None
+    modifier = clean_text(match.group(2)) or None
+    return int(match.group(1)), modifier
+
+
+def _extract_abilities_and_moves(soup, page_url):
+    card_text = _required_one(
+        soup, "#Card_text", "card text section", page_url
+    )
+    move_table = card_text.parent.find_next_sibling()
+    if move_table is None:
+        return [], []
+    tbody = move_table.find("tbody")
+    if tbody is None:
+        return [], []
+    rows = tbody.find_all("tr", recursive=False)
+
+    abilities = []
+    moves = []
+    index = 0
+    while index < len(rows):
+        row = rows[index]
+        if row.find("img", alt="Future paradox") is not None:
+            index += 1
+            if index >= len(rows):
+                break
+            row = rows[index]
+
+        move_table_row = row.find("td")
+        nested_table = move_table_row.find("table") if move_table_row else None
+        move_info = nested_table.find("tr") if nested_table else None
+        if move_info is None:
+            index += 1
+            continue
+
+        ability_link = move_info.find(href=re.compile("Ability"))
+        if ability_link is not None:
+            ability_name_tag = move_info.find(
+                "td", style="text-align: center; color:#7E0A0E;"
+            )
+            ability_name = clean_text(
+                extract_english_text(
+                    ability_name_tag.get_text(" ", strip=True)
+                    if ability_name_tag else ability_link.get_text(" ", strip=True)
+                )
+            )
+            effect = clean_text(rows[index + 1].get_text(" ", strip=True)) \
+                if index + 1 < len(rows) else ""
+            abilities.append({
+                "name": ability_name or None,
+                "effect_text": effect or None,
+            })
+            index += 2
+            continue
+
+        cost_header = move_info.find("th", class_="roundyleft")
+        cost = {}
+        if cost_header is not None:
+            for anchor in cost_header.find_all("a"):
+                energy_type = anchor.get("title")
+                if energy_type:
+                    cost[energy_type] = cost.get(energy_type, 0) + 1
+
+        name_cell = (
+            cost_header.find_next_sibling()
+            if cost_header is not None else None
+        )
+        if name_cell is None:
+            index += 1
+            continue
+        name = clean_text(
+            extract_english_text(name_cell.get_text(" ", strip=True))
+        )
+        damage_cell = move_info.find("th", class_="roundyright")
+        damage_text = clean_text(damage_cell.get_text(" ", strip=True)) \
+            if damage_cell is not None else ""
+        damage, damage_modifier = _parse_damage(damage_text)
+        effect = clean_text(rows[index + 1].get_text(" ", strip=True)) \
+            if index + 1 < len(rows) else ""
+        moves.append({
+            "name": name or None,
+            "cost": cost,
+            "damage": damage,
+            "damage_modifier": damage_modifier,
+            "damage_text": damage_text or None,
+            "effect_text": effect or None,
+        })
+        index += 2
+    return abilities, moves
+
+
+def scrape_pokemon_info(url, set_name=None):
+    """Extract one Pokémon card's displayed facts from its Bulbapedia page."""
+    soup = _page_soup(url)
+    heading = _required_one(
+        soup,
+        "h1#firstHeading span.mw-page-title-main",
+        "card page title",
+        url,
+    )
+    name_with_set = normalize_pokemon_name(heading.get_text())
+
+    info_rows = soup.select(
+        "div#mw-content-text table tr:nth-child(3) > td > table > tbody > tr"
+    )
+    if len(info_rows) < 4:
+        raise ValueError(f"Bulbapedia page has an unexpected Pokémon info table: {url}")
+
+    first_info = info_rows[0].find("td")
+    evolution_text = clean_text(first_info.get_text(" ", strip=True)) \
+        if first_info else ""
+    evolution_stage = re.sub(r"\s*Pokémon.*$", "", evolution_text).strip() or None
+    previous_evolution = None
+    previous_tag = first_info.find("small") if first_info else None
+    if previous_tag is not None:
+        previous_text = clean_text(previous_tag.get_text(" ", strip=True))
+        previous_evolution = re.sub(
+            r"^Evolves from\s+", "", previous_text, flags=re.IGNORECASE
+        ).strip() or None
+        if previous_evolution:
+            previous_evolution = normalize_pokemon_name(previous_evolution)
+
+    name_tag = info_rows[1].find("td")
+    name = normalize_pokemon_name(
+        name_tag.get_text(" ", strip=True).replace("\xa0", "-")
+        if name_tag else ""
+    )
+    type_tag = info_rows[2].find("td")
+    pokemon_type = clean_text(type_tag.get_text(" ", strip=True)) \
+        if type_tag else None
+    hp_tag = info_rows[3].find("td")
+    hp_text = clean_text(hp_tag.get_text(" ", strip=True)) if hp_tag else ""
+    hp_match = re.search(r"\d+", hp_text)
+
+    stat_headers = soup.select(
+        "div#mw-content-text table tr:nth-child(3) > td > table > "
+        "tbody > tr:nth-child(5) td table tbody tr th"
+    )
+    weakness = None
+    resistance = None
+    retreat_cost = None
+    if len(stat_headers) > 0:
+        link = stat_headers[0].find("a")
+        weakness = link.get("title") if link else None
+    if len(stat_headers) > 1:
+        link = stat_headers[1].find("a")
+        resistance = link.get("title") if link else None
+    if len(stat_headers) > 2:
+        retreat_cost = len(stat_headers[2].find_all("img"))
+
+    set_info = soup.select(
+        "div#mw-content-text table tr:nth-child(3) > td > "
+        "table:nth-child(2) > tbody > tr td:nth-child(2)"
+    )
+    expansion = clean_text(set_info[0].get_text(" ", strip=True)) \
+        if set_info else None
+    abilities, moves = _extract_abilities_and_moves(soup, url)
+
+    return {
+        "name": name or None,
+        "name_with_set": name_with_set or None,
+        "card_type": "pokemon",
+        "card_variants": _extract_card_variants(name),
+        "evolution_stage": evolution_stage,
+        "previous_evolution": previous_evolution,
+        "hp": int(hp_match.group()) if hp_match else None,
+        "hp_text": hp_text or None,
+        "type": pokemon_type,
+        "weakness": weakness,
+        "resistance": resistance,
+        "retreat_cost": retreat_cost,
+        "abilities": abilities,
+        "moves": moves,
+        "card_number": None,
+        "card_mark": None,
+        "rarity": None,
+        "set": set_name,
+        "expansion": expansion,
+        "source_url": url,
+    }
+
+
+def _set_name_from_url(url):
+    slug = unquote(url.rsplit("/", 1)[-1])
+    return re.sub(r"\s*\(TCG\)$", "", slug.replace("_", " "))
+
+
+def scrape_expansion(url, set_list_id):
+    """Extract the Pokémon-card rows from one Bulbapedia set listing."""
+    soup = _page_soup(url)
+    selector = f"#{set_list_id}"
+    section = _required_one(soup, selector, "set card list section", url)
+    list_table = section.parent.find_next_sibling()
+    if list_table is None:
+        raise ValueError(
+            f"Bulbapedia set page {url} has no table immediately after "
+            f"section {selector}; expected the set card list table"
+        )
+    card_table = list_table.find("table", class_="roundy") if list_table else None
+    if card_table is None:
+        raise ValueError(
+            f"Bulbapedia set page {url}: expected a table with class 'roundy' "
+            f"after section {selector}"
+        )
+    tbody = card_table.find("tbody")
+    if tbody is None:
+        raise ValueError(
+            f"Bulbapedia set page {url}: expected a <tbody> in the 'roundy' "
+            f"table after section {selector}"
+        )
+    table_rows = tbody.find_all("tr", recursive=False)
+    if len(table_rows) < 2:
+        raise ValueError(
+            f"Bulbapedia set page {url}: expected at least 2 rows in the "
+            f"'roundy' table after section {selector}, found {len(table_rows)}"
+        )
+    card_container = table_rows[1].find("td")
+    nested_table = card_container.find("table") if card_container else None
+    card_tbody = nested_table.find("tbody") if nested_table else None
+    if card_tbody is None:
+        raise ValueError(
+            f"Bulbapedia set page {url}: could not find the nested card-list "
+            f"table in row 2 after section {selector}"
+        )
+    card_rows = card_tbody.find_all("tr", recursive=False)
+
+    cards = []
+    for row_number, row in enumerate(card_rows[1:-1], start=2):
+        type_header = row.find("th", style="background:#FFFFFF;")
+        if type_header is None:
+            break
+        image = type_header.find("img")
+        if image is not None and "Pok" not in image.get("alt", ""):
+            break
+
+        cells = row.find_all("td", recursive=False)
+        if len(cells) < 4:
+            continue
+        card_link = cells[2].find("a", href=True)
+        mark_link = cells[1].find("a")
+        rarity_link = cells[3].find("a")
+        if card_link is None:
+            raise ValueError(
+                f"Bulbapedia set page {url}, card row {row_number}: "
+                "expected a card link in the third cell"
+            )
+        card_url = card_link["href"]
+        if not card_url.startswith("http"):
+            card_url = BASE_URL + card_url
+        try:
+            card = scrape_pokemon_info(
+                card_url, set_name=_set_name_from_url(url)
+            )
+        except (ValueError, requests.RequestException) as error:
+            raise ValueError(
+                f"Failed scraping Pokémon card in set page {url}, "
+                f"card row {row_number} ({card_url}): {error}"
+            ) from error
+        card["card_number"] = clean_text(cells[0].get_text(" ", strip=True)) or None
+        card["card_mark"] = mark_link.get("title") if mark_link else None
+        card["rarity"] = rarity_link.get("title") if rarity_link else None
+        cards.append(card)
+    return cards
+
+
+def scrape_all_pokemon_cards():
+    cards = []
+    seen = set()
+    for url, set_list_id in EXPANSIONS:
+        print(
+            f"Scraping set {_set_name_from_url(url)} "
+            f"(page {url}; looking for #{set_list_id})...",
+            file=sys.stderr,
+        )
+        for card in scrape_expansion(url, set_list_id):
+            identity = card["name_with_set"]
+            if identity in seen:
+                print(f"Skipping duplicate card {identity}", file=sys.stderr)
+                continue
+            seen.add(identity)
+            cards.append(card)
+    return cards
+
+
+def write_cards(cards, output_path):
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with output_path.open("w", encoding="utf-8") as output_file:
+        json.dump(
+            {"schema_version": 1, "cards": cards},
+            output_file,
+            ensure_ascii=False,
+            indent=2,
+        )
+        output_file.write("\n")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Scrape Pokémon cards from Bulbapedia into JSON."
+    )
+    parser.add_argument(
+        "--output", type=Path, default=DEFAULT_OUTPUT,
+        help=f"JSON output path (default: {DEFAULT_OUTPUT})",
+    )
+    parser.add_argument(
+        "--test", action="store_true",
+        help="Scrape the existing single-card test page instead of all sets.",
+    )
+    parser.add_argument(
+        "--card-url", help="Scrape one card page, useful for testing extraction."
+    )
+    args = parser.parse_args()
+
+    try:
+        if args.card_url or args.test:
+            card = scrape_pokemon_info(args.card_url or DEFAULT_TEST_URL)
+            cards = [card]
         else:
-          break
+            cards = scrape_all_pokemon_cards()
+        write_cards(cards, args.output)
+    except (requests.RequestException, ValueError) as error:
+        parser.exit(1, f"Scraping failed: {error}\n")
+    print(f"Wrote {len(cards)} Pokémon cards to {args.output}", file=sys.stderr)
 
-        card_list_row_info = card_list_rows[i].find_all('td', recursive=False)
-        pkmn_card_no = card_list_row_info[0].get_text().replace('\n', '')
-        pkmn_card_mark = card_list_row_info[1].find('a').attrs['title']
-        pkmn_card_link = card_list_row_info[2].find('a').attrs['href']
-        pkmn_card_rarity = card_list_row_info[3].find('a').attrs['title']
 
-        pkmn_data = scrape_pokemon_info('https://bulbapedia.bulbagarden.net' + str(pkmn_card_link))
-        pkmn_data['Card No'] = pkmn_card_no
-        pkmn_data['Card Mark'] = pkmn_card_mark
-        pkmn_data['Card Rarity'] = pkmn_card_rarity
-
-        all_pkmn_cards.append(pkmn_data)
-
-    # Get all keys from the first dictionary (assuming all dictionaries have the same keys)
-    df = pd.read_csv(DATA_DIR / 'pkmn_data.csv')
-    keys = list(all_pkmn_cards[0].keys())
-
-    if index == 0:
-      # Write to csv file with all pkmn info
-      with open(DATA_DIR / 'pkmn_data.csv', 'w', newline='') as csvfile:
-        # Create a CSV writer object
-        writer = csv.DictWriter(csvfile, fieldnames=keys)
-        # Write the header row
-        writer.writeheader()
-        # Write each dictionary as a row in the CSV
-        for item in all_pkmn_cards:
-          writer.writerow(item)
-      print(f"CSV file created successfully: {DATA_DIR / 'pkmn_data.csv'}")
-    else:
-      # Write to csv file with all pkmn info
-      with open(DATA_DIR / 'pkmn_data.csv', 'a', newline='') as csvfile:
-        # Create a CSV writer object
-        writer = csv.DictWriter(csvfile, fieldnames=keys)
-
-        # Write each dictionary as a row in the CSV
-        for item in all_pkmn_cards:
-          if item['Name w/ Set'] not in df['Name w/ Set'].values:
-            writer.writerow(item)
-          else:
-            print(f"Duplicate found for {item['Name w/ Set']}. Row not inserted.")
-      print(f"CSV file updated successfully: {DATA_DIR / 'pkmn_data.csv'}")
-
-    # Write to csv file with only this expansion's pkmn info (no duplicate check)
-    with open(DATA_DIR / expansion_csv_name[index], 'w', newline='') as csvfile:
-      # Create a CSV writer object
-      writer = csv.DictWriter(csvfile, fieldnames=keys)
-      # Write the header row
-      writer.writeheader()
-      # Write each dictionary as a row in the CSV
-      for item in all_pkmn_cards:
-        writer.writerow(item)
-    print(f"CSV file created successfully: {DATA_DIR / expansion_csv_name[index]}")
-else:
-  all_pkmn_cards = []
-  pkmn_data = scrape_pokemon_info('https://bulbapedia.bulbagarden.net/wiki/Registeel_(Astral_Radiance_108)')
-  print(pkmn_data)
-  all_pkmn_cards.append(pkmn_data)
-
-  # Get all keys from the first dictionary (assuming all dictionaries have the same keys)
-  keys = list(all_pkmn_cards[0].keys())
-
-  # Open a CSV file for writing
-  with open(DATA_DIR / 'pkmn_data_temp.csv', 'a', newline='') as csvfile:
-    # Create a CSV writer object
-    writer = csv.DictWriter(csvfile, fieldnames=keys)
-    # Write the header row
-    writer.writeheader()
-    # Write each dictionary as a row in the CSV
-    for item in all_pkmn_cards:
-      writer.writerow(item)
-
-  print("CSV file created successfully: pkmn_data.csv")
+if __name__ == "__main__":
+    main()

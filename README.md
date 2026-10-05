@@ -7,7 +7,7 @@ one-hit knockouts.
 
 - `webscraping/` contains the card-data scraper, generated-data inputs, analysis
   calculator, and related scripts.
-- `build/` contains the Capacitor Android and iOS projects and website build
+- `capacitor/` contains the Capacitor Android and iOS projects and website build
   configuration.
 - `website/` contains the static site served by GitHub Pages and packaged by
   Capacitor.

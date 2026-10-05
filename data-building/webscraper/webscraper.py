@@ -4,6 +4,7 @@ import argparse
 import json
 import re
 import sys
+import unicodedata
 from pathlib import Path
 from urllib.parse import unquote, urljoin, urlsplit
 
@@ -19,6 +20,10 @@ DEFAULT_TEST_URL = "https://limitlesstcg.com/cards?q=regulation%3E%3DH&show=all&
 
 def clean_text(value):
     return re.sub(r"\s+", " ", value or "").strip()
+
+
+def normalize_ascii(value):
+    return unicodedata.normalize("NFKD", value or "").encode("ascii", "ignore").decode("ascii")
 
 
 def normalize_pokemon_name(value):
@@ -108,17 +113,6 @@ def _extract_card_variants(name):
     normalized = clean_text(name or "")
     if "-ex" in normalized or " ex" in normalized.lower():
         variants.append("ex")
-    if "-VSTAR" in normalized or " VSTAR" in normalized:
-        variants.append("VSTAR")
-    elif "-VMAX" in normalized or " VMAX" in normalized:
-        variants.append("VMAX")
-    elif "-V" in normalized or " V " in f" {normalized} ":
-        variants.append("V")
-    if any(marker in normalized for marker in ("Ancient", "Future")):
-        if "Ancient" in normalized:
-            variants.append("Ancient")
-        if "Future" in normalized:
-            variants.append("Future")
     return variants
 
 
@@ -165,92 +159,193 @@ def _extract_json_literals(obj):
     return [obj]
 
 
-def _scrape_limitless_card(soup, url, set_name=None):
-    raw_title = _card_page_metadata(soup)
-    if raw_title is None:
-        raise ValueError(f"Limitless page is missing a title: {url}")
+def _extract_limitless_set_details(soup):
+    current = soup.select_one(".card-prints-current")
+    if current is None:
+        return None, None, None
 
-    name = raw_title
-    for split_value in (" — ", " - ", " | "):
-        if split_value in name:
-            name = name.split(split_value, 1)[0]
+    set_name = None
+    set_text = current.select_one(".text-lg")
+    if set_text is not None:
+        set_name = clean_text(set_text.get_text(" ", strip=True))
+    if not set_name:
+        set_image = current.select_one("img.set")
+        if set_image is not None:
+            set_name = clean_text(set_image.get("alt") or "")
+
+    card_number = None
+    rarity = None
+    detail_text = None
+    for span in current.select(".prints-current-details span"):
+        value = clean_text(span.get_text(" ", strip=True))
+        if not value:
+            continue
+        if re.search(r"#\s*\d+|\b(Common|Uncommon|Rare|Promo|Trainer|Holo|Ultra)\b", value, flags=re.IGNORECASE):
+            detail_text = value
             break
 
-    name = re.sub(r"\s*\([^)]*\)$", "", name).strip()
-    name = clean_text(name)
-    if not name:
-        raise ValueError(f"Limitless page has an empty title: {url}")
+    if detail_text:
+        number_match = re.search(r"#\s*(\d+)", detail_text)
+        if number_match:
+            card_number = number_match.group(1)
+        rarity_match = re.search(r"(?:#\s*\d+\s*[•·-]?\s*)([A-Za-z][A-Za-z\s/-]*)$", detail_text)
+        if rarity_match:
+            rarity = clean_text(rarity_match.group(1))
+        else:
+            rarity = clean_text(re.sub(r"^.*?#\s*\d+\s*[•·-]?\s*", "", detail_text).strip())
+        rarity = re.sub(r"^[^A-Za-z]+", "", rarity or "").strip()
 
-    hp = None
-    hp_match = re.search(r"\bHP\s*(\d+)\b", soup.get_text(" ", strip=True), flags=re.IGNORECASE)
-    if hp_match:
-        hp = int(hp_match.group(1))
-        hp_text = hp_match.group(0)
-    else:
-        hp_text = None
+    return set_name, card_number, rarity
 
-    pokemon_type = _scan_text(soup, ["[data-type]", "[data-testid='type']", ".type"]) or None
-    weakness = _scan_text(soup, ["[data-weakness]", "[data-testid='weakness']", ".weakness"]) or None
-    resistance = _scan_text(soup, ["[data-resistance]", "[data-testid='resistance']", ".resistance"]) or None
+
+def _extract_limitless_wrr(soup):
+    wrr_block = soup.select_one(".card-text-wrr")
+    if wrr_block is None:
+        return None, None, None
+
+    text = clean_text(wrr_block.get_text(" ", strip=True))
+    weakness = None
+    resistance = None
     retreat_cost = None
-    retreat_match = re.search(r"\bRetreat Cost\s*[:\-]?\s*(\d+)", soup.get_text(" ", strip=True), flags=re.IGNORECASE)
+
+    weakness_match = re.search(r"Weakness\s*:\s*(.*?)(?=\s*Resistance\s*:|\s*Retreat\s*:|$)", text, flags=re.IGNORECASE)
+    if weakness_match:
+        weakness = clean_text(weakness_match.group(1))
+
+    resistance_match = re.search(r"Resistance\s*:\s*(.*?)(?=\s*Retreat\s*:|$)", text, flags=re.IGNORECASE)
+    if resistance_match:
+        resistance = clean_text(resistance_match.group(1))
+
+    retreat_match = re.search(r"Retreat\s*:\s*(\d+)", text, flags=re.IGNORECASE)
     if retreat_match:
         retreat_cost = int(retreat_match.group(1))
 
-    card_number = _scan_text(soup, ["[data-card-number]", "[data-number]", ".card-number"]) or None
-    rarity = _scan_text(soup, ["[data-rarity]", "[data-testid='rarity']", ".rarity"]) or None
-    card_mark = _scan_text(soup, ["[data-regulation]", "[data-testid='regulation']", ".regulation"]) or None
-    set_name = set_name or _scan_text(soup, ["[data-set]", "[data-testid='set']", ".set"]) or None
-    if set_name:
-        set_name = re.sub(r"^.*?\s+-\s+", "", set_name).strip()
-        set_name = re.sub(r"\s*\(.*?\)$", "", set_name).strip() or set_name
+    return weakness, resistance, retreat_cost
+
+
+def _parse_limitless_attack(info_tag):
+    symbol = info_tag.select_one(".ptcg-symbol")
+    cost = clean_text(symbol.get_text(" ", strip=True)) if symbol is not None else None
+    raw_text = clean_text(info_tag.get_text(" ", strip=True))
+    if cost:
+        raw_text = raw_text.replace(cost, "", 1).strip()
+
+    damage = None
+    damage_modifier = None
+    damage_text = None
+    if raw_text:
+        match = re.search(r"^(?P<name>.+?)\s+(?P<damage>\d+)$", raw_text)
+        if match:
+            raw_text = match.group("name")
+            damage_text = match.group("damage")
+            damage = int(damage_text)
+            damage_modifier = None
+        elif re.search(r"\d+", raw_text):
+            raw_text = re.sub(r"\s+\d+$", "", raw_text).strip()
+
+    return cost, raw_text or None, damage, damage_modifier, damage_text, raw_text or None
+
+
+def _scrape_limitless_card(soup, url, set_name=None):
+    name_tag = soup.select_one(".card-text-name")
+    if name_tag is None:
+        raise ValueError(f"Limitless page is missing a card name: {url}")
+    name = clean_text(name_tag.get_text(" ", strip=True))
+    if not name:
+        raise ValueError(f"Limitless page has an empty card name: {url}")
+
+    type_block = soup.select_one(".card-text-type")
+    if type_block is None:
+        raise ValueError(f"Limitless page is missing card type info: {url}")
+
+    type_text = clean_text(type_block.get_text(" ", strip=True))
+    normalized_type_text = normalize_ascii(type_text).lower()
+    if "pokemon" not in normalized_type_text:
+        raise ValueError(f"Limitless page is not a Pokémon card: {url}")
+
+    card_type = "pokemon"
+    evolution_stage = None
+    previous_evolution = None
+
+    stage_match = re.search(r"(Basic|Stage 1|Stage 2)", type_text, flags=re.IGNORECASE)
+    if stage_match:
+        evolution_stage = stage_match.group(1).strip()
+    if "Evolves from" in type_text and type_block.select_one("a") is not None:
+        previous_evolution = clean_text(type_block.select_one("a").get_text(" ", strip=True))
+
+    title_block = soup.select_one(".card-text-title")
+    hp = None
+    hp_text = None
+    pokemon_type = None
+    if title_block is not None:
+        title_text = clean_text(title_block.get_text(" ", strip=True))
+        parts = [part.strip() for part in re.split(r"\s*-\s*", title_text) if part.strip()]
+        if len(parts) >= 2:
+            pokemon_type = parts[-2]
+            hp_text = parts[-1]
+            hp_match = re.search(r"(\d+)", hp_text)
+            if hp_match:
+                hp = int(hp_match.group(1))
+
+    weakness, resistance, retreat_cost = _extract_limitless_wrr(soup)
+
+    set_name_override, card_number, rarity = _extract_limitless_set_details(soup)
+    if set_name_override:
+        set_name = set_name_override
+    elif set_name is None:
+        set_name = None
+
+    regulation_mark = None
+    regulation_tag = soup.select_one(".regulation-mark")
+    if regulation_tag is not None:
+        mark_text = clean_text(regulation_tag.get_text(" ", strip=True))
+        mark_match = re.search(r"([A-Z0-9]+)\s+Regulation\s+Mark", mark_text, flags=re.IGNORECASE)
+        if mark_match:
+            regulation_mark = mark_match.group(1)
+        elif mark_text:
+            regulation_mark = mark_text.split()[0]
 
     abilities = []
+    for ability_block in soup.select(".card-text-ability"):
+        info = ability_block.select_one(".card-text-ability-info")
+        effect = ability_block.select_one(".card-text-ability-effect")
+        if info is None:
+            continue
+        ability_name = clean_text(info.get_text(" ", strip=True))
+        if ability_name.lower().startswith("ability:"):
+            ability_name = ability_name[8:].strip()
+        effects = clean_text(effect.get_text(" ", strip=True)) if effect is not None else None
+        abilities.append({
+            "name": ability_name or None,
+            "effect_text": effects or None,
+        })
+
     moves = []
-    for script in soup.find_all("script"):
-        script_text = script.string or ""
-        if not script_text.strip().startswith(("{", "[")):
+    for attack_block in soup.select(".card-text-attack"):
+        info = attack_block.select_one(".card-text-attack-info")
+        effect = attack_block.select_one(".card-text-attack-effect")
+        if info is None:
             continue
-        try:
-            payload = json.loads(script_text)
-        except (TypeError, ValueError):
-            continue
-        for value in _extract_json_literals(payload):
-            if isinstance(value, dict):
-                if "name" in value and "effectText" in value and not value.get("cost"):
-                    abilities.append({"name": value.get("name"), "effect_text": value.get("effectText")})
-                if "name" in value and "text" in value and "cost" in value:
-                    moves.append({
-                        "name": value.get("name"),
-                        "cost": value.get("cost", {}),
-                        "damage": value.get("damage"),
-                        "damage_modifier": None,
-                        "damage_text": value.get("damageText"),
-                        "effect_text": value.get("text"),
-                    })
 
-    if not abilities and not moves:
-        body_text = clean_text(soup.get_text(" ", strip=True))
-        if re.search(r"\bAbilities\b", body_text, flags=re.IGNORECASE):
-            for section in soup.select("section, article, div"):
-                section_text = clean_text(section.get_text(" ", strip=True))
-                if not re.search(r"\bAbilities\b", section_text, flags=re.IGNORECASE):
-                    continue
-                for item in section.select("li, tr, p, div"):
-                    item_text = clean_text(item.get_text(" ", strip=True))
-                    if not item_text or item_text.lower() == "abilities":
-                        continue
-                    if ":" in item_text:
-                        title, effect = item_text.split(":", 1)
-                        abilities.append({"name": clean_text(title), "effect_text": clean_text(effect)})
+        cost, attack_name, damage, damage_modifier, damage_text, effect_text = _parse_limitless_attack(info)
+        effect_text = clean_text(effect.get_text(" ", strip=True)) if effect is not None else None
+        moves.append({
+            "name": attack_name or None,
+            "cost": cost,
+            "damage": damage,
+            "damage_modifier": damage_modifier,
+            "damage_text": damage_text,
+            "effect_text": effect_text or None,
+        })
 
+    name_with_set = f"{name} ({set_name})" if set_name else name
     return {
         "name": name,
-        "name_with_set": f"{name} ({set_name})" if set_name else name,
-        "card_type": "pokemon",
+        "name_with_set": name_with_set,
+        "card_type": card_type,
         "card_variants": _extract_card_variants(name),
-        "evolution_stage": None,
-        "previous_evolution": None,
+        "evolution_stage": evolution_stage,
+        "previous_evolution": previous_evolution,
         "hp": hp,
         "hp_text": hp_text,
         "type": pokemon_type,
@@ -260,7 +355,7 @@ def _scrape_limitless_card(soup, url, set_name=None):
         "abilities": abilities,
         "moves": moves,
         "card_number": card_number,
-        "card_mark": card_mark,
+        "card_mark": regulation_mark,
         "rarity": rarity,
         "set": set_name,
         "expansion": set_name,
@@ -343,12 +438,7 @@ def scrape_pokemon_info(url, set_name=None):
     soup = _page_soup(url)
     host = urlsplit(url).netloc.lower()
     if "limitlesstcg.com" in host:
-        try:
-            card = _scrape_limitless_card(soup, url, set_name=set_name)
-            if card.get("moves") or card.get("abilities") or card.get("type") or card.get("card_number"):
-                return card
-        except ValueError:
-            pass
+        return _scrape_limitless_card(soup, url, set_name=set_name)
     return _scrape_compatibility_card(soup, url, set_name=set_name)
 
 

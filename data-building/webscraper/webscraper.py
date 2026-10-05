@@ -5,7 +5,7 @@ import json
 import re
 import sys
 from pathlib import Path
-from urllib.parse import urljoin, urlsplit
+from urllib.parse import urlencode, urljoin, urlsplit
 
 import requests
 from bs4 import BeautifulSoup
@@ -32,6 +32,116 @@ TEST_SEARCH_URL = (
     "&display=text"
 )
 
+def _build_set_search_url(set_code):
+    set_code = set_code.upper()
+
+    params = {
+        "q": f"!set:{set_code}",
+        "show": "all",
+        "unique": "cards",
+        "display": "text",
+    }
+
+    return (
+        f"{LIMITLESS_BASE_URL}/cards"
+        f"?{urlencode(params)}"
+    )
+
+
+def _load_cards(input_path):
+    if not input_path.exists():
+        raise ValueError(
+            f"Dataset does not exist: {input_path}"
+        )
+
+    try:
+        with input_path.open("r", encoding="utf-8") as input_file:
+            data = json.load(input_file)
+    except (OSError, json.JSONDecodeError) as error:
+        raise ValueError(
+            f"Could not read dataset {input_path}: {error}"
+        ) from error
+
+    if not isinstance(data, dict) or "cards" not in data:
+        raise ValueError(
+            f"Invalid dataset format: {input_path}"
+        )
+
+    return data["cards"]
+
+
+def _add_set(cards, set_code):
+    set_code = set_code.upper()
+
+    search_url = _build_set_search_url(set_code)
+
+    print(
+        f"Scraping set {set_code}...",
+        file=sys.stderr,
+    )
+
+    new_cards = _limitless_search_cards(search_url)
+
+    if not new_cards:
+        raise ValueError(
+            f"No cards found for set {set_code}"
+        )
+
+    found_sets = {
+        card.get("set")
+        for card in new_cards
+    }
+
+    if set_code not in found_sets:
+        raise ValueError(
+            f"Limitless returned no cards for set {set_code}"
+        )
+
+    new_cards = [
+        card
+        for card in new_cards
+        if card.get("set") == set_code
+    ]
+
+    print(
+        f"Found {len(new_cards)} cards in set {set_code}.",
+        file=sys.stderr,
+    )
+
+    _populate_set_metadata(new_cards)
+
+    cards = [
+        card
+        for card in cards
+        if card.get("set") != set_code
+    ]
+
+    cards.extend(new_cards)
+
+    return cards
+
+
+def _remove_mark(cards, regulation_mark):
+    regulation_mark = regulation_mark.upper()
+
+    original_count = len(cards)
+
+    cards = [
+        card
+        for card in cards
+        if (card.get("card_mark") or "").upper()
+        != regulation_mark
+    ]
+
+    removed_count = original_count - len(cards)
+
+    print(
+        f"Removed {removed_count} cards with regulation mark "
+        f"{regulation_mark}.",
+        file=sys.stderr,
+    )
+
+    return cards
 
 def _validate_cards(cards):
     warnings = []
@@ -728,7 +838,35 @@ def main():
         help="Scrape one Limitless card page, useful for testing.",
     )
 
+    parser.add_argument(
+        "--add-set",
+        metavar="SET",
+        help="Add or replace all cards from a set.",
+    )
+
+    parser.add_argument(
+        "--remove-mark",
+        metavar="MARK",
+        help="Remove all cards with a regulation mark.",
+    )
+
     args = parser.parse_args()
+
+    operation_count = sum(
+        bool(value)
+        for value in (
+            args.test,
+            args.card_url,
+            args.add_set,
+            args.remove_mark,
+        )
+    )
+
+    if operation_count > 1:
+        parser.error(
+            "--test, --card-url, --add-set, and --remove-mark "
+            "cannot be used together."
+        )
 
     try:
         if args.card_url:
@@ -742,6 +880,60 @@ def main():
             card["card_mark"] = _extract_regulation_mark(soup)
 
             cards = [card]
+
+        elif args.add_set:
+            cards = _load_cards(args.output)
+
+            cards = _add_set(
+                cards,
+                args.add_set,
+            )
+
+            warnings = _validate_cards(cards)
+
+            if warnings:
+                print(
+                    f"Found {len(warnings)} validation warning(s):",
+                    file=sys.stderr,
+                )
+
+                for warning in warnings:
+                    print(
+                        f"  WARNING: {warning}",
+                        file=sys.stderr,
+                    )
+            else:
+                print(
+                    "Validation passed with no warnings.",
+                    file=sys.stderr,
+                )
+
+        elif args.remove_mark:
+            cards = _load_cards(args.output)
+
+            cards = _remove_mark(
+                cards,
+                args.remove_mark,
+            )
+
+            warnings = _validate_cards(cards)
+
+            if warnings:
+                print(
+                    f"Found {len(warnings)} validation warning(s):",
+                    file=sys.stderr,
+                )
+
+                for warning in warnings:
+                    print(
+                        f"  WARNING: {warning}",
+                        file=sys.stderr,
+                    )
+            else:
+                print(
+                    "Validation passed with no warnings.",
+                    file=sys.stderr,
+                )
 
         elif args.test:
             cards = scrape_all_pokemon_cards(

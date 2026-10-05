@@ -74,10 +74,12 @@ class CardPipelineTests(unittest.TestCase):
         page_url = "https://bulbapedia.bulbagarden.net/wiki/Latest_Set_(TCG)"
         html = """
         <div><h2 id="Card_lists">Card lists</h2></div>
-        <table class="roundy"><tbody>
-          <tr></tr>
-          <tr><td><table><tbody><tr></tr><tr></tr></tbody></table></td></tr>
-        </tbody></table>
+        <div><table><tbody><tr><td>
+          <table class="roundy"><tbody>
+            <tr></tr>
+            <tr><td><table><tbody><tr></tr><tr></tr></tbody></table></td></tr>
+          </tbody></table>
+        </td></tr></tbody></table></div>
         """
         with patch.object(
             webscraper,

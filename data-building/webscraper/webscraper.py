@@ -398,6 +398,9 @@ def _extract_limitless_wrr(card):
     if weakness_match:
         weakness = clean_text(weakness_match.group(1))
 
+    if weakness and weakness.lower() == "none":
+        weakness = None
+
     resistance_match = re.search(
         r"Resistance\s*:\s*(.*?)(?=\s*Retreat\s*:|$)",
         text,

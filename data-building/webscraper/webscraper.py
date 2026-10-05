@@ -102,26 +102,9 @@ def scrape_pokemon_info(url):
 
   # Calculate card type information
   pkmn_card_type = []
-  ancient_pkmn_list = ['Great Tusk', 'Scream Tail', 'Brute Bonnet', 'Flutter Mane', 'Slither Wing', 'Sandy Shocks', 'Roaring Moon', 'Koraidon', 'Walking Wake', 'Gouging Fire', 'Raging Bolt']
-  future_pkmn_list = ['Iron Treads', 'Iron Bundle', 'Iron Hands', 'Iron Jugulis', 'Iron Moth', 'Iron Thorns', 'Iron Valiant', 'Miraidon', 'Iron Leaves', 'Iron Boulder', 'Iron Crown']
+
   if '-ex' in pkmn_name:
     pkmn_card_type.append('ex')
-  if '-VSTAR' in pkmn_name:
-    pkmn_card_type.append('VSTAR')
-  elif '-VMAX' in pkmn_name:
-    pkmn_card_type.append('VMAX')
-  elif '-V' in pkmn_name:
-    pkmn_card_type.append('V')
-   
-  for ancient_pkmn in ancient_pkmn_list:
-    if ancient_pkmn in pkmn_name:
-      pkmn_card_type.append('Ancient')
-      break
-
-  for future_pkmn in future_pkmn_list:
-    if future_pkmn in pkmn_name:
-      pkmn_card_type.append('Future')
-      break
 
   # Extract weakness, resistance, retreat cost
   # Laughably bad website design so there is a one row table in the overall table w/ pokemon info
@@ -273,23 +256,25 @@ def scrape_pokemon_info(url):
 # convert to database and make sample query
 
 expansion_url_arr = [
-  "https://bulbapedia.bulbagarden.net/wiki/Brilliant_Stars_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Astral_Radiance_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_GO_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Lost_Origin_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Silver_Tempest_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Crown_Zenith_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Scarlet_%26_Violet_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Paldea_Evolved_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Obsidian_Flames_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/151_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Paradox_Rift_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Paldean_Fates_(TCG)",
   "https://bulbapedia.bulbagarden.net/wiki/Temporal_Forces_(TCG)",
-  "https://bulbapedia.bulbagarden.net/wiki/Twilight_Masquerade_(TCG)",]
-  # "https://bulbapedia.bulbagarden.net/wiki/SWSH_Black_Star_Promos_(TCG)",
-  # "https://bulbapedia.bulbagarden.net/wiki/SVP_Black_Star_Promos_(TCG)",
-  # "https://bulbapedia.bulbagarden.net/wiki/McDonald%27s_Collection_2023_(TCG)"]
+  "https://bulbapedia.bulbagarden.net/wiki/Twilight_Masquerade_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Shrouded_Fable_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Stellar_Crown_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Surging_Sparks_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Prismatic_Evolutions_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Journey_Together_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Destined_Rivals_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Black_Bolt_%26_White_Flare_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Black_Bolt_%26_White_Flare_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Mega_Evolution_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Phantasmal_Flames_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Ascended_Heroes_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Perfect_Order_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Chaos_Rising_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Pitch_Black_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/30th_Celebration_(TCG)",
+  "https://bulbapedia.bulbagarden.net/wiki/Delta_Reign_(TCG)"
+]
 
 set_lists_id = [
   "Set_list",
@@ -305,26 +290,31 @@ set_lists_id = [
   "Card_lists",
   "Set_list",
   "Card_lists",
-  "Card_lists",]
+  "Card_lists",
+]
   # "Card_list",
   # "Card_list",
   # "Set list"]]
 
 expansion_csv_name = [
-  "bs.csv",
-  "ar.csv",
-  "pg.csv",
-  "lo.csv",
-  "st.csv",
-  "cz.csv",
-  "sv.csv",
-  "pe.csv",
-  "of.csv",
-  "151.csv",
-  "pr.csv",
-  "pf.csv",
-  "tf.csv",
-  "tm.csv"
+  "tef.csv",
+  "twm.csv",
+  "sfa.csv",
+  "scr.csv",
+  "ssp.csv",
+  "pre.csv",
+  "jtg.csv",
+  "dri.csv",
+  "blk.csv",
+  "wht.csv",
+  "meg.csv",
+  "pfl.csv",
+  "asc.csv",
+  "por.csv",
+  "cri.csv",
+  "pbl.csv",
+  "30c.csv",
+  "dlr.csv"
 ]
 
 if test != True:   

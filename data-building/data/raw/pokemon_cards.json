@@ -3825,6 +3825,42 @@
       "source_url": "https://limitlesstcg.com/cards/30C/125"
     },
     {
+      "name": "Poké Pad",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a Pokémon that doesn't have a Rule Box, reveal it, and put it into your hand. Then, shuffle your deck. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)",
+      "card_number": "126",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "30C",
+      "source_url": "https://limitlesstcg.com/cards/30C/126",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Switch",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Switch your Active Pokémon with 1 of your Benched Pokémon.",
+      "card_number": "127",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "30C",
+      "source_url": "https://limitlesstcg.com/cards/30C/127",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Ultra Ball",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if you discard 2 other cards from your hand. Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.",
+      "card_number": "128",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "30C",
+      "source_url": "https://limitlesstcg.com/cards/30C/128",
+      "trainer_type": "Item"
+    },
+    {
       "name": "Tropius",
       "card_type": "Pokemon",
       "card_variants": [],
@@ -4050,7 +4086,8 @@
       "name": "Mega Delphox ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Braixen",
@@ -4635,7 +4672,8 @@
       "name": "Mega Zeraora ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -4771,7 +4809,8 @@
       "name": "Mega Slowbro ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Slowpoke",
@@ -4979,7 +5018,8 @@
       "name": "Mega Chandelure ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Lampent",
@@ -5282,7 +5322,8 @@
       "name": "Mega Darkrai ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -5827,7 +5868,8 @@
       "name": "Mega Excadrill ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Drilbur",
@@ -6037,6 +6079,210 @@
       "rarity": null,
       "set": "PBL",
       "source_url": "https://limitlesstcg.com/cards/PBL/71"
+    },
+    {
+      "name": "Antique Armor Fossil",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Play this card as if it were a 60-HP Basic [Colorless] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play. Ability: Protective Armor As long as this Pokémon is in the Active Spot, all of your Pokémon take 10 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance) .",
+      "card_number": "72",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/72",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Antique Skull Fossil",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Play this card as if it were a 60-HP Basic [Colorless] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play. Ability: Spiny Skull If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , place 3 damage counters on the Attacking Pokémon.",
+      "card_number": "73",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/73",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Backtrack Badge",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during your turn, after you flip any coins for an attack of the [Colorless] Pokémon this card is attached to, you may ignore all results of those coin flips and begin flipping those coins again.",
+      "card_number": "74",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/74",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Dark Bell",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Both Active non- [Darkness] Pokémon are now Confused.",
+      "card_number": "75",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/75",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Fossil Quarry",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, that player may search their deck for up to 2 Item cards that have \"Antique\" in their name and put them onto their Bench. Then, that player shuffles their deck.",
+      "card_number": "76",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/76",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Gladion's Final Battle",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only when it is the last card in your hand. During this turn, attacks used by your Pokémon that don't have a Rule Box do 80 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance) . (Pokémon ex, Pokémon V, etc. have Rule Boxes.)",
+      "card_number": "77",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/77",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Gwynn",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Discard up to 2 Pokémon that don't have a Rule Box from your hand, and draw 3 cards for each card you discarded in this way. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)",
+      "card_number": "78",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/78",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Jett",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Draw a card for each of your opponent's Mega Evolution Pokémon ex in play.",
+      "card_number": "79",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/79",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Misty's Vitality",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 4 Basic [Water] Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck. Your turn ends.",
+      "card_number": "80",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/80",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Rust Syndicate Grunt",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if any of your Pokémon were Knocked Out during your opponent's last turn. Discard an Energy from 1 of your opponent's Pokémon.",
+      "card_number": "81",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/81",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Tremendous Bomb",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to isn't a Mega Evolution Pokémon ex, is in the Active Spot, and takes 240 or more damage from an attack from your opponent's Mega Evolution Pokémon ex (even if this Pokémon is Knocked Out) , place 12 damage counters on the Attacking Pokémon. If you placed any damage counters in this way, discard this card.",
+      "card_number": "82",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/82",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Shadowy Darkness Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Darkness] Energy. As long as the [Darkness] Pokémon this card is attached to is on your Bench, prevent all damage done to it by attacks from your opponent's Pokémon.",
+      "card_number": "83",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/83",
+      "energy_type": "Special Energy"
+    },
+    {
+      "name": "Voltaic Lightning Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Lightning] Energy. Attacks used by the [Lightning] Pokémon this card is attached to do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance) .",
+      "card_number": "84",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/84",
+      "energy_type": "Special Energy"
+    },
+    {
+      "name": "Brave Bangle",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to doesn't have a Rule Box, the attacks it uses do 30 more damage to your opponent's Active Pokémon ex (before applying Weakness and Resistance) . (Pokémon ex, Pokémon V, etc. have Rule Boxes.)",
+      "card_number": "104",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/104",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Crushing Hammer",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Flip a coin. If heads, discard an Energy attached to 1 of your opponent's Pokémon.",
+      "card_number": "105",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/105",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Energy Switch",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Move a basic Energy from 1 of your Pokémon to another of your Pokémon.",
+      "card_number": "107",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/107",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Iron Defender",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "During your opponent's next turn, all of your [Metal] Pokémon take 30 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance) . (This includes new Pokémon that come into play.)",
+      "card_number": "110",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "PBL",
+      "source_url": "https://limitlesstcg.com/cards/PBL/110",
+      "trainer_type": "Item"
     },
     {
       "name": "Weedle",
@@ -6472,7 +6718,8 @@
       "name": "Mega Pyroar ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Litleo",
@@ -6705,7 +6952,8 @@
       "name": "Mega Greninja ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Frogadier",
@@ -7110,7 +7358,8 @@
       "name": "Mega Floette ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -7512,7 +7761,8 @@
       "name": "Mega Gallade ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Kirlia",
@@ -8044,7 +8294,8 @@
       "name": "Mega Dragalge ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Skrelp",
@@ -8315,6 +8566,210 @@
       "rarity": null,
       "set": "CRI",
       "source_url": "https://limitlesstcg.com/cards/CRI/73"
+    },
+    {
+      "name": "Adversity Policy",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to has Weakness to your opponent's Active Pokémon's type, is in the Active Spot, and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , draw 3 cards.",
+      "card_number": "74",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/74",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Ange Floette",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can put this card into play only if you discard a Prism Tower in play, and you can put this card into play during the same turn you play Prism Tower. Each Mega Floette ex in play (both yours and your opponent's) gets +150 HP.",
+      "card_number": "75",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/75",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "AZ's Tranquility",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Switch your Active Pokémon with 1 of your Benched Pokémon. If you moved a Pokémon ex to your Bench in this way, heal 80 damage from that Pokémon.",
+      "card_number": "76",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/76",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Emma",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Your opponent reveals their hand, and you draw a card for each Pokémon you find there.",
+      "card_number": "77",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/77",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Great Haul Net",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Choose 1 or both: • Shuffle up to 3 [Water] Pokémon from your discard pile into your deck. • Shuffle up to 3 Basic [Water] Energy cards from your discard pile into your deck.",
+      "card_number": "78",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/78",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Philippe",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Attach up to 2 Basic [Metal] Energy cards from your discard pile to 1 of your [Metal] Pokémon.",
+      "card_number": "79",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/79",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Prism Tower",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, that player may discard 2 cards from their hand in order to draw a card.",
+      "card_number": "80",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/80",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Roxie's Performance",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "During your opponent's next turn, their Poisoned Pokémon can't retreat. (This includes newly Poisoned Pokémon.)",
+      "card_number": "81",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/81",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Special Red Card",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if your opponent has 3 or fewer Prize cards remaining. Your opponent shuffles their hand and puts it on the bottom of their deck. If they put any cards on the bottom of their deck in this way, they draw 3 cards.",
+      "card_number": "82",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/82",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Transformation Tome",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You must play 2 Transformation Tome cards at once. (This effect works one time for 2 cards.) Choose a Basic Pokémon in your discard pile and switch it with 1 of your Basic Pokémon in play. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon.",
+      "card_number": "83",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/83",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Bubbly Water Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Water] Energy. The [Water] Pokémon this card is attached to recovers from all Special Conditions and can't be affected by any Special Conditions.",
+      "card_number": "84",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/84",
+      "energy_type": "Special Energy"
+    },
+    {
+      "name": "Magnetic Metal Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Metal] Energy. The [Metal] Pokémon this card is attached to has no Retreat Cost.",
+      "card_number": "85",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/85",
+      "energy_type": "Special Energy"
+    },
+    {
+      "name": "Nitro Fire Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Fire] Energy. If this card is discarded by an effect of an attack used by the [Fire] Pokémon this card is attached to, put this card into your hand after attack damage and effects.",
+      "card_number": "86",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/86",
+      "energy_type": "Special Energy"
+    },
+    {
+      "name": "Energy Retrieval",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Put up to 2 Basic Energy cards from your discard pile into your hand.",
+      "card_number": "108",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/108",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Jumbo Ice Cream",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 80 damage from your Active Pokémon that has 3 or more Energy attached.",
+      "card_number": "109",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/109",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Surfing Beach",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, that player may switch their Active [Water] Pokémon with 1 of their Benched [Water] Pokémon.",
+      "card_number": "114",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/114",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Tool Scrapper",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Choose up to 2 Pokémon Tool cards attached to Pokémon in play (yours or your opponent's) and discard them.",
+      "card_number": "115",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "CRI",
+      "source_url": "https://limitlesstcg.com/cards/CRI/115",
+      "trainer_type": "Item"
     },
     {
       "name": "Spinarak",
@@ -8931,7 +9386,8 @@
       "name": "Mega Starmie ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Staryu",
@@ -9257,7 +9713,8 @@
       "name": "Mega Clefable ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Clefairy",
@@ -9767,7 +10224,8 @@
       "name": "Mega Zygarde ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -10020,7 +10478,8 @@
       "name": "Mega Skarmory ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -10419,6 +10878,282 @@
       "source_url": "https://limitlesstcg.com/cards/POR/67"
     },
     {
+      "name": "Antique Jaw Fossil",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Play this card as if it were a 60-HP Basic [Colorless] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play. Ability: Intimidating Jaw As long as this Pokémon is in the Active Spot, attacks used by your opponent's Active Pokémon do 30 less damage (before applying Weakness and Resistance) .",
+      "card_number": "68",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/68",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Antique Sail Fossil",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Play this card as if it were a 60-HP Basic [Colorless] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play. Ability: Protective Sail Whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to this Pokémon.",
+      "card_number": "69",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/69",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Core Memory",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "The Mega Zygarde ex this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) FFFF Geobuster 350 Discard all Energy from this Pokémon.",
+      "card_number": "70",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/70",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Energy Search",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a Basic Energy card, reveal it, and put it into your hand. Then, shuffle your deck.",
+      "card_number": "72",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/72",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Energy Swatter",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Your opponent reveals their hand, and you choose an Energy card you find there and put it on the bottom of their deck.",
+      "card_number": "73",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/73",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Hole-Digging Shovel",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Discard the top 2 cards of your deck.",
+      "card_number": "74",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/74",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Jacinthe",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 150 damage from 1 of your [Psychic] Pokémon.",
+      "card_number": "75",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/75",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Judge",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Each player shuffles their hand into their deck and draws 4 cards.",
+      "card_number": "76",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/76",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Lumiose City",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, that player may search their deck for a Basic Pokémon and put it onto their Bench. Then, that player shuffles their deck. If a player searches their deck in this way, their turn ends.",
+      "card_number": "77",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/77",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Lumiose Galette",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 20 damage and remove a Special Condition from your Active Pokémon.",
+      "card_number": "78",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/78",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Naveen",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Draw cards until you have 5 cards in your hand. Before drawing cards, you may discard any number of cards from your hand. (If you can't draw any cards in this way, you can't use this card.)",
+      "card_number": "79",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/79",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Poké Ball",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.",
+      "card_number": "80",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/80",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Pokémon Catcher",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Flip a coin. If heads, switch in 1 of your opponent's Benched Pokémon to the Active Spot.",
+      "card_number": "82",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/82",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Potion",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 30 damage from 1 of your Pokémon.",
+      "card_number": "83",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/83",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Rosa's Encouragement",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if you have more Prize cards remaining than your opponent. Attach up to 2 Basic Energy cards from your discard pile to 1 of your Stage 2 Pokémon.",
+      "card_number": "84",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/84",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Tarragon",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Put up to 4 in any combination of [Fighting] Pokémon and Basic [Fighting] Energy cards from your discard pile into your hand.",
+      "card_number": "85",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/85",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Growing Grass Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Grass] Energy. The [Grass] Pokémon this card is attached to gets +20 HP.",
+      "card_number": "86",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/86",
+      "energy_type": "Special Energy"
+    },
+    {
+      "name": "Rocky Fighting Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Fighting] Energy. Prevent all effects of attacks used by your opponent's Pokémon done to the [Fighting] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)",
+      "card_number": "87",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/87",
+      "energy_type": "Special Energy"
+    },
+    {
+      "name": "Telepathic Psychic Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Psychic] Energy. When you attach this card from your hand to a [Psychic] Pokémon, search your deck for up to 2 Basic [Psychic] Pokémon and put them onto your Bench. Then, shuffle your deck.",
+      "card_number": "88",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/88",
+      "energy_type": "Special Energy"
+    },
+    {
+      "name": "Energy Recycler",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Shuffle up to 5 basic Energy cards from your discard pile into your deck.",
+      "card_number": "108",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/108",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Forest of Vitality",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Each player's [Grass] Pokémon can evolve into [Grass] Pokémon during the turn they play those Pokémon, except during their first turn.",
+      "card_number": "109",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/109",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Sacred Ash",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Shuffle 5 Pokémon from your discard pile into your deck.",
+      "card_number": "115",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/115",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Wondrous Patch",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Attach a Basic [Psychic] Energy card from your discard pile to 1 of your Benched [Psychic] Pokémon.",
+      "card_number": "117",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "POR",
+      "source_url": "https://limitlesstcg.com/cards/POR/117",
+      "trainer_type": "Item"
+    },
+    {
       "name": "Erika's Oddish",
       "card_type": "Pokemon",
       "card_variants": [],
@@ -10698,7 +11433,8 @@
       "name": "Mega Meganium ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Bayleef",
@@ -11046,7 +11782,8 @@
       "name": "Mega Charizard Y ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Charmeleon",
@@ -11315,7 +12052,8 @@
       "name": "Mega Emboar ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Pignite",
@@ -11534,7 +12272,8 @@
       "name": "Cinderace ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Raboot",
@@ -11693,7 +12432,8 @@
       "name": "Mega Feraligatr ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Croconaw",
@@ -11817,7 +12557,8 @@
       "name": "Mega Froslass ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Snorunt",
@@ -12152,7 +12893,8 @@
       "name": "Pikachu ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -12278,7 +13020,8 @@
       "name": "Mega Eelektross ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Eelektrik",
@@ -12649,7 +13392,8 @@
       "name": "Miraidon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -13156,7 +13900,8 @@
       "name": "Mega Gardevoir ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Kirlia",
@@ -13907,7 +14652,8 @@
       "name": "Mega Lucario ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Riolu",
@@ -14006,7 +14752,8 @@
       "name": "Mega Hawlucha ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -14167,7 +14914,8 @@
       "name": "Koraidon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -14296,7 +15044,8 @@
       "name": "Mega Gengar ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Haunter",
@@ -14608,7 +15357,8 @@
       "name": "Mega Scrafty ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Scraggy",
@@ -15151,7 +15901,8 @@
       "name": "Mega Dragonite ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Dragonair",
@@ -15421,7 +16172,8 @@
       "name": "Dragapult ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Drakloak",
@@ -15819,7 +16571,8 @@
       "name": "Mega Audino ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -16043,7 +16796,8 @@
       "name": "Terapagos ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -16079,6 +16833,414 @@
       "rarity": null,
       "set": "ASC",
       "source_url": "https://limitlesstcg.com/cards/ASC/179"
+    },
+    {
+      "name": "Acerola's Mischief",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if your opponent has 2 or fewer Prize cards remaining. Choose 1 of your Pokémon in play. During your opponent's next turn, prevent all damage from and effects of attacks done to that Pokémon by your opponent's Pokémon ex.",
+      "card_number": "180",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/180",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Air Balloon",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "The Retreat Cost of the Pokémon this card is attached to is [Colorless] [Colorless] less.",
+      "card_number": "181",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/181",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Anthea & Concordia",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if you have N's Darmanitan, N's Zoroark ex, N's Vanilluxe, N's Klinklang, N's Reshiram, and N's Zekrom in play. During this turn, if your opponent's Active Pokémon is Knocked Out by damage from an attack used by your N's Pokémon, take 3 more Prize cards.",
+      "card_number": "182",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/182",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Boss's Orders",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Switch 1 of your opponent's Benched Pokémon with their Active Pokémon.",
+      "card_number": "183",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/183",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Buddy-Buddy Poffin",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 2 Basic Pokémon with 70 HP or less and put them onto your Bench. Then, shuffle your deck.",
+      "card_number": "184",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/184",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Canari",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if you discard another card from your hand. Search your deck for up to 4 [Lightning] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "185",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/185",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Counter Gain",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If you have more Prize cards remaining than your opponent, the attacks of the Pokémon this card is attached to cost [Colorless] less.",
+      "card_number": "186",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/186",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Fighting Gong",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a Basic [Fighting] Energy card or a Basic [Fighting] Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.",
+      "card_number": "187",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/187",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Glass Trumpet",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if you have any Tera Pokémon in play. Choose up to 2 of your Benched [Colorless] Pokémon and attach a Basic Energy card from your discard pile to each of them.",
+      "card_number": "189",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/189",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Iris's Fighting Spirit",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if you discard another card from your hand. Draw cards until you have 6 cards in your hand.",
+      "card_number": "190",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/190",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Light Ball",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Attacks used by the Pikachu ex this card is attached to do 50 more damage to your opponent's Active Pokémon ex (before applying Weakness and Resistance) .",
+      "card_number": "191",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/191",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Lillie's Determination",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Shuffle your hand into your deck. Then, draw 6 cards. If you have exactly 6 Prize cards remaining, draw 8 cards instead.",
+      "card_number": "192",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/192",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Mega Signal",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a Mega Evolution Pokémon ex, reveal it, and put it into your hand. Then, shuffle your deck.",
+      "card_number": "193",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/193",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Mystery Garden",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, that player may discard an Energy card from their hand in order to draw cards until they have as many cards in their hand as they have [Psychic] Pokémon in play.",
+      "card_number": "194",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/194",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "N's PP Up",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Attach a Basic Energy card from your discard pile to 1 of your Benched N's Pokémon.",
+      "card_number": "195",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/195",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Night Stretcher",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Put a Pokémon or a Basic Energy card from your discard pile into your hand.",
+      "card_number": "196",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/196",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Nighttime Mine",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Attacks used by each Tera Pokémon in play (both yours and your opponent's) cost [Colorless] more.",
+      "card_number": "197",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/197",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Premium Power Pro",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "During this turn, attacks used by your [Fighting] Pokémon do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance) .",
+      "card_number": "199",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/199",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Surfer",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Switch your Active Pokémon with 1 of your Benched Pokémon. If you do, draw cards until you have 5 cards in your hand.",
+      "card_number": "200",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/200",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Team Rocket's Archer",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if any of your Team Rocket's Pokémon were Knocked Out during your opponent's last turn. Each player shuffles their hand into their deck. Then, you draw 5 cards, and your opponent draws 3 cards.",
+      "card_number": "201",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/201",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Team Rocket's Ariana",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Draw cards until you have 5 cards in your hand. If all of your Pokémon in play are Team Rocket's Pokémon, draw cards until you have 8 cards in your hand instead.",
+      "card_number": "202",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/202",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Team Rocket's Factory",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, if they played a Supporter card that has \"Team Rocket\" in its name from their hand this turn, they may draw 2 cards.",
+      "card_number": "203",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/203",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Team Rocket's Giovanni",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Switch your Active Team Rocket's Pokémon with 1 of your Benched Team Rocket's Pokémon. If you do, switch in 1 of your opponent's Benched Pokémon to the Active Spot.",
+      "card_number": "204",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/204",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Team Rocket's Great Ball",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Flip a coin. If heads, search your deck for an Evolution Team Rocket's Pokémon, reveal it, and put it into your hand. If tails, search your deck for a Basic Team Rocket's Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.",
+      "card_number": "205",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/205",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Team Rocket's Hypnotizer",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Team Rocket's Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Team Rocket's Pokémon is Knocked Out) , the Attacking Pokémon is now Asleep.",
+      "card_number": "206",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/206",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Team Rocket's Petrel",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a Trainer card, reveal it, and put it into your hand. Then, shuffle your deck.",
+      "card_number": "207",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/207",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Team Rocket's Proton",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If you go first, you may use this card during your first turn. Search your deck for up to 3 Basic Team Rocket's Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "208",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/208",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Team Rocket's Transceiver",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a Supporter card that has \"Team Rocket\" in its name, reveal it, and put it into your hand. Then, shuffle your deck.",
+      "card_number": "209",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/209",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Team Rocket's Watchtower",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "[Colorless] Pokémon in play (both yours and your opponent's) have no Abilities.",
+      "card_number": "210",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/210",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Thick Scale",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "The [Dragon] Pokémon this card is attached to takes 50 less damage from attacks from your opponent's [Grass] , [Fire] , [Water] , or [Lightning] Pokémon (after applying Weakness and Resistance) .",
+      "card_number": "211",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/211",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Urbain",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Draw 3 cards.",
+      "card_number": "214",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/214",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Waitress",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Look at the top 6 cards of your deck and attach a Basic Energy card you find there to 1 of your Pokémon. Shuffle the other cards back into your deck.",
+      "card_number": "215",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/215",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Prism Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "This card provides [Colorless] Energy. If the Pokémon this card is attached to is a Basic Pokémon, this card provides every type of Energy but provides only 1 Energy at a time.",
+      "card_number": "216",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/216",
+      "energy_type": "Special Energy"
+    },
+    {
+      "name": "Team Rocket's Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "This card can only be attached to a Team Rocket's Pokémon. If this card is attached to anything other than a Team Rocket's Pokémon, discard this card. As long as this card is attached to a Pokémon, it provides 2 in any combination of [Psychic] Energy and [Darkness] Energy.",
+      "card_number": "217",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/217",
+      "energy_type": "Special Energy"
     },
     {
       "name": "Sprigatito ex",
@@ -16117,10 +17279,47 @@
       "source_url": "https://limitlesstcg.com/cards/ASC/251"
     },
     {
+      "name": "Black Belt's Training",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "During this turn, attacks used by your Pokémon do 40 more damage to your opponent's Active Pokémon ex (before applying Weakness and Resistance) .",
+      "card_number": "255",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/255",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Cheren",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Draw 3 cards.",
+      "card_number": "258",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/258",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Jamming Tower",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Pokémon Tools attached to each Pokémon (both yours and your opponent's) have no effect.",
+      "card_number": "261",
+      "card_mark": "J",
+      "rarity": null,
+      "set": "ASC",
+      "source_url": "https://limitlesstcg.com/cards/ASC/261",
+      "trainer_type": "Stadium"
+    },
+    {
       "name": "Mega Diancie ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -16339,7 +17538,8 @@
       "name": "Mega Heracross ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -16615,7 +17815,8 @@
       "name": "Mega Charizard X ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Charmeleon",
@@ -17939,7 +19140,8 @@
       "name": "Mega Sharpedo ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Carvanha",
@@ -18682,7 +19884,8 @@
       "name": "Mega Lopunny ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Buneary",
@@ -18713,6 +19916,102 @@
       "rarity": null,
       "set": "PFL",
       "source_url": "https://limitlesstcg.com/cards/PFL/84"
+    },
+    {
+      "name": "Battle Cage",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Prevent all damage counters from being placed on Benched Pokémon (both yours and your opponent's) by effects of attacks and Abilities from the opponent's Pokémon. (Damage from attacks is still taken.)",
+      "card_number": "85",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "PFL",
+      "source_url": "https://limitlesstcg.com/cards/PFL/85",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Blowtorch",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if you discard a Basic [Fire] Energy card from your hand. Discard a Pokémon Tool or Special Energy card from 1 of your opponent's Pokémon, or discard a Stadium in play.",
+      "card_number": "86",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "PFL",
+      "source_url": "https://limitlesstcg.com/cards/PFL/86",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Dawn",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a Basic Pokémon, a Stage 1 Pokémon, and a Stage 2 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "87",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "PFL",
+      "source_url": "https://limitlesstcg.com/cards/PFL/87",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Dizzying Valley",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Confused Pokémon (both yours and your opponent's) don't recover from that Special Condition when they evolve or devolve.",
+      "card_number": "88",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "PFL",
+      "source_url": "https://limitlesstcg.com/cards/PFL/88",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Firebreather",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 7 Basic [Fire] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "89",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "PFL",
+      "source_url": "https://limitlesstcg.com/cards/PFL/89",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Grimsley's Move",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Look at the top 7 cards of your deck and put a [Darkness] Pokémon you find there onto your Bench. Shuffle the other cards and put them on the bottom of your deck. You can't use this card during your first turn.",
+      "card_number": "90",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "PFL",
+      "source_url": "https://limitlesstcg.com/cards/PFL/90",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Punk Helmet",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the [Darkness] Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , place 4 damage counters on the Attacking Pokémon.",
+      "card_number": "92",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "PFL",
+      "source_url": "https://limitlesstcg.com/cards/PFL/92",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Sacred Charm",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "The Pokémon this card is attached to takes 30 less damage from attacks from your opponent's Pokémon that have an Ability (after applying Weakness and Resistance) .",
+      "card_number": "93",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "PFL",
+      "source_url": "https://limitlesstcg.com/cards/PFL/93",
+      "trainer_type": "Tool"
     },
     {
       "name": "Paldean Wooper",
@@ -18767,6 +20066,18 @@
       "rarity": null,
       "set": "PFL",
       "source_url": "https://limitlesstcg.com/cards/PFL/106"
+    },
+    {
+      "name": "Ignition Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "If this card is attached to 1 of your Pokémon, discard it at the end of your turn. As long as this card is attached to a Pokémon, it provides [Colorless] Energy. If this card is attached to an Evolution Pokémon, it provides [Colorless] [Colorless] [Colorless] Energy instead.",
+      "card_number": "124",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "PFL",
+      "source_url": "https://limitlesstcg.com/cards/PFL/124",
+      "energy_type": "Special Energy"
     },
     {
       "name": "Bulbasaur",
@@ -18826,7 +20137,8 @@
       "name": "Mega Venusaur ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Ivysaur",
@@ -19431,7 +20743,8 @@
       "name": "Mega Camerupt ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Numel",
@@ -19877,7 +21190,8 @@
       "name": "Mega Abomasnow ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Snover",
@@ -20290,7 +21604,8 @@
       "name": "Mega Manectric ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Electrike",
@@ -21182,7 +22497,8 @@
       "name": "Mega Absol ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -21433,7 +22749,8 @@
       "name": "Mega Mawile ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -21623,7 +22940,8 @@
       "name": "Mega Latias ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -21745,7 +23063,8 @@
       "name": "Mega Kangaskhan ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Mega"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -22044,6 +23363,90 @@
       "rarity": null,
       "set": "MEG",
       "source_url": "https://limitlesstcg.com/cards/MEG/112"
+    },
+    {
+      "name": "Lt. Surge's Bargain",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Ask your opponent if each player may take a Prize card. If yes, each player takes a Prize card. If no, you draw 4 cards.",
+      "card_number": "120",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "MEG",
+      "source_url": "https://limitlesstcg.com/cards/MEG/120",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Pokémon Center Lady",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 60 damage and remove all Special Conditions from 1 of your Pokémon.",
+      "card_number": "123",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "MEG",
+      "source_url": "https://limitlesstcg.com/cards/MEG/123",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Rare Candy",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Choose 1 of your Basic Pokémon in play. If you have a Stage 2 card in your hand that evolves from that Pokémon, put that card on the Basic Pokémon. (This counts as evolving that Pokémon.) You can't use this card during your first turn or on a Basic Pokémon that was put into play this turn.",
+      "card_number": "125",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "MEG",
+      "source_url": "https://limitlesstcg.com/cards/MEG/125",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Repel",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.",
+      "card_number": "126",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "MEG",
+      "source_url": "https://limitlesstcg.com/cards/MEG/126",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Risky Ruins",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Whenever any player puts a Basic non- [Darkness] Pokémon onto their Bench during their turn, place 2 damage counters on that Pokémon.",
+      "card_number": "127",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "MEG",
+      "source_url": "https://limitlesstcg.com/cards/MEG/127",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Strange Timepiece",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Devolve 1 of your evolved [Psychic] Pokémon by putting any number of Evolution cards on it into your hand. (That Pokémon can't evolve this turn.)",
+      "card_number": "128",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "MEG",
+      "source_url": "https://limitlesstcg.com/cards/MEG/128",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Wally's Compassion",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal all damage from 1 of your Mega Evolution Pokémon ex. If you healed any damage in this way, put all Energy attached to that Pokémon into your hand.",
+      "card_number": "132",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "MEG",
+      "source_url": "https://limitlesstcg.com/cards/MEG/132",
+      "trainer_type": "Supporter"
     },
     {
       "name": "Snivy",
@@ -24450,6 +25853,66 @@
       "rarity": null,
       "set": "BLK",
       "source_url": "https://limitlesstcg.com/cards/BLK/78"
+    },
+    {
+      "name": "Antique Cover Fossil",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Play this card as if it were a 60-HP Basic [Colorless] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play. Ability: Protective Cover Prevent all effects of attacks used by your opponent's Pokémon done to this Pokémon. (Damage is not an effect.)",
+      "card_number": "80",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "BLK",
+      "source_url": "https://limitlesstcg.com/cards/BLK/80",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Energy Coin",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Flip 2 coins. If both of them are heads, search your deck for a Basic Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck.",
+      "card_number": "81",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "BLK",
+      "source_url": "https://limitlesstcg.com/cards/BLK/81",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Fennel",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 40 damage from each of your Pokémon.",
+      "card_number": "82",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "BLK",
+      "source_url": "https://limitlesstcg.com/cards/BLK/82",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "N's Plan",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Move up to 2 Energy from your Benched Pokémon to your Active Pokémon.",
+      "card_number": "83",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "BLK",
+      "source_url": "https://limitlesstcg.com/cards/BLK/83",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Pokégear 3.0",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Look at the top 7 cards of your deck. You may reveal a Supporter card you find there and put it into your hand. Shuffle the other cards back into your deck.",
+      "card_number": "84",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "BLK",
+      "source_url": "https://limitlesstcg.com/cards/BLK/84",
+      "trainer_type": "Item"
     },
     {
       "name": "Sewaddle",
@@ -26940,6 +28403,42 @@
       "rarity": null,
       "set": "WHT",
       "source_url": "https://limitlesstcg.com/cards/WHT/78"
+    },
+    {
+      "name": "Antique Plume Fossil",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Play this card as if it were a 60-HP Basic [Colorless] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play. Ability: Plume Protection As long as this Pokémon is on your Bench, prevent all damage done to this Pokémon by attacks from your opponent's Pokémon.",
+      "card_number": "79",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "WHT",
+      "source_url": "https://limitlesstcg.com/cards/WHT/79",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Harlequin",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Each player shuffles their hand into their deck. Then, flip a coin. If heads, you draw 5 cards, and your opponent draws 3 cards. If tails, you draw 3 cards, and your opponent draws 5 cards.",
+      "card_number": "83",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "WHT",
+      "source_url": "https://limitlesstcg.com/cards/WHT/83",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Hilda",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for an Evolution Pokémon and an Energy card, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "84",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "WHT",
+      "source_url": "https://limitlesstcg.com/cards/WHT/84",
+      "trainer_type": "Supporter"
     },
     {
       "name": "Ethan's Pinsir",
@@ -31450,6 +32949,126 @@
       "source_url": "https://limitlesstcg.com/cards/DRI/160"
     },
     {
+      "name": "Arven's Sandwich",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 30 damage from your Active Pokémon. If that Pokémon is an Arven's Pokémon, heal 100 damage from it instead.",
+      "card_number": "161",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "DRI",
+      "source_url": "https://limitlesstcg.com/cards/DRI/161",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Cynthia's Power Weight",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "The Cynthia's Pokémon this card is attached to gets +70 HP.",
+      "card_number": "162",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "DRI",
+      "source_url": "https://limitlesstcg.com/cards/DRI/162",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Emcee's Hype",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Draw 2 cards. If your opponent has 3 or fewer Prize cards remaining, draw 2 more cards.",
+      "card_number": "163",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "DRI",
+      "source_url": "https://limitlesstcg.com/cards/DRI/163",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Ethan's Adventure",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 3 in any combination of Ethan's Pokémon and Basic [Fire] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "165",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "DRI",
+      "source_url": "https://limitlesstcg.com/cards/DRI/165",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Granite Cave",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Steven's Pokémon (both yours and your opponent's) take 30 less damage from attacks from the opponent's Pokémon (after applying Weakness and Resistance) .",
+      "card_number": "166",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "DRI",
+      "source_url": "https://limitlesstcg.com/cards/DRI/166",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Spikemuth Gym",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, that player may search their deck for a Marnie's Pokémon, reveal it, and put it into their hand. Then, that player shuffles their deck.",
+      "card_number": "169",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "DRI",
+      "source_url": "https://limitlesstcg.com/cards/DRI/169",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Team Rocket's Bother-Bot",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Turn 1 of your opponent's face-down Prize cards face up and choose a random card from your opponent's hand. Your opponent reveals that card. You may have your opponent switch those cards. (That Prize card remains face up for the rest of the game.)",
+      "card_number": "172",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "DRI",
+      "source_url": "https://limitlesstcg.com/cards/DRI/172",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Team Rocket's Venture Bomb",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Flip a coin. If heads, put 2 damage counters on 1 of your opponent's Pokémon. If tails, put 2 damage counters on your Active Pokémon.",
+      "card_number": "179",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "DRI",
+      "source_url": "https://limitlesstcg.com/cards/DRI/179",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "TM Machine",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 3 Pokémon Tool cards that have \"Technical Machine\" in their name, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "181",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "DRI",
+      "source_url": "https://limitlesstcg.com/cards/DRI/181",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Levincia",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, that player may put up to 2 Basic [Lightning] Energy cards from their discard pile into their hand.",
+      "card_number": "244",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "DRI",
+      "source_url": "https://limitlesstcg.com/cards/DRI/244",
+      "trainer_type": "Stadium"
+    },
+    {
       "name": "Caterpie",
       "card_type": "Pokemon",
       "card_variants": [],
@@ -35429,6 +37048,138 @@
       "source_url": "https://limitlesstcg.com/cards/JTG/141"
     },
     {
+      "name": "Billy & O'Nare",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Draw 2 cards. Then, if you have 10 or more cards in your hand, draw 2 more cards.",
+      "card_number": "142",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "JTG",
+      "source_url": "https://limitlesstcg.com/cards/JTG/142",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Brock's Scouting",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 2 Basic Pokémon or 1 Evolution Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "146",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "JTG",
+      "source_url": "https://limitlesstcg.com/cards/JTG/146",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Hop's Bag",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 2 Basic Hop's Pokémon and put them onto your Bench. Then, shuffle your deck.",
+      "card_number": "147",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "JTG",
+      "source_url": "https://limitlesstcg.com/cards/JTG/147",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Hop's Choice Band",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Attacks used by the Hop's Pokémon this card is attached to cost [Colorless] less and do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance) .",
+      "card_number": "148",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "JTG",
+      "source_url": "https://limitlesstcg.com/cards/JTG/148",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Lillie's Pearl",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Lillie's Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes 1 fewer Prize card.",
+      "card_number": "151",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "JTG",
+      "source_url": "https://limitlesstcg.com/cards/JTG/151",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "N's Castle",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "N's Pokémon in play (both yours and your opponent's) have no Retreat Cost.",
+      "card_number": "152",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "JTG",
+      "source_url": "https://limitlesstcg.com/cards/JTG/152",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Postwick",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Attacks used by Hop's Pokémon (both yours and your opponent's) do 30 more damage to the opponent's Active Pokémon (before applying Weakness and Resistance) .",
+      "card_number": "154",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "JTG",
+      "source_url": "https://limitlesstcg.com/cards/JTG/154",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Redeemable Ticket",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Count your Prize cards, shuffle them, and put them on the bottom of your deck. Then, take that many cards from the top of your deck and put them face down as your Prize cards.",
+      "card_number": "156",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "JTG",
+      "source_url": "https://limitlesstcg.com/cards/JTG/156",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Ruffian",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Discard a Pokémon Tool and a Special Energy from 1 of your opponent's Pokémon.",
+      "card_number": "157",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "JTG",
+      "source_url": "https://limitlesstcg.com/cards/JTG/157",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Super Potion",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 60 damage from 1 of your Pokémon. If you do, discard an Energy attached to that Pokémon.",
+      "card_number": "158",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "JTG",
+      "source_url": "https://limitlesstcg.com/cards/JTG/158",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Spiky Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Colorless] Energy. If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , put 2 damage counters on the Attacking Pokémon.",
+      "card_number": "159",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "JTG",
+      "source_url": "https://limitlesstcg.com/cards/JTG/159",
+      "energy_type": "Special Energy"
+    },
+    {
       "name": "Exeggcute",
       "card_type": "Pokemon",
       "card_variants": [],
@@ -35554,7 +37305,8 @@
       "name": "Leafeon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Eevee",
@@ -35747,7 +37499,8 @@
       "name": "Teal Mask Ogerpon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -35785,7 +37538,8 @@
       "name": "Flareon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Eevee",
@@ -35894,7 +37648,8 @@
       "name": "Hearthflame Mask Ogerpon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -36060,7 +37815,8 @@
       "name": "Vaporeon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Eevee",
@@ -36169,7 +37925,8 @@
       "name": "Glaceon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Eevee",
@@ -36210,7 +37967,8 @@
       "name": "Wellspring Mask Ogerpon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -36287,7 +38045,8 @@
       "name": "Jolteon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Eevee",
@@ -36362,7 +38121,8 @@
       "name": "Espeon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Eevee",
@@ -36587,7 +38347,8 @@
       "name": "Sylveon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Eevee",
@@ -37002,7 +38763,8 @@
       "name": "Cornerstone Mask Ogerpon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -37040,7 +38802,8 @@
       "name": "Umbreon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Eevee",
@@ -37430,7 +39193,8 @@
       "name": "Eevee ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -37924,10 +39688,335 @@
       "source_url": "https://limitlesstcg.com/cards/PRE/91"
     },
     {
+      "name": "Amarys",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Draw 4 cards. At the end of this turn, if you have 5 or more cards in your hand, discard your hand.",
+      "card_number": "93",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/93",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Area Zero Underdepths",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Each player who has any Tera Pokémon in play can have up to 8 Pokémon on their Bench. If a player no longer has any Tera Pokémon in play, that player discards Pokémon from their Bench until they have 5. When this card leaves play, both players discard Pokémon from their Bench until they have 5, and the player who played this card discards first.",
+      "card_number": "94",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/94",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Binding Mochi",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Attacks used by the Poisoned Pokémon this card is attached to do 40 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance) .",
+      "card_number": "95",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/95",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Briar",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if your opponent has exactly 2 Prize cards remaining. During this turn, if your opponent's Active Pokémon is Knocked Out by damage from an attack used by your Tera Pokémon, take 1 more Prize card.",
+      "card_number": "100",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/100",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Bug Catching Set",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Look at the top 7 cards of your deck. You may reveal up to 2 in any combination of [Grass] Pokémon and Basic [Grass] Energy cards you find there and put them into your hand. Shuffle the other cards back into your deck.",
+      "card_number": "102",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/102",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Carmine",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If you go first, you may use this card during your first turn. Discard your hand and draw 5 cards.",
+      "card_number": "103",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/103",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Ciphermaniac's Codebreaking",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for 2 cards, shuffle your deck, then put those cards on top of it in any order.",
+      "card_number": "104",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/104",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Crispin",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 2 Basic Energy cards of different types, reveal them, and put 1 of them into your hand. Attach the other to 1 of your Pokémon. Then, shuffle your deck.",
+      "card_number": "105",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/105",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Explorer's Guidance",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.",
+      "card_number": "107",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/107",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Festival Grounds",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Each Pokémon that has any Energy attached (both yours and your opponent's) recovers from all Special Conditions and can't be affected by any Special Conditions.",
+      "card_number": "108",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/108",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Friends in Paldea",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Draw 3 cards.",
+      "card_number": "109",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/109",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Haban Berry",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to is damaged by an attack from your opponent's [Dragon] Pokémon, it takes 60 less damage (after applying Weakness and Resistance) , and discard this card.",
+      "card_number": "111",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/111",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Janine's Secret Art",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Choose up to 2 of your [Darkness] Pokémon. For each of those Pokémon, search your deck for a Basic [Darkness] Energy card and attach it to that Pokémon. Then, shuffle your deck. If you attached Energy to your Active Pokémon in this way, it is now Poisoned.",
+      "card_number": "112",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/112",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Kieran",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Choose 1: • Switch your Active Pokémon with 1 of your Benched Pokémon. • During this turn, attacks used by your Pokémon do 30 more damage to your opponent's Active Pokémon ex and Active Pokémon V (before applying Weakness and Resistance) .",
+      "card_number": "113",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/113",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Lacey",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Shuffle your hand into your deck. Then, draw 4 cards. If your opponent has 3 or fewer Prize cards remaining, draw 8 cards instead.",
+      "card_number": "114",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/114",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Larry's Skill",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Discard your hand and search your deck for a Pokémon, a Supporter card, and a Basic Energy card, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "115",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/115",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Max Rod",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Put up to 5 in any combination of Pokémon and Basic Energy cards from your discard pile into your hand.",
+      "card_number": "116",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/116",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Maximum Belt",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Attacks used by the Pokémon this card is attached to do 50 more damage to your opponent's Active Pokémon ex (before applying Weakness and Resistance) .",
+      "card_number": "117",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/117",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Ogre's Mask",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Choose a Pokémon ex in your discard pile that has \"Ogerpon\" in its name, and switch it with 1 of your Pokémon ex in play that has \"Ogerpon\" in its name. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon.",
+      "card_number": "118",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/118",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Prime Catcher",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Switch in 1 of your opponent's Benched Pokémon to the Active Spot. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.",
+      "card_number": "119",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/119",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Rescue Board",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "The Retreat Cost of the Pokémon this card is attached to is [Colorless] less. If that Pokémon's remaining HP is 30 or less, it has no Retreat Cost.",
+      "card_number": "126",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/126",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Roto-Stick",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Look at the top 4 cards of your deck. You may reveal any number of Supporter cards you find there and put them into your hand. Shuffle the other cards back into your deck.",
+      "card_number": "127",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/127",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Scoop Up Cyclone",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Put 1 of your Pokémon and all cards attached to it into your hand.",
+      "card_number": "128",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/128",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Sparkling Crystal",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "When the Tera Pokémon this card is attached to uses an attack, that attack costs 1 Energy less. (The Energy can be of any type.)",
+      "card_number": "129",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/129",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Treasure Tracker",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 5 Pokémon Tool cards, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "131",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/131",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Eri",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Your opponent reveals their hand, and you discard up to 2 Item cards you find there.",
+      "card_number": "136",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/136",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Tyme",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Tell your opponent the name of a Pokémon in your hand and put that Pokémon face down in front of you. Your opponent guesses that Pokémon's HP, and then you reveal it. If your opponent guessed right, they draw 4 cards. If they guessed wrong, you draw 4 cards. Then, return the Pokémon to your hand.",
+      "card_number": "143",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/143",
+      "trainer_type": "Supporter"
+    },
+    {
       "name": "Ceruledge ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Charcadet",
@@ -38135,6 +40224,18 @@
       "rarity": null,
       "set": "PRE",
       "source_url": "https://limitlesstcg.com/cards/PRE/168"
+    },
+    {
+      "name": "Drayton",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Look at the top 7 cards of your deck. You may reveal a Pokémon and a Trainer card you find there and put them into your hand. Shuffle the other cards back into your deck.",
+      "card_number": "172",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "PRE",
+      "source_url": "https://limitlesstcg.com/cards/PRE/172",
+      "trainer_type": "Supporter"
     },
     {
       "name": "Iron Leaves ex",
@@ -40818,7 +42919,8 @@
       "name": "Palossand ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Sandygast",
@@ -41312,7 +43414,8 @@
       "name": "Flygon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Vibrava",
@@ -41738,7 +43841,8 @@
       "name": "Hydreigon ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Zweilous",
@@ -42179,7 +44283,8 @@
       "name": "Alolan Exeggutor ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Exeggcute",
@@ -42485,7 +44590,8 @@
       "name": "Tatsugiri ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -42992,7 +45098,8 @@
       "name": "Cyclizar ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -43064,6 +45171,318 @@
       "rarity": null,
       "set": "SSP",
       "source_url": "https://limitlesstcg.com/cards/SSP/160"
+    },
+    {
+      "name": "Amulet of Hope",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck.",
+      "card_number": "162",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/162",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Babiri Berry",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to is damaged by an attack from your opponent's [Metal] Pokémon, it takes 60 less damage (after applying Weakness and Resistance) , and discard this card.",
+      "card_number": "163",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/163",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Brilliant Blender",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 5 cards and discard them. Then, shuffle your deck.",
+      "card_number": "164",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/164",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Call Bell",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if you go second, and only during your first turn. Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.",
+      "card_number": "165",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/165",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Chill Teaser Toy",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if you go second, and only during your first turn. Put an Energy attached to 1 of your opponent's Pokémon into their hand.",
+      "card_number": "166",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/166",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Clemont's Quick Wit",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 60 damage from each of your [Lightning] Pokémon.",
+      "card_number": "167",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/167",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Colbur Berry",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to is damaged by an attack from your opponent's [Darkness] Pokémon, it takes 60 less damage (after applying Weakness and Resistance) , and discard this card.",
+      "card_number": "168",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/168",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Cyrano",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 3 Pokémon ex, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "170",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/170",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Deduction Kit",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Look at the top 3 cards of your deck and put them back in any order, or shuffle them and put them on the bottom of your deck.",
+      "card_number": "171",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/171",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Dragon Elixir",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 60 damage from your Active [Dragon] Pokémon.",
+      "card_number": "172",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/172",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Drasna",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Shuffle your hand into your deck. Then, flip a coin. If heads, draw 8 cards. If tails, draw 3 cards.",
+      "card_number": "173",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/173",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Dusk Ball",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Look at the 7 cards from the bottom of your deck. Choose 1 Pokémon you find there, show it to your opponent, and put it into your hand. Put the remaining cards back on top of your deck. Shuffle your deck afterward.",
+      "card_number": "175",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/175",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Energy Search Pro",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for any number of Basic Energy cards of different types, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "176",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/176",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Gravity Mountain",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Each Stage 2 Pokémon in play (both yours and your opponent's) gets -30 HP.",
+      "card_number": "177",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/177",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Jasmine's Gaze",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "During your opponent's next turn, all of your Pokémon take 30 less damage from attacks from your opponent's Pokémon (after applying Weakness and Resistance) . (This includes new Pokémon that come into play.)",
+      "card_number": "178",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/178",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Lisia's Appeal",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Switch in 1 of your opponent's Benched Basic Pokémon to the Active Spot. If you do, the new Active Pokémon is now Confused.",
+      "card_number": "179",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/179",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Lively Stadium",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Each Basic Pokémon in play (both yours and your opponent's) gets +30 HP.",
+      "card_number": "180",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/180",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Meddling Memo",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Your opponent counts the cards in their hand, shuffles those cards, and puts them on the bottom of their deck. If they do, they draw that many cards.",
+      "card_number": "181",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/181",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Megaton Blower",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Discard all Pokémon Tools and Special Energy from all of your opponent's Pokémon, and discard a Stadium in play.",
+      "card_number": "182",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/182",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Miracle Headset",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Put up to 2 Supporter cards from your discard pile into your hand.",
+      "card_number": "183",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/183",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Passho Berry",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to is damaged by an attack from your opponent's [Water] Pokémon, it takes 60 less damage (after applying Weakness and Resistance) , and discard this card.",
+      "card_number": "184",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/184",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Precious Trolley",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for any number of Basic Pokémon and put them onto your Bench. Then, shuffle your deck.",
+      "card_number": "185",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/185",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Scramble Switch",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Switch your Active Pokémon with 1 of your Benched Pokémon. Then, you may move as many Energy attached to the old Active Pokémon to the new Active Pokémon as you like.",
+      "card_number": "186",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/186",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Technical Machine: Fluorite",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "The Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) If this card is attached to 1 of your Pokémon, discard it at the end of your turn. GWP Fluorite Discard all Energy from this Pokémon, and heal all damage from each of your Tera Pokémon.",
+      "card_number": "188",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/188",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Tera Orb",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a Tera Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.",
+      "card_number": "189",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/189",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Enriching Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Colorless] Energy. When you attach this card from your hand to a Pokémon, draw 4 cards.",
+      "card_number": "191",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SSP",
+      "source_url": "https://limitlesstcg.com/cards/SSP/191",
+      "energy_type": "Special Energy"
     },
     {
       "name": "Ledyba",
@@ -43668,7 +46087,8 @@
       "name": "Lapras ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Basic",
       "previous_evolution": null,
@@ -44245,7 +46665,8 @@
       "name": "Galvantula ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Joltik",
@@ -46362,6 +48783,90 @@
       "source_url": "https://limitlesstcg.com/cards/SCR/127"
     },
     {
+      "name": "Antique Root Fossil",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Play this card as if it were a 60-HP Basic [Colorless] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play. Ability: Primal Root As long as this Pokémon is in the Active Spot, attacks used by your opponent's Basic Pokémon cost [Colorless] more.",
+      "card_number": "130",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SCR",
+      "source_url": "https://limitlesstcg.com/cards/SCR/130",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Deluxe Bomb",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , put 12 damage counters on the Attacking Pokémon. If you placed any damage counters in this way, discard this card.",
+      "card_number": "134",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SCR",
+      "source_url": "https://limitlesstcg.com/cards/SCR/134",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Grand Tree",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, that player may search their deck for a Stage 1 Pokémon that evolves from 1 of their Basic Pokémon and put it onto that Pokémon to evolve it. If that Pokémon was evolved in this way, that player may search their deck for a Stage 2 Pokémon that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, that player shuffles their deck. (Players can't evolve a Basic Pokémon during their first turn or a Basic Pokémon that was put into play this turn.)",
+      "card_number": "136",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SCR",
+      "source_url": "https://limitlesstcg.com/cards/SCR/136",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Gravity Gemstone",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "As long as the Pokémon this card is attached to is in the Active Spot, the Retreat Cost of both Active Pokémon is [Colorless] more.",
+      "card_number": "137",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SCR",
+      "source_url": "https://limitlesstcg.com/cards/SCR/137",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Kofu",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Put 2 cards from your hand on the bottom of your deck in any order. If you put 2 cards on the bottom of your deck in this way, draw 4 cards. (If you can't put 2 cards from your hand on the bottom of your deck, you can't use this card.)",
+      "card_number": "138",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SCR",
+      "source_url": "https://limitlesstcg.com/cards/SCR/138",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Occa Berry",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to is damaged by an attack from your opponent's [Fire] Pokémon, it takes 60 less damage (after applying Weakness and Resistance) , and discard this card.",
+      "card_number": "140",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SCR",
+      "source_url": "https://limitlesstcg.com/cards/SCR/140",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Payapa Berry",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to is damaged by an attack from your opponent's [Psychic] Pokémon, it takes 60 less damage (after applying Weakness and Resistance) , and discard this card.",
+      "card_number": "141",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SCR",
+      "source_url": "https://limitlesstcg.com/cards/SCR/141",
+      "trainer_type": "Tool"
+    },
+    {
       "name": "Joltik",
       "card_type": "Pokemon",
       "card_variants": [],
@@ -46759,7 +49264,8 @@
       "name": "Revavroom ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Varoom",
@@ -47808,6 +50314,126 @@
       "source_url": "https://limitlesstcg.com/cards/SFA/53"
     },
     {
+      "name": "Academy at Night",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, that player may put a card from their hand on top of their deck.",
+      "card_number": "54",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SFA",
+      "source_url": "https://limitlesstcg.com/cards/SFA/54",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Cassiopeia",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only when it is the last card in your hand. Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.",
+      "card_number": "56",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SFA",
+      "source_url": "https://limitlesstcg.com/cards/SFA/56",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Colress's Tenacity",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a Stadium card and an Energy card, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "57",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SFA",
+      "source_url": "https://limitlesstcg.com/cards/SFA/57",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Dangerous Laser",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Your opponent's Active Pokémon is now Burned and Confused.",
+      "card_number": "58",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SFA",
+      "source_url": "https://limitlesstcg.com/cards/SFA/58",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Neutralization Zone",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Prevent all damage done to Pokémon that don't have a Rule Box (both yours and your opponent's) by attacks from the opponent's Pokémon ex and Pokémon V. (Pokémon ex, Pokémon V, etc. have Rule Boxes.) This card can't be put into your hand or deck from the discard pile.",
+      "card_number": "60",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SFA",
+      "source_url": "https://limitlesstcg.com/cards/SFA/60",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Poké Vital A",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 150 damage from 1 of your Pokémon. This card can't be put into your hand or deck from the discard pile.",
+      "card_number": "62",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SFA",
+      "source_url": "https://limitlesstcg.com/cards/SFA/62",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Powerglass",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "At the end of your turn (after your attack) , if the Pokémon this card is attached to is in the Active Spot, you may attach a Basic Energy card from your discard pile to it.",
+      "card_number": "63",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SFA",
+      "source_url": "https://limitlesstcg.com/cards/SFA/63",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Xerosic's Machinations",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Your opponent discards cards from their hand until they have 3 cards in their hand.",
+      "card_number": "64",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SFA",
+      "source_url": "https://limitlesstcg.com/cards/SFA/64",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Darkness Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": null,
+      "card_number": "98",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SFA",
+      "source_url": "https://limitlesstcg.com/cards/SFA/98",
+      "energy_type": "Basic Energy"
+    },
+    {
+      "name": "Metal Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": null,
+      "card_number": "99",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SFA",
+      "source_url": "https://limitlesstcg.com/cards/SFA/99",
+      "energy_type": "Basic Energy"
+    },
+    {
       "name": "Tangela",
       "card_type": "Pokemon",
       "card_variants": [],
@@ -48606,7 +51232,8 @@
       "name": "Magcargo ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Slugma",
@@ -50765,7 +53392,8 @@
       "name": "Greninja ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 2",
       "previous_evolution": "Frogadier",
@@ -51751,6 +54379,222 @@
       "rarity": null,
       "set": "TWM",
       "source_url": "https://limitlesstcg.com/cards/TWM/140"
+    },
+    {
+      "name": "Accompanying Flute",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Reveal the top 5 cards of your opponent's deck. You may choose any number of Basic Pokémon you find there and put those Pokémon onto their Bench. Your opponent shuffles the other cards back into their deck.",
+      "card_number": "142",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/142",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Caretaker",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Draw 2 cards. If you drew any cards in this way and if Community Center is in play, shuffle this Caretaker into your deck instead of discarding it.",
+      "card_number": "144",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/144",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Community Center",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, if they played a Supporter card from their hand this turn, they may heal 10 damage from each of their Pokémon.",
+      "card_number": "146",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/146",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Cook",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal 70 damage from your Active Pokémon.",
+      "card_number": "147",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/147",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Enhanced Hammer",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Discard a Special Energy attached to 1 of your opponent's Pokémon.",
+      "card_number": "148",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/148",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Handheld Fan",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , move an Energy from the Attacking Pokémon to 1 of your opponent's Benched Pokémon.",
+      "card_number": "150",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/150",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Hassel",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if any of your Pokémon were Knocked Out during your opponent's last turn. Look at the top 8 cards of your deck and put up to 3 of them into your hand. Shuffle the other cards back into your deck.",
+      "card_number": "151",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/151",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Hyper Aroma",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 3 Stage 1 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "152",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/152",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Lana's Aid",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Put up to 3 in any combination of Pokémon that don't have a Rule Box and Basic Energy cards from your discard pile into your hand. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)",
+      "card_number": "155",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/155",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Love Ball",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a Pokémon with the same name as 1 of your opponent's Pokémon in play, reveal it, and put it into your hand. Then, shuffle your deck.",
+      "card_number": "156",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/156",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Lucian",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Each player shuffles their hand and puts it on the bottom of their deck. If either player put any cards on the bottom of their deck in this way, each player flips a coin. If heads, that player draws 6 cards. If tails, they draw 3 cards.",
+      "card_number": "157",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/157",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Lucky Helmet",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Whenever the Pokémon this card is attached to is your Active Pokémon and is damaged by an opponent's attack (even if that Pokémon is Knocked Out) , draw 2 cards.",
+      "card_number": "158",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/158",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Perrin",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Reveal up to 2 Pokémon in your hand and put them into your deck. If you do, search your deck for up to that many Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "160",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/160",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Secret Box",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if you discard 3 other cards from your hand. Search your deck for an Item card, a Pokémon Tool card, a Supporter card, and a Stadium card, reveal them, and put them into your hand. Then, shuffle your deck.",
+      "card_number": "163",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/163",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Survival Brace",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to has full HP and would be Knocked Out by damage from an attack from your opponent's Pokémon, it is not Knocked Out, and its remaining HP becomes 10. Then, discard this card.",
+      "card_number": "164",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/164",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Unfair Stamp",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if any of your Pokémon were Knocked Out during your opponent's last turn. Each player shuffles their hand into their deck. Then, you draw 5 cards, and your opponent draws 2 cards.",
+      "card_number": "165",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/165",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Boomerang Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Colorless] Energy. If this card is discarded by an effect of an attack used by the Pokémon this card is attached to, attach this card from your discard pile to that Pokémon after attacking.",
+      "card_number": "166",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/166",
+      "energy_type": "Special Energy"
+    },
+    {
+      "name": "Legacy Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time. If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes 1 fewer Prize card. This effect of your Legacy Energy can't be applied more than once per game.",
+      "card_number": "167",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TWM",
+      "source_url": "https://limitlesstcg.com/cards/TWM/167",
+      "energy_type": "Special Energy"
     },
     {
       "name": "Scyther",
@@ -53448,7 +56292,8 @@
       "name": "Wugtrio ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Wiglett",
@@ -54838,7 +57683,8 @@
       "name": "Farigiraf ex",
       "card_type": "Pokemon",
       "card_variants": [
-        "ex"
+        "ex",
+        "Tera"
       ],
       "evolution_stage": "Stage 1",
       "previous_evolution": "Girafarig",
@@ -55768,6 +58614,174 @@
       "source_url": "https://limitlesstcg.com/cards/TEF/139"
     },
     {
+      "name": "Awakening Drum",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Draw a card for each of your Ancient Pokémon in play.",
+      "card_number": "141",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/141",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Bianca's Devotion",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Heal all damage from 1 of your Pokémon that has 30 HP or less remaining.",
+      "card_number": "142",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/142",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Boxed Order",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then, shuffle your deck. Your turn ends.",
+      "card_number": "143",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/143",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Full Metal Lab",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "[Metal] Pokémon (both yours and your opponent's) take 30 less damage from attacks from the opponent's Pokémon (after applying Weakness and Resistance) .",
+      "card_number": "148",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/148",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Hand Trimmer",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Each player discards cards from their hand until they have 5 cards in their hand. Your opponent discards first. (If a player has 5 or fewer cards in their hand, they do not discard.)",
+      "card_number": "150",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/150",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Heavy Baton",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "If the Pokémon this card is attached to has a Retreat Cost of exactly 4, is in the Active Spot, and is Knocked Out by damage from an attack from your opponent's Pokémon, move up to 3 Basic Energy cards from that Pokémon to your Benched Pokémon in any way you like.",
+      "card_number": "151",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/151",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Hero's Cape",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "The Pokémon this card is attached to gets +100 HP.",
+      "card_number": "152",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/152",
+      "trainer_type": "Tool"
+    },
+    {
+      "name": "Master Ball",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.",
+      "card_number": "153",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/153",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Morty's Conviction",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "You can use this card only if you discard another card from your hand. Draw a card for each of your opponent's Benched Pokémon.",
+      "card_number": "155",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/155",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Perilous Jungle",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "During Pokémon Checkup, put 2 more damage counters on each Poisoned non- [Darkness] Pokémon (both yours and your opponent's) .",
+      "card_number": "156",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/156",
+      "trainer_type": "Stadium"
+    },
+    {
+      "name": "Reboot Pod",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Attach a Basic Energy card from your discard pile to each of your Future Pokémon.",
+      "card_number": "158",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/158",
+      "trainer_type": "Item"
+    },
+    {
+      "name": "Salvatore",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Search your deck for a card that has no Abilities and evolves from 1 of your Pokémon, and put it onto that Pokémon to evolve it. Then, shuffle your deck. You can use this card on a Pokémon you put down when you were setting up to play or on a Pokémon that was put into play this turn.",
+      "card_number": "160",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/160",
+      "trainer_type": "Supporter"
+    },
+    {
+      "name": "Mist Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Colorless] Energy. Prevent all effects of attacks used by your opponent's Pokémon done to the Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)",
+      "card_number": "161",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/161",
+      "energy_type": "Special Energy"
+    },
+    {
+      "name": "Neo Upper Energy",
+      "card_type": "Energy",
+      "card_variants": [],
+      "effect_text": "As long as this card is attached to a Pokémon, it provides [Colorless] Energy. If this card is attached to a Stage 2 Pokémon, this card provides every type of Energy but provides only 2 Energy at a time.",
+      "card_number": "162",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "TEF",
+      "source_url": "https://limitlesstcg.com/cards/TEF/162",
+      "energy_type": "Special Energy"
+    },
+    {
       "name": "Drifloon",
       "card_type": "Pokemon",
       "card_variants": [],
@@ -55956,6 +58970,18 @@
       "rarity": null,
       "set": "MEP",
       "source_url": "https://limitlesstcg.com/cards/MEP/21"
+    },
+    {
+      "name": "Celebratory Fanfare",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Once during each player's turn, that player may heal 10 damage from each of their Pokémon. If a player healed any damage in this way, their turn ends.",
+      "card_number": "28",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "MEP",
+      "source_url": "https://limitlesstcg.com/cards/MEP/28",
+      "trainer_type": "Stadium"
     },
     {
       "name": "Bulbasaur",
@@ -56719,6 +59745,18 @@
       "source_url": "https://limitlesstcg.com/cards/MEP/86"
     },
     {
+      "name": "Paradise Resort",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "The Retreat Cost of each Psyduck in play (both yours and your opponent's) is [Colorless] less.",
+      "card_number": "92",
+      "card_mark": "I",
+      "rarity": null,
+      "set": "MEP",
+      "source_url": "https://limitlesstcg.com/cards/MEP/92",
+      "trainer_type": "Stadium"
+    },
+    {
       "name": "Armarouge ex",
       "card_type": "Pokemon",
       "card_variants": [
@@ -56965,6 +60003,18 @@
       "rarity": null,
       "set": "SVP",
       "source_url": "https://limitlesstcg.com/cards/SVP/113"
+    },
+    {
+      "name": "Picnicker",
+      "card_type": "Trainer",
+      "card_variants": [],
+      "effect_text": "Flip a coin. If heads, draw 4 cards. If tails, draw 2 cards.",
+      "card_number": "114",
+      "card_mark": "H",
+      "rarity": null,
+      "set": "SVP",
+      "source_url": "https://limitlesstcg.com/cards/SVP/114",
+      "trainer_type": "Supporter"
     },
     {
       "name": "Snorlax",

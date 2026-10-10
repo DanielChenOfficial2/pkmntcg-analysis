@@ -1,4 +1,5 @@
-﻿"""Scrape Pokemon card facts from Limitless TCG into a JSON interchange file."""
+﻿
+"""Scrape Pokemon card facts from Limitless TCG into a JSON interchange file."""
 
 import argparse
 import json
@@ -32,6 +33,7 @@ TEST_SEARCH_URL = (
     "&display=text"
 )
 
+
 def _build_set_search_url(set_code):
     set_code = set_code.upper()
 
@@ -42,17 +44,12 @@ def _build_set_search_url(set_code):
         "display": "text",
     }
 
-    return (
-        f"{LIMITLESS_BASE_URL}/cards"
-        f"?{urlencode(params)}"
-    )
+    return f"{LIMITLESS_BASE_URL}/cards?{urlencode(params)}"
 
 
 def _load_cards(input_path):
     if not input_path.exists():
-        raise ValueError(
-            f"Dataset does not exist: {input_path}"
-        )
+        raise ValueError(f"Dataset does not exist: {input_path}")
 
     try:
         with input_path.open("r", encoding="utf-8") as input_file:
@@ -63,34 +60,23 @@ def _load_cards(input_path):
         ) from error
 
     if not isinstance(data, dict) or "cards" not in data:
-        raise ValueError(
-            f"Invalid dataset format: {input_path}"
-        )
+        raise ValueError(f"Invalid dataset format: {input_path}")
 
     return data["cards"]
 
 
 def _add_set(cards, set_code):
     set_code = set_code.upper()
-
     search_url = _build_set_search_url(set_code)
 
-    print(
-        f"Scraping set {set_code}...",
-        file=sys.stderr,
-    )
+    print(f"Scraping set {set_code}...", file=sys.stderr)
 
     new_cards = _limitless_search_cards(search_url)
 
     if not new_cards:
-        raise ValueError(
-            f"No cards found for set {set_code}"
-        )
+        raise ValueError(f"No cards found for set {set_code}")
 
-    found_sets = {
-        card.get("set")
-        for card in new_cards
-    }
+    found_sets = {card.get("set") for card in new_cards}
 
     if set_code not in found_sets:
         raise ValueError(
@@ -98,8 +84,7 @@ def _add_set(cards, set_code):
         )
 
     new_cards = [
-        card
-        for card in new_cards
+        card for card in new_cards
         if card.get("set") == set_code
     ]
 
@@ -111,8 +96,7 @@ def _add_set(cards, set_code):
     _populate_set_metadata(new_cards)
 
     cards = [
-        card
-        for card in cards
+        card for card in cards
         if card.get("set") != set_code
     ]
 
@@ -123,14 +107,11 @@ def _add_set(cards, set_code):
 
 def _remove_mark(cards, regulation_mark):
     regulation_mark = regulation_mark.upper()
-
     original_count = len(cards)
 
     cards = [
-        card
-        for card in cards
-        if (card.get("card_mark") or "").upper()
-        != regulation_mark
+        card for card in cards
+        if (card.get("card_mark") or "").upper() != regulation_mark
     ]
 
     removed_count = original_count - len(cards)
@@ -142,6 +123,7 @@ def _remove_mark(cards, regulation_mark):
     )
 
     return cards
+
 
 def _validate_cards(cards):
     warnings = []
@@ -177,6 +159,18 @@ def _validate_cards(cards):
         "M",
     }
 
+    valid_trainer_types = {
+        "Item",
+        "Supporter",
+        "Tool",
+        "Stadium",
+    }
+
+    valid_energy_types = {
+        "Basic Energy",
+        "Special Energy",
+    }
+
     seen_identities = set()
 
     for index, card in enumerate(cards, start=1):
@@ -193,24 +187,16 @@ def _validate_cards(cards):
         # Common card fields
 
         if not card.get("name"):
-            warnings.append(
-                f"{prefix}: missing name"
-            )
+            warnings.append(f"{prefix}: missing name")
 
         if not card.get("set"):
-            warnings.append(
-                f"{prefix}: missing set"
-            )
+            warnings.append(f"{prefix}: missing set")
 
         if not card.get("card_number"):
-            warnings.append(
-                f"{prefix}: missing card number"
-            )
+            warnings.append(f"{prefix}: missing card number")
 
         if not card.get("source_url"):
-            warnings.append(
-                f"{prefix}: missing source URL"
-            )
+            warnings.append(f"{prefix}: missing source URL")
 
         # Duplicate card identity
 
@@ -226,7 +212,7 @@ def _validate_cards(cards):
         else:
             seen_identities.add(identity)
 
-        # Card type
+        # Pokémon-specific fields
 
         if card.get("card_type") == "Pokemon":
             hp = card.get("hp")
@@ -287,7 +273,9 @@ def _validate_cards(cards):
                 cost = attack.get("cost")
 
                 if cost:
-                    invalid_symbols = set(cost) - valid_energy_symbols
+                    invalid_symbols = (
+                        set(cost) - valid_energy_symbols
+                    )
 
                     if invalid_symbols:
                         warnings.append(
@@ -315,7 +303,46 @@ def _validate_cards(cards):
                         f"{damage_modifier!r}"
                     )
 
+        # Trainer-specific fields
+
+        elif card.get("card_type") == "Trainer":
+            trainer_type = card.get("trainer_type")
+
+            if trainer_type not in valid_trainer_types:
+                warnings.append(
+                    f"{prefix}: invalid Trainer subtype: "
+                    f"{trainer_type!r}"
+                )
+
+            if not card.get("effect_text"):
+                warnings.append(
+                    f"{prefix}: Trainer card is missing effect text"
+                )
+
+        # Energy-specific fields
+
+        elif card.get("card_type") == "Energy":
+            energy_type = card.get("energy_type")
+
+            if energy_type not in valid_energy_types:
+                warnings.append(
+                    f"{prefix}: invalid Energy subtype: "
+                    f"{energy_type!r}"
+                )
+
+            if not card.get("effect_text"):
+                warnings.append(
+                    f"{prefix}: Energy card is missing effect text"
+                )
+
+        else:
+            warnings.append(
+                f"{prefix}: unknown card type: "
+                f"{card.get('card_type')!r}"
+            )
+
     return warnings
+
 
 def clean_text(value):
     return re.sub(r"\s+", " ", value or "").strip()
@@ -328,13 +355,16 @@ def _page_soup(url, session=None):
         response = getter(url, timeout=30)
         response.raise_for_status()
     except requests.RequestException as error:
-        raise ValueError(f"Could not fetch page {url}: {error}") from error
+        raise ValueError(
+            f"Could not fetch page {url}: {error}"
+        ) from error
 
     return BeautifulSoup(response.content, "html.parser")
 
 
 def _parse_limitless_attack(info_tag, effect_tag):
     symbol = info_tag.select_one(".ptcg-symbol")
+
     cost = (
         clean_text(symbol.get_text(" ", strip=True))
         if symbol is not None
@@ -348,7 +378,6 @@ def _parse_limitless_attack(info_tag, effect_tag):
 
     damage = None
     damage_modifier = None
-    # damage_text = None
 
     match = re.match(
         r"^(?P<name>.+?)\s+(?P<damage>\d+)(?P<modifier>[+×])?$",
@@ -359,7 +388,6 @@ def _parse_limitless_attack(info_tag, effect_tag):
         raw_text = match.group("name")
         damage = int(match.group("damage"))
         damage_modifier = match.group("modifier")
-        # damage_text = f"{match.group('damage')}{damage_modifier or ''}"
 
     effect_text = (
         clean_text(effect_tag.get_text(" ", strip=True))
@@ -372,7 +400,6 @@ def _parse_limitless_attack(info_tag, effect_tag):
         "cost": cost,
         "damage": damage,
         "damage_modifier": damage_modifier,
-        # "damage_text": damage_text,
         "effect_text": effect_text or None,
     }
 
@@ -425,17 +452,122 @@ def _extract_limitless_wrr(card):
     return weakness, resistance, retreat_cost
 
 
-def _extract_card_variants(name):
+def _extract_card_variants(name, abilities=None):
     variants = []
     normalized = clean_text(name or "").lower()
 
     if normalized.endswith(" ex") or "-ex" in normalized:
         variants.append("ex")
 
+    if re.search(r"\bmega\b", normalized, flags=re.IGNORECASE):
+        variants.append("Mega")
+
+    if any(
+        clean_text(ability.get("name")).lower() == "tera"
+        for ability in (abilities or [])
+    ):
+        variants.append("Tera")
+
     return variants
 
 
-def _parse_limitless_card(card):
+def _extract_trainer_type(type_text):
+    match = re.search(
+        r"\b(Item|Supporter|Tool|Stadium)\b",
+        type_text,
+        flags=re.IGNORECASE,
+    )
+
+    if match is None:
+        return None
+
+    return match.group(1).title()
+
+
+def _extract_energy_type(type_text):
+    match = re.search(
+        r"\b(Basic|Special)\s+Energy\b",
+        type_text,
+        flags=re.IGNORECASE,
+    )
+
+    if match is None:
+        return None
+
+    return f"{match.group(1).title()} Energy"
+
+
+def _extract_card_effect(card):
+    sections = card.select(".card-text-section")
+
+    # The first section contains the name and category.
+    # The second section contains the effect text.
+    if len(sections) < 2:
+        return None
+
+    effect_section = BeautifulSoup(
+        str(sections[1]),
+        "html.parser",
+    )
+
+    # Remove symbols' copy-only bracket decorations.
+    for tag in effect_section.select(".copy-only"):
+        tag.decompose()
+
+    # Replace energy symbols with readable energy names.
+    for symbol in effect_section.select(
+        '.ptcg-symbol, [style*="ptcg-font"]'
+    ):
+        tooltip = symbol.get("data-tooltip")
+
+        if tooltip:
+            symbol.replace_with(f"[{tooltip}]")
+
+    effect_text = clean_text(
+        effect_section.get_text(" ", strip=True)
+    )
+
+    return effect_text or None
+
+
+def _extract_set_and_number(set_info, name_tag):
+    """Extract the set code and card number from the page or card URL."""
+    if set_info is not None:
+        set_info_text = clean_text(
+            set_info.get_text(" ", strip=True)
+        )
+
+        match = re.match(
+            r"^(.*?)\s+#\s*(\d+)\s*$",
+            set_info_text,
+        )
+
+        if match:
+            return clean_text(match.group(1)), match.group(2)
+
+    if name_tag is not None:
+        href = name_tag.get("href", "")
+        path_parts = urlsplit(href).path.strip("/").split("/")
+
+        if (
+            len(path_parts) >= 3
+            and path_parts[0] == "cards"
+            and path_parts[1]
+            and path_parts[2].isdigit()
+        ):
+            return path_parts[1].upper(), path_parts[2]
+
+    raise ValueError(
+        "Card is missing set and card number information"
+    )
+
+
+def _parse_limitless_non_pokemon_card(
+    card,
+    card_type,
+    subtype_field,
+    subtype,
+):
     title_block = card.select_one(".card-text-title")
     type_block = card.select_one(".card-text-type")
     set_info = card.select_one(".card-set-info")
@@ -447,8 +579,49 @@ def _parse_limitless_card(card):
     if type_block is None:
         raise ValueError("Card is missing type information")
 
-    if set_info is None:
-        raise ValueError("Card is missing set information")
+    if name_tag is None:
+        raise ValueError("Card is missing card name/link")
+
+    name = clean_text(name_tag.get_text(" ", strip=True))
+
+    source_url = urljoin(
+        LIMITLESS_BASE_URL,
+        name_tag.get("href", ""),
+    )
+
+    set_code, card_number = _extract_set_and_number(
+        set_info,
+        name_tag,
+    )
+
+    result = {
+        "name": name,
+        "card_type": card_type,
+        "card_variants": [],
+        "effect_text": _extract_card_effect(card),
+        "card_number": card_number,
+        "card_mark": None,
+        "rarity": None,
+        "set": set_code,
+        "source_url": source_url,
+    }
+
+    result[subtype_field] = subtype
+
+    return result
+
+
+def _parse_limitless_pokemon_card(card):
+    title_block = card.select_one(".card-text-title")
+    type_block = card.select_one(".card-text-type")
+    set_info = card.select_one(".card-set-info")
+    name_tag = card.select_one(".card-text-name a")
+
+    if title_block is None:
+        raise ValueError("Card is missing title information")
+
+    if type_block is None:
+        raise ValueError("Card is missing type information")
 
     if name_tag is None:
         raise ValueError("Card is missing card name/link")
@@ -470,13 +643,13 @@ def _parse_limitless_card(card):
     if hp_match:
         hp = int(hp_match.group(1))
 
-        type_text = title_text[:hp_match.start()].strip()
-        type_text = type_text.rstrip("-").strip()
+        title_type_text = title_text[:hp_match.start()].strip()
+        title_type_text = title_type_text.rstrip("-").strip()
 
-        if " - " in type_text:
-            pokemon_type = type_text.rsplit(" - ", 1)[-1].strip()
+        if " - " in title_type_text:
+            pokemon_type = title_type_text.rsplit(" - ", 1)[-1].strip()
         else:
-            pokemon_type = type_text or None
+            pokemon_type = title_type_text or None
 
     type_text = clean_text(type_block.get_text(" ", strip=True))
 
@@ -493,7 +666,12 @@ def _parse_limitless_card(card):
     )
 
     if stage_match:
-        evolution_stage = stage_match.group(1)
+        stage_value = stage_match.group(1)
+        evolution_stage = {
+            "basic": "Basic",
+            "stage 1": "Stage 1",
+            "stage 2": "Stage 2",
+        }[stage_value.casefold()]
 
     evolves_from = type_block.find(
         string=re.compile(r"Evolves from", flags=re.IGNORECASE)
@@ -518,9 +696,7 @@ def _parse_limitless_card(card):
         if info is None:
             continue
 
-        ability_name = clean_text(
-            info.get_text(" ", strip=True)
-        )
+        ability_name = clean_text(info.get_text(" ", strip=True))
 
         ability_name = re.sub(
             r"^Ability\s*:\s*",
@@ -551,37 +727,17 @@ def _parse_limitless_card(card):
         if info is None:
             continue
 
-        moves.append(
-            _parse_limitless_attack(info, effect)
-        )
+        moves.append(_parse_limitless_attack(info, effect))
 
-    set_info_text = clean_text(
-        set_info.get_text(" ", strip=True)
+    set_code, card_number = _extract_set_and_number(
+        set_info,
+        name_tag,
     )
-
-    set_match = re.match(
-        r"^(.*?)\s+#\s*(\d+)\s*$",
-        set_info_text,
-    )
-
-    if set_match:
-        set_code = clean_text(set_match.group(1))
-        card_number = set_match.group(2)
-    else:
-        set_code = set_info_text or None
-        card_number = None
-
-    # name_with_set = (
-    #     f"{name} ({set_code})"
-    #     if set_code
-    #     else name
-    # )
 
     return {
         "name": name,
-        # "name_with_set": name_with_set,
         "card_type": "Pokemon",
-        "card_variants": _extract_card_variants(name),
+        "card_variants": _extract_card_variants(name, abilities),
         "evolution_stage": evolution_stage,
         "previous_evolution": previous_evolution,
         "hp": hp,
@@ -599,15 +755,116 @@ def _parse_limitless_card(card):
     }
 
 
-def _parse_limitless_card_page(soup, url):
-    card = soup.select_one(".card")
+def _parse_limitless_card(card):
+    """Parse a card from either a search result or a detail page."""
+    # On detail pages, .card is an image. The text sections live
+    # elsewhere in the document, so this function accepts either the
+    # search-result card element or the full BeautifulSoup document.
+    title_block = card.select_one(".card-text-title")
+    type_block = card.select_one(".card-text-type")
 
-    if card is None:
-        raise ValueError(
-            f"Individual card page is missing card wrapper: {url}"
+    title_text = (
+        clean_text(title_block.get_text(" ", strip=True))
+        if title_block is not None
+        else ""
+    )
+
+    type_text = (
+        clean_text(type_block.get_text(" ", strip=True))
+        if type_block is not None
+        else ""
+    )
+
+    if not title_text and not type_text:
+        raise ValueError("Card is missing title and type information")
+
+    normalized_type = type_text.casefold()
+    normalized_title = title_text.casefold()
+
+    # Use the explicit category from the type section when available.
+    # Pokémon type sections commonly start with "Pokémon", while
+    # Trainer and Energy sections start with those category names.
+    if re.search(r"\btrainer\b", normalized_type):
+        subtype = _extract_trainer_type(type_text)
+
+        if subtype is None:
+            subtype = _extract_trainer_type(title_text)
+
+        if subtype is None:
+            raise ValueError(
+                f"Could not determine Trainer subtype from: {type_text}"
+            )
+
+        return _parse_limitless_non_pokemon_card(
+            card,
+            "Trainer",
+            "trainer_type",
+            subtype,
         )
 
-    return _parse_limitless_card(card)
+    if re.search(r"\benergy\b", normalized_type):
+        subtype = _extract_energy_type(type_text)
+
+        if subtype is None:
+            subtype = _extract_energy_type(title_text)
+
+        if subtype is None:
+            raise ValueError(
+                f"Could not determine Energy subtype from: {type_text}"
+            )
+
+        return _parse_limitless_non_pokemon_card(
+            card,
+            "Energy",
+            "energy_type",
+            subtype,
+        )
+
+    if (
+        re.search(r"\bpok[eé]mon\b", normalized_type)
+        or re.search(r"\b\d+\s*hp\b", normalized_title)
+    ):
+        return _parse_limitless_pokemon_card(card)
+
+    # Some search-result layouts may omit the category prefix from
+    # the type section. Use the card's title as a fallback.
+    if "trainer" in normalized_title:
+        subtype = _extract_trainer_type(title_text)
+
+        if subtype is not None:
+            return _parse_limitless_non_pokemon_card(
+                card,
+                "Trainer",
+                "trainer_type",
+                subtype,
+            )
+
+    if "energy" in normalized_title:
+        subtype = _extract_energy_type(title_text)
+
+        if subtype is not None:
+            return _parse_limitless_non_pokemon_card(
+                card,
+                "Energy",
+                "energy_type",
+                subtype,
+            )
+
+    raise ValueError(
+        f"Could not determine card category from: "
+        f"{type_text} {title_text}"
+    )
+
+
+def _parse_limitless_card_page(soup, url):
+    # On a Limitless detail page, ".card" selects the card image rather
+    # than the text wrapper. Parse the full document instead.
+    if soup.select_one(".card-text-section") is None:
+        raise ValueError(
+            f"Individual card page is missing card text sections: {url}"
+        )
+
+    return _parse_limitless_card(soup)
 
 
 def _limitless_search_cards(search_url):
@@ -683,9 +940,7 @@ def _extract_regulation_mark(soup):
     if regulation_tag is None:
         return None
 
-    text = clean_text(
-        regulation_tag.get_text(" ", strip=True)
-    )
+    text = clean_text(regulation_tag.get_text(" ", strip=True))
 
     match = re.search(
         r"([A-Z0-9]+)\s+Regulation\s+Mark",
@@ -727,7 +982,8 @@ def _populate_set_metadata(cards):
             continue
 
         print(
-            f"[{index}/{total_sets}] Getting regulation mark for set {set_code}",
+            f"[{index}/{total_sets}] Getting regulation mark "
+            f"for set {set_code}",
             end="",
             flush=True,
             file=sys.stderr,
@@ -763,7 +1019,7 @@ def scrape_all_pokemon_cards(search_url):
     cards = _limitless_search_cards(search_url)
 
     print(
-        f"Found {len(cards)} Pokémon cards.",
+        f"Found {len(cards)} cards.",
         file=sys.stderr,
     )
 
@@ -774,10 +1030,7 @@ def scrape_all_pokemon_cards(search_url):
 
     _populate_set_metadata(cards)
 
-    print(
-        "Validating scraped cards...",
-        file=sys.stderr,
-    )
+    print("Validating scraped cards...", file=sys.stderr)
 
     warnings = _validate_cards(cards)
 
@@ -788,10 +1041,7 @@ def scrape_all_pokemon_cards(search_url):
         )
 
         for warning in warnings:
-            print(
-                f"  WARNING: {warning}",
-                file=sys.stderr,
-            )
+            print(f"  WARNING: {warning}", file=sys.stderr)
     else:
         print(
             "Validation passed with no warnings.",
@@ -887,10 +1137,7 @@ def main():
         elif args.add_set:
             cards = _load_cards(args.output)
 
-            cards = _add_set(
-                cards,
-                args.add_set,
-            )
+            cards = _add_set(cards, args.add_set)
 
             warnings = _validate_cards(cards)
 
@@ -901,10 +1148,7 @@ def main():
                 )
 
                 for warning in warnings:
-                    print(
-                        f"  WARNING: {warning}",
-                        file=sys.stderr,
-                    )
+                    print(f"  WARNING: {warning}", file=sys.stderr)
             else:
                 print(
                     "Validation passed with no warnings.",
@@ -914,10 +1158,7 @@ def main():
         elif args.remove_mark:
             cards = _load_cards(args.output)
 
-            cards = _remove_mark(
-                cards,
-                args.remove_mark,
-            )
+            cards = _remove_mark(cards, args.remove_mark)
 
             warnings = _validate_cards(cards)
 
@@ -928,10 +1169,7 @@ def main():
                 )
 
                 for warning in warnings:
-                    print(
-                        f"  WARNING: {warning}",
-                        file=sys.stderr,
-                    )
+                    print(f"  WARNING: {warning}", file=sys.stderr)
             else:
                 print(
                     "Validation passed with no warnings.",
@@ -939,28 +1177,18 @@ def main():
                 )
 
         elif args.test:
-            cards = scrape_all_pokemon_cards(
-                TEST_SEARCH_URL
-            )
+            cards = scrape_all_pokemon_cards(TEST_SEARCH_URL)
 
         else:
-            cards = scrape_all_pokemon_cards(
-                DEFAULT_SEARCH_URL
-            )
+            cards = scrape_all_pokemon_cards(DEFAULT_SEARCH_URL)
 
-        write_cards(
-            cards,
-            args.output,
-        )
+        write_cards(cards, args.output)
 
     except (requests.RequestException, ValueError) as error:
-        parser.exit(
-            1,
-            f"Scraping failed: {error}\n",
-        )
+        parser.exit(1, f"Scraping failed: {error}\n")
 
     print(
-        f"Wrote {len(cards)} Pokémon cards to {args.output}",
+        f"Wrote {len(cards)} cards to {args.output}",
         file=sys.stderr,
     )
 

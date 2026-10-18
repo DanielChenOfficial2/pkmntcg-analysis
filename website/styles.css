@@ -48,27 +48,34 @@ h1 {
     }
 }
 
+
 .search-form {
     display: flex;
     align-items: flex-start;
     gap: 12px;
 }
 
-@media (max-width: 650px) {
-    .search-form {
-        flex-direction: column;
-        align-items: stretch;
-    }
+.form-field {
+    flex: 1;
+    min-width: 0;
 }
 
 #search-button {
+    flex-shrink: 0;
     align-self: flex-start;
     margin-top: 28px;
 }
 
-.form-field {
-    flex: 1;
-    min-width: 0;
+@media (max-width: 650px) {
+    .search-form {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 8px;
+    }
+
+    #search-button {
+        padding: 8px 16px;
+    }
 }
 
 label {
@@ -237,6 +244,16 @@ tbody tr:hover {
     cursor: pointer;
 }
 
+@media (max-width: 650px) {
+    .autocomplete-options {
+        max-height: 40vh;
+    }
+
+    .autocomplete-option {
+        padding: 14px 12px;
+    }
+}
+
 .autocomplete-option:last-child {
     border-bottom: none;
 }
@@ -257,13 +274,10 @@ tbody tr:hover {
     font-size: 0.85rem;
 }
 
-@media (max-width: 650px) {
-    .autocomplete-options {
-        max-height: 40vh;
-    }
-
-    .autocomplete-option {
-        padding: 14px 12px;
+@media (max-width: 472px) {
+    .autocomplete-help {
+        width: calc(100% + 100px);
+        max-width: calc(100vw - 56px);
     }
 }
 
@@ -307,6 +321,16 @@ tbody tr:hover {
     text-align: center;
     color: #626a73;
     padding: 32px 12px;
+}
+
+.mobile-break {
+    display: none;
+}
+
+@media (max-width: 650px) {
+    .mobile-break {
+        display: initial;
+    }
 }
 
 .defender-panel {
@@ -366,4 +390,65 @@ tbody tr:hover {
     font-size: 1rem;
     font-weight: normal;
     color: black;
+}
+
+
+@media (max-width: 650px) {
+    .table-wrapper {
+        overflow-x: visible;
+    }
+
+    .results-panel table:not(.defender-table),
+    .results-panel thead,
+    .results-panel tbody,
+    .results-panel tr,
+    .results-panel th,
+    .results-panel td {
+        display: block;
+        width: 100%;
+    }
+
+    .results-panel thead {
+        display: none;
+    }
+
+    .results-panel tbody tr {
+        margin-bottom: 12px;
+        padding: 12px;
+        border: 1px solid #e0e3e7;
+        border-radius: 8px;
+        background: white;
+    }
+
+    .results-panel tbody tr:last-child {
+        margin-bottom: 0;
+    }
+
+    .results-panel tbody td {
+        padding: 6px 0;
+        border-bottom: none;
+        overflow-wrap: break-word;
+        word-break: normal;
+        hyphens: auto;
+    }
+
+    .results-panel tbody td:first-child {
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
+
+    .results-panel tbody td:nth-child(2)::before {
+        content: "Move: ";
+        font-weight: 600;
+    }
+
+    .results-panel tbody td:nth-child(3)::before {
+        content: "Damage Calculation: ";
+        font-weight: 600;
+    }
+
+    .results-panel tbody td[colspan] {
+        text-align: center;
+        padding: 20px 0;
+    }
 }

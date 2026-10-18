@@ -1,3 +1,6 @@
+console.log("Viewport:", window.innerWidth, window.innerHeight);
+console.log("Screen:", window.screen.width, window.screen.height);
+console.log("Device pixel ratio:", window.devicePixelRatio);
 
 const defenderSelect = document.getElementById("defender");
 const defenderInput = document.getElementById("defender-input");
@@ -451,7 +454,7 @@ function renderResults(moves) {
         const row = document.createElement("tr");
         const calculation = formatDamage(move);
 
-        // Opposing Pokémon and its type.
+        // Attacking Pokémon and its type.
         const attackerCell = addPokemonCell(
             row,
             cardLabel({
@@ -476,7 +479,7 @@ function renderResults(moves) {
 
         renderPokemonType(move.attacker_type, typeIcon);
 
-        // Opposing Pokémon's move and its Energy cost.
+        // Attacking Pokémon's move and its Energy cost.
         const moveCell = addPokemonCell(
             row,
             move.move_name,

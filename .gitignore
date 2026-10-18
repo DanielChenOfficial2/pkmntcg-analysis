@@ -1,3 +1,14 @@
 archive/
+
 capacitor/node_modules/
-data-building/scripts_return
+
+capacitor/android/app/
+!capacitor/android/app/build.gradle
+!capacitor/android/app/capacitor.build.gradle
+!capacitor/android/app/proguard-rules.pro
+
+capacitor/android/build/
+
+data-building/scripts_return/
+data-building/webscraper/__pycache__/
+data-analysis/calculator/__pycache__/

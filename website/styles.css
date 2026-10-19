@@ -1,4 +1,3 @@
-
 :root {
     font-family: Arial, Helvetica, sans-serif;
     color: #202124;
@@ -48,33 +47,72 @@ h1 {
     }
 }
 
-
+/* Search form */
 .search-form {
+    display: block;
+}
+
+.search-input-row {
     display: flex;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 12px;
 }
 
-.form-field {
+.autocomplete-field {
     flex: 1;
     min-width: 0;
 }
 
+.autocomplete {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    width: 100%;
+}
+
 #search-button {
     flex-shrink: 0;
-    align-self: flex-start;
-    margin-top: 28px;
 }
 
 @media (max-width: 650px) {
-    .search-form {
-        flex-direction: row;
-        align-items: flex-start;
+    .search-input-row {
         gap: 8px;
     }
 
     #search-button {
         padding: 8px 16px;
+    }
+}
+
+#clear-button {
+    flex-shrink: 0;
+    background: #e5e7eb;
+    color: #202124;
+}
+
+#clear-button:hover {
+    background: #d1d5db;
+}
+
+@media (max-width: 650px) {
+    #clear-button {
+        padding: 8px 12px;
+    }
+}
+
+/* Stack input and buttons on narrow screens */
+@media (max-width: 400px) {
+    .search-input-row {
+        flex-wrap: wrap;
+    }
+
+    .search-input-row .autocomplete {
+        flex: 0 0 100%;
+    }
+
+    .search-input-row #search-button,
+    .search-input-row #clear-button {
+        flex: 1;
     }
 }
 
@@ -113,7 +151,7 @@ button:hover {
 
 button:disabled {
     opacity: 0.6;
-    cursor: wait;
+    cursor: not-allowed;
 }
 
 .results-heading {
@@ -186,19 +224,11 @@ tbody tr:hover {
     font-weight: normal;
 }
 
-.autocomplete-field {
-    flex: 1;
-    min-width: 0;
-}
-
-.autocomplete {
-    position: relative;
-    width: 100%;
-}
-
+/* Autocomplete */
 .autocomplete input[type="text"] {
+    display: block;
     width: 100%;
-    box-sizing: border-box;
+    min-width: 0;
     padding: 12px;
     border: 1px solid #cfd4dc;
     border-radius: 6px;
@@ -281,12 +311,11 @@ tbody tr:hover {
     }
 }
 
-/* Align each result row's content at the top */
+/* Results */
 #results-body td {
     vertical-align: top;
 }
 
-/* Keep the damage type aligned with the Pokémon and move names */
 .damage-type {
     margin-top: 0;
     margin-bottom: 0;
@@ -307,6 +336,7 @@ tbody tr:hover {
     color: #000000;
 }
 
+/* Status messages */
 #status {
     color: #626a73;
     margin: 16px 0 0;
@@ -317,22 +347,107 @@ tbody tr:hover {
     color: #b42318;
 }
 
+#status .status-line-one,
+#status .status-line-two {
+    display: block;
+}
+
+@media (min-width: 387px) {
+    #status .status-line-one {
+        display: inline;
+    }
+}
+
+.status-responsive-break {
+    display: inline;
+}
+
+@media (max-width: 386px) {
+    .status-responsive-break {
+        display: block;
+    }
+}
+
+/* Empty states */
 .empty-state {
     text-align: center;
     color: #626a73;
     padding: 32px 12px;
 }
 
-.mobile-break {
+.empty-state span {
+    display: inline;
+}
+
+@media (max-width: 450px) {
+    .empty-selected-types .line-break-450 {
+        display: block;
+    }
+}
+
+@media (max-width: 277px) {
+    .empty-selected-types .line-break-450,
+    .empty-selected-types .line-break-277 {
+        display: block;
+    }
+}
+
+.empty-default .empty-layout-wide,
+.empty-default .empty-layout-medium,
+.empty-default .empty-layout-narrow {
+    display: none;
+}
+
+@media (min-width: 545px) {
+    .empty-default .empty-layout-wide {
+        display: inline;
+    }
+}
+
+@media (min-width: 338px) and (max-width: 544px) {
+    .empty-default .empty-layout-medium {
+        display: inline;
+    }
+}
+
+@media (max-width: 337px) {
+    .empty-default .empty-layout-narrow {
+        display: inline;
+    }
+}
+
+.empty-state .mobile-message,
+.empty-state .narrow-message {
     display: none;
 }
 
 @media (max-width: 650px) {
-    .mobile-break {
-        display: initial;
+    .empty-state .default-message {
+        display: none;
+    }
+
+    .empty-state .mobile-message {
+        display: inline;
     }
 }
 
+@media (max-width: 311px) {
+    .empty-state .mobile-message {
+        display: none;
+    }
+
+    .empty-state .narrow-message {
+        display: inline;
+    }
+}
+
+.empty-message {
+    hyphens: none;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+/* Defending Pokémon panel */
 .defender-panel {
     background: white;
     border: 1px solid #e0e3e7;
@@ -377,6 +492,17 @@ tbody tr:hover {
     border-bottom: none;
 }
 
+#defender-help span {
+    display: inline;
+}
+
+@media (max-width: 378px) {
+    #defender-help span {
+        display: block;
+    }
+}
+
+/* Energy and cost icons */
 .energy-icon {
     display: inline-block;
     width: 1em;
@@ -392,7 +518,7 @@ tbody tr:hover {
     color: black;
 }
 
-
+/* Responsive results table */
 @media (max-width: 650px) {
     .table-wrapper {
         overflow-x: visible;
@@ -451,4 +577,159 @@ tbody tr:hover {
         text-align: center;
         padding: 20px 0;
     }
+
+    .results-panel tbody td.empty-state {
+        font-weight: normal;
+        font-size: 1rem;
+    }
+}
+
+/* Attacking Pokémon type filter */
+.type-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 1rem 0;
+}
+
+.type-filter-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+}
+
+.type-filter-label {
+    font-weight: 600;
+}
+
+@media (max-width: 406px) {
+    .type-filter-label {
+        max-width: 100px;
+    }
+}
+
+.type-filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+@media (max-width: 456px) {
+    .type-filter-options {
+        display: grid;
+        grid-template-columns: repeat(5, max-content);
+        gap: 0.4rem;
+        justify-content: start;
+    }
+}
+
+@media (max-width: 253px) {
+    .type-filter-options {
+        display: grid;
+        grid-template-columns: repeat(12, max-content);
+        gap: 0.4rem;
+        justify-content: start;
+    }
+
+    /* First row: 4 icons */
+    .type-filter-option:nth-child(-n + 4) {
+        grid-column: span 3;
+    }
+
+    /* Second and third rows: 3 icons each */
+    .type-filter-option:nth-child(n + 5) {
+        grid-column: span 4;
+    }
+}
+
+.type-filter-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.4rem;
+    background-color: #f9fafb;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+.type-filter-option img {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+.type-filter-option:active {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+}
+
+/* Hover only on devices that support actual hovering */
+@media (hover: hover) and (pointer: fine) {
+    .type-filter-option:not([aria-pressed="true"]):hover {
+        background-color: #e5e7eb;
+        border-color: #9ca3af;
+    }
+
+    .type-filter-option[aria-pressed="true"]:hover {
+        background-color: #bfdbfe;
+        border-color: #2563eb;
+    }
+}
+
+/* Selected type */
+.type-filter-option[aria-pressed="true"] {
+    background-color: #bfdbfe;
+    border-color: #2563eb;
+}
+
+.type-filter-option[aria-pressed="true"]:active {
+    background-color: #bfdbfe;
+    border-color: #2563eb;
+}
+
+/* Keyboard accessibility */
+.type-filter-option:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+}
+
+/* Prevent mobile focus from changing the button's background */
+.type-filter-option:focus {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+}
+
+/* Keep selected buttons blue when focused */
+.type-filter-option[aria-pressed="true"]:focus {
+    background-color: #bfdbfe;
+    border-color: #2563eb;
+}
+
+/* Preserve the correct color while tapping */
+.type-filter-option:active {
+    background-color: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.type-filter-option[aria-pressed="true"]:active {
+    background-color: #bfdbfe;
+    border-color: #2563eb;
+}
+
+#clear-type-filter {
+    background: #e5e7eb;
+    color: #202124;
+    border: none;
+}
+
+#clear-type-filter:hover {
+    background: #d1d5db;
 }

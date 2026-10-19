@@ -26,41 +26,50 @@
                 <div class="form-field autocomplete-field">
                     <label for="defender-input">Defending Pokemon</label>
 
-                    <div class="autocomplete">
-                        <input
-                            id="defender-input"
-                            type="text"
-                            placeholder="Search Pokemon..."
-                            autocomplete="off"
-                            role="combobox"
-                            aria-autocomplete="list"
-                            aria-controls="defender-options"
-                            aria-expanded="false"
-                            aria-describedby="defender-help"
-                        >
+                    <div class="search-input-row">
+                        <div class="autocomplete">
+                            <input
+                                id="defender-input"
+                                type="text"
+                                placeholder="Search Pokemon..."
+                                autocomplete="off"
+                                role="combobox"
+                                aria-autocomplete="list"
+                                aria-controls="defender-options"
+                                aria-expanded="false"
+                                aria-describedby="defender-help"
+                            >
 
-                        <input id="defender" type="hidden">
+                            <input id="defender" type="hidden">
 
-                        <div
-                            id="defender-options"
-                            class="autocomplete-options"
-                            role="listbox"
-                            hidden
-                        ></div>
+                            <div
+                                id="defender-options"
+                                class="autocomplete-options"
+                                role="listbox"
+                                hidden
+                            ></div>
+                        </div>
+
+                        <button id="search-button" type="submit" disabled>
+                            Search
+                        </button>
+
+                        <button id="clear-button" type="button">
+                            Clear
+                        </button>
                     </div>
 
                     <p id="defender-help" class="autocomplete-help">
-                        Search by Pokemon name, set code, or card number.
+                        <span>Search by Pokemon name,</span>
+                        <span>set code, or card number.</span>
                     </p>
                 </div>
-
-                <button id="search-button" type="submit" disabled>
-                    Search
-                </button>
             </form>
 
             <p id="status" role="status" aria-live="polite">
-                Loading card database...
+                <span id="status-message"></span>
+                <span id="status-break" aria-hidden="true"></span>
+                <span id="status-suffix"></span>
             </p>
         </section>
 
@@ -95,6 +104,111 @@
                 <span id="result-count">No search yet</span>
             </div>
 
+            <div class="type-filter">
+                <div class="type-filter-header">
+                    <span class="type-filter-label">Attacking Pokémon Types</span>
+                    <button id="clear-type-filter" type="button">Clear types</button>
+                </div>
+
+                <div id="type-filter-options"
+                    class="type-filter-options"
+                    role="group"
+                    aria-label="Filter by attacking Pokémon type">
+
+                    <button class="type-filter-option"
+                            type="button"
+                            data-type="Grass"
+                            aria-label="Grass"
+                            aria-pressed="false"
+                            title="Grass">
+                        <img src="./images/energy/Grass-20px.png" alt="">
+                    </button>
+
+                    <button class="type-filter-option"
+                            type="button"
+                            data-type="Fire"
+                            aria-label="Fire"
+                            aria-pressed="false"
+                            title="Fire">
+                        <img src="./images/energy/Fire-20px.png" alt="">
+                    </button>
+
+                    <button class="type-filter-option"
+                            type="button"
+                            data-type="Water"
+                            aria-label="Water"
+                            aria-pressed="false"
+                            title="Water">
+                        <img src="./images/energy/Water-20px.png" alt="">
+                    </button>
+
+                    <button class="type-filter-option"
+                            type="button"
+                            data-type="Lightning"
+                            aria-label="Lightning"
+                            aria-pressed="false"
+                            title="Lightning">
+                        <img src="./images/energy/Lightning-20px.png" alt="">
+                    </button>
+
+                    <button class="type-filter-option"
+                            type="button"
+                            data-type="Psychic"
+                            aria-label="Psychic"
+                            aria-pressed="false"
+                            title="Psychic">
+                        <img src="./images/energy/Psychic-20px.png" alt="">
+                    </button>
+
+                    <button class="type-filter-option"
+                            type="button"
+                            data-type="Fighting"
+                            aria-label="Fighting"
+                            aria-pressed="false"
+                            title="Fighting">
+                        <img src="./images/energy/Fighting-20px.png" alt="">
+                    </button>
+
+                    <button class="type-filter-option"
+                            type="button"
+                            data-type="Darkness"
+                            aria-label="Darkness"
+                            aria-pressed="false"
+                            title="Darkness">
+                        <img src="./images/energy/Darkness-20px.png" alt="">
+                    </button>
+
+                    <button class="type-filter-option"
+                            type="button"
+                            data-type="Metal"
+                            aria-label="Metal"
+                            aria-pressed="false"
+                            title="Metal">
+                        <img src="./images/energy/Metal-20px.png" alt="">
+                    </button>
+
+                    <button class="type-filter-option"
+                            type="button"
+                            data-type="Dragon"
+                            aria-label="Dragon"
+                            aria-pressed="false"
+                            title="Dragon">
+                        <img src="./images/energy/Dragon-20px.png" alt="">
+                    </button>
+
+                    <button class="type-filter-option"
+                            type="button"
+                            data-type="Colorless"
+                            aria-label="Colorless"
+                            aria-pressed="false"
+                            title="Colorless">
+                        <img src="./images/energy/Colorless-20px.png" alt="">
+                    </button>
+
+                </div>
+
+            </div>
+
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -109,8 +223,16 @@
                         <tr>
                             <td colspan="3" class="empty-state">
                                 <span class="empty-message">
-                                    Select a defending Pokemon<span class="mobile-break"><br></span>
-                                    and click Search.
+                                    <span class="default-message">Select a defending Pokemon and click Search.</span>
+                                    <span class="mobile-message">
+                                        Select a defending Pokemon<br>
+                                        and click Search.
+                                    </span>
+                                    <span class="narrow-message">
+                                        Select a defending<br>
+                                        Pokemon and<br>
+                                        click Search.
+                                    </span>
                                 </span>
                             </td>
                         </tr>

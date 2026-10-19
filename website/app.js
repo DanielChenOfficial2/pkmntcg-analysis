@@ -1,13 +1,10 @@
-console.log("Viewport:", window.innerWidth, window.innerHeight);
-console.log("Screen:", window.screen.width, window.screen.height);
-console.log("Device pixel ratio:", window.devicePixelRatio);
-
 const defenderSelect = document.getElementById("defender");
 const defenderInput = document.getElementById("defender-input");
 const defenderOptions = document.getElementById("defender-options");
 
 const searchForm = document.getElementById("search-form");
 const searchButton = document.getElementById("search-button");
+const clearButton = document.getElementById("clear-button");
 
 const defenderPanel = document.getElementById("defender-panel");
 const defenderHeading = document.getElementById("defender-heading");
@@ -20,8 +17,12 @@ const resultsBody = document.getElementById("results-body");
 const resultCount = document.getElementById("result-count");
 const statusElement = document.getElementById("status");
 
+const typeFilterOptions = document.getElementById("type-filter-options");
+const clearTypeFilterButton = document.getElementById("clear-type-filter");
+
 let allPokemon = [];
 let filteredPokemon = [];
+let currentMoves = [];
 let activeSuggestionIndex = -1;
 
 
@@ -44,12 +45,6 @@ function cardLabel(pokemon) {
 }
 
 
-function setStatus(message, isError = false) {
-    statusElement.textContent = message;
-    statusElement.classList.toggle("error", isError);
-}
-
-
 function displayDefenderInfo(pokemon) {
     defenderHeading.textContent = cardLabel(pokemon);
     defenderHp.textContent = pokemon.hp != null ? pokemon.hp : "None";
@@ -59,6 +54,31 @@ function displayDefenderInfo(pokemon) {
     renderPokemonType(pokemon.resistance, defenderResistance);
 
     defenderPanel.hidden = false;
+}
+
+
+function setStatus(message, isError = false) {
+    statusElement.classList.toggle("error", isError);
+
+    const messageElement = document.getElementById("status-message");
+    const breakElement = document.getElementById("status-break");
+    const suffixElement = document.getElementById("status-suffix");
+
+    const readyMessage =
+        `Database ready. ${allPokemon.length} Pokemon cards loaded.`;
+
+    if (message === readyMessage) {
+        messageElement.textContent =
+            `Database ready. ${allPokemon.length}`;
+        suffixElement.textContent = "Pokemon cards loaded.";
+        breakElement.textContent = "";
+        breakElement.classList.add("status-responsive-break");
+    } else {
+        messageElement.textContent = message;
+        suffixElement.textContent = "";
+        breakElement.textContent = "";
+        breakElement.classList.remove("status-responsive-break");
+    }
 }
 
 
@@ -135,6 +155,8 @@ function selectPokemon(pokemon) {
     defenderSelect.value = pokemon.id;
     defenderInput.value = cardLabel(pokemon);
 
+    searchButton.disabled = false;
+
     closeSuggestions();
     setStatus("Pokemon selected. Press Search to continue.");
 }
@@ -184,6 +206,8 @@ defenderInput.addEventListener("click", () => {
 defenderInput.addEventListener("input", () => {
     // Typing invalidates the previous selection.
     defenderSelect.value = "";
+    searchButton.disabled = true;
+
     renderSuggestions(defenderInput.value);
 });
 
@@ -229,6 +253,17 @@ document.addEventListener("click", event => {
 });
 
 
+// ---------- Clear defending Pokemon ----------
+
+clearButton.addEventListener("click", () => {
+    defenderInput.value = "";
+    defenderSelect.value = "";
+    searchButton.disabled = true;
+
+    closeSuggestions();
+});
+
+
 // ---------- Pokémon and move table helpers ----------
 
 function addPokemonCell(row, name, details) {
@@ -251,7 +286,7 @@ function addPokemonCell(row, name, details) {
 }
 
 
-// Map recognized Energy names to local SVG filenames.
+// Map recognized Energy names to local image filenames.
 const ENERGY_ICON_FILES = {
     grass: "Grass-20px.png",
     fire: "Fire-20px.png",
@@ -367,7 +402,6 @@ function renderEnergyCost(cost, container) {
 
             container.appendChild(icon);
         } else {
-            // Colorless and any unsupported symbols use a text fallback.
             const fallback = document.createElement("span");
             fallback.className = "energy-fallback";
             fallback.textContent = code;
@@ -420,6 +454,9 @@ function formatDamage(move) {
 }
 
 
+// ---------- Empty results ----------
+
+
 function showEmptyResults(message) {
     resultsBody.replaceChildren();
 
@@ -428,7 +465,72 @@ function showEmptyResults(message) {
 
     cell.colSpan = 3;
     cell.className = "empty-state";
-    cell.textContent = message;
+
+    if (message === "No moves match the selected attacking types.") {
+        cell.classList.add("empty-selected-types");
+
+        cell.append(
+            document.createTextNode("No moves match"),
+            Object.assign(document.createElement("span"), {
+                className: "line-break-450",
+                textContent: " the selected"
+            }),
+            Object.assign(document.createElement("span"), {
+                className: "line-break-277",
+                textContent: " attacking types."
+            })
+        );
+    } else if (
+        message === "No moves met the current damage thresholds for this Pokemon."
+    ) {
+        cell.classList.add("empty-default");
+
+        const layouts = [
+            {
+                className: "empty-layout-wide",
+                lines: [
+                    "No moves meet the current damage thresholds for this Pokemon."
+                ]
+            },
+            {
+                className: "empty-layout-medium",
+                lines: [
+                    "No moves meet the current",
+                    "damage threshold for this Pokemon"
+                ]
+            },
+            {
+                className: "empty-layout-narrow",
+                lines: [
+                    "No moves meet",
+                    "the current",
+                    "damage thresholds",
+                    "for this Pokemon"
+                ]
+            }
+        ];
+
+        for (const layout of layouts) {
+            const layoutElement = document.createElement("span");
+            layoutElement.className = layout.className;
+
+            layout.lines.forEach((line, index) => {
+                if (index > 0) {
+                    layoutElement.appendChild(
+                        document.createElement("br")
+                    );
+                }
+
+                layoutElement.appendChild(
+                    document.createTextNode(line)
+                );
+            });
+
+            cell.appendChild(layoutElement);
+        }
+    } else {
+        cell.textContent = message;
+    }
 
     row.appendChild(cell);
     resultsBody.appendChild(row);
@@ -437,14 +539,16 @@ function showEmptyResults(message) {
 }
 
 
+// ---------- Render results ----------
 
-function renderResults(moves) {
+function renderResults(
+    moves,
+    emptyMessage = "No moves met the current damage thresholds for this Pokemon."
+) {
     resultsBody.replaceChildren();
 
     if (moves.length === 0) {
-        showEmptyResults(
-            "No moves met the current damage thresholds for this Pokemon."
-        );
+        showEmptyResults(emptyMessage);
         return;
     }
 
@@ -519,13 +623,67 @@ function renderResults(moves) {
 }
 
 
+function renderFilteredResults() {
+    const selectedTypes = new Set(
+        [...typeFilterOptions.querySelectorAll(
+            ".type-filter-option[aria-pressed='true']"
+        )].map(button => button.dataset.type.toLowerCase())
+    );
+
+    const filteredMoves = selectedTypes.size === 0
+        ? currentMoves
+        : currentMoves.filter(move =>
+            selectedTypes.has((move.attacker_type || "").toLowerCase())
+        );
+
+    if (filteredMoves.length === 0) {
+        showEmptyResults(
+            selectedTypes.size > 0
+                ? "No moves match the selected attacking types."
+                : "No moves met the current damage thresholds for this Pokemon."
+        );
+        return;
+    }
+
+    renderResults(filteredMoves);
+}
+
+
+// ---------- Attacking type filters ----------
+
+typeFilterOptions.addEventListener("click", event => {
+    const button = event.target.closest(".type-filter-option");
+
+    if (!button) return;
+
+    const isSelected = button.getAttribute("aria-pressed") === "true";
+    button.setAttribute("aria-pressed", String(!isSelected));
+
+    renderFilteredResults();
+});
+
+
+clearTypeFilterButton.addEventListener("click", () => {
+    typeFilterOptions
+        .querySelectorAll(".type-filter-option")
+        .forEach(button => {
+            button.setAttribute("aria-pressed", "false");
+        });
+
+    renderFilteredResults();
+});
+
+
 // ---------- Initialization ----------
 
 async function initialize() {
+    searchButton.disabled = true;
+
     try {
         allPokemon = await OneShotDatabase.getPokemonList();
 
-        searchButton.disabled = allPokemon.length === 0;
+        // A card must be selected before Search is enabled.
+        searchButton.disabled = true;
 
         setStatus(
             `Database ready. ${allPokemon.length} Pokemon cards loaded.`
@@ -576,10 +734,10 @@ searchForm.addEventListener("submit", async event => {
 
         setStatus("Searching for one-shot moves...");
 
-        const moves =
+        currentMoves =
             await OneShotDatabase.findCandidateMoves(defenderId);
 
-        renderResults(moves);
+        renderFilteredResults();
         setStatus("Search complete.");
     } catch (error) {
         console.error(error);
@@ -587,8 +745,10 @@ searchForm.addEventListener("submit", async event => {
         showEmptyResults("An error occurred while searching.");
         setStatus(`Search failed: ${error.message}`, true);
     } finally {
-        searchButton.disabled = false;
         searchButton.textContent = "Search";
+
+        // Enable only if a valid selection still exists.
+        searchButton.disabled = !defenderSelect.value;
     }
 });
 

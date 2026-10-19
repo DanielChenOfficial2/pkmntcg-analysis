@@ -1,63 +1,38 @@
-#!/usr/bin/env bash
 set -euo pipefail
 
-# Install and configure the Android SDK for WSL/Linux.
-# Run from any directory; paths are resolved relative to this script.
-
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd -- "$SCRIPT_DIR/.." && pwd)"
-
-ANDROID_HOME="${ANDROID_HOME:-$HOME/Android/Sdk}"
-CMDLINE_TOOLS_DIR="$ANDROID_HOME/cmdline-tools/latest"
-TOOLS_URL="https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip"
-
-echo "==> Installing prerequisites..."
+# Install Java and required utilities.
 sudo apt-get update
-sudo apt-get install -y wget unzip
+sudo apt-get install -y openjdk-21-jdk curl unzip
 
-echo "==> Preparing Android SDK directory..."
+# Define the Linux Android SDK location.
+export ANDROID_HOME="$HOME/Android/Sdk"
 mkdir -p "$ANDROID_HOME/cmdline-tools"
 
-if [[ ! -x "$CMDLINE_TOOLS_DIR/bin/sdkmanager" ]]; then
-    echo "==> Downloading Android command-line tools..."
-    TEMP_DIR="$(mktemp -d)"
-    trap 'rm -rf "$TEMP_DIR"' EXIT
+# Download Google's Linux command-line tools.
+TEMP_DIR="$(mktemp -d)"
+trap 'rm -rf "$TEMP_DIR"' EXIT
 
-    wget -q --show-progress "$TOOLS_URL" \
-        -O "$TEMP_DIR/commandlinetools.zip"
+curl -fL \
+    "https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip" \
+    -o "$TEMP_DIR/cmdline-tools.zip"
 
-    echo "==> Extracting command-line tools..."
-    unzip -q "$TEMP_DIR/commandlinetools.zip" -d "$TEMP_DIR"
+# Install into the required cmdline-tools/latest layout.
+unzip -q "$TEMP_DIR/cmdline-tools.zip" -d "$TEMP_DIR"
 
-    if [[ -d "$CMDLINE_TOOLS_DIR" ]]; then
-        mv "$CMDLINE_TOOLS_DIR" "$TEMP_DIR/old-latest"
-    fi
+rm -rf "$ANDROID_HOME/cmdline-tools/latest"
+mv "$TEMP_DIR/cmdline-tools" \
+    "$ANDROID_HOME/cmdline-tools/latest"
 
-    mv "$TEMP_DIR/cmdline-tools" "$CMDLINE_TOOLS_DIR"
-fi
+# Configure the SDK for this terminal.
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"
 
-export ANDROID_HOME
-export ANDROID_SDK_ROOT="$ANDROID_HOME"
-export PATH="$CMDLINE_TOOLS_DIR/bin:$ANDROID_HOME/platform-tools:$PATH"
+# Accept SDK licenses.
+yes | sdkmanager --sdk_root="$ANDROID_HOME" --licenses
 
-echo "==> Accepting Android SDK licenses..."
-sdkmanager --sdk_root="$ANDROID_HOME" --licenses
-
-echo "==> Installing Android SDK packages..."
+# Install the Linux SDK components.
 sdkmanager --sdk_root="$ANDROID_HOME" \
     "platform-tools" \
-    "platforms;android-36" \
+    "platforms;android-35" \
     "build-tools;35.0.0"
 
-echo "==> Configuring Gradle SDK path..."
-printf 'sdk.dir=%s\n' "$ANDROID_HOME" \
-    > "$PROJECT_ROOT/capacitor/android/local.properties"
-
-echo "==> Setup complete!"
-echo "Android SDK: $ANDROID_HOME"
-echo "Gradle config: $PROJECT_ROOT/capacitor/android/local.properties"
-echo
-echo "Add these lines to ~/.bashrc if they aren't already present:"
-echo "export ANDROID_HOME=\"$ANDROID_HOME\""
-echo 'export ANDROID_SDK_ROOT="$ANDROID_HOME"'
-echo 'export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH"'
+echo "Android SDK installation complete."

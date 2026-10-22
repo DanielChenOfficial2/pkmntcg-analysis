@@ -53,6 +53,9 @@ CREATE TABLE pokemon (
     name TEXT NOT NULL,
     card_type TEXT NOT NULL,
     card_number TEXT,
+    is_ex INTEGER NOT NULL DEFAULT 0,
+    is_mega INTEGER NOT NULL DEFAULT 0,
+    is_tera INTEGER NOT NULL DEFAULT 0,
     set_code TEXT,
     card_mark TEXT,
     hp INTEGER,
@@ -201,6 +204,40 @@ def is_pokemon_card(card):
     }
 
 
+def has_card_variant(card, variant_name):
+    """Return whether card_variants contains the specified variant."""
+    variants = card.get("card_variants", [])
+
+    if not isinstance(variants, list):
+        return False
+
+    return any(
+        isinstance(variant, str)
+        and variant.strip().casefold() == variant_name.casefold()
+        for variant in variants
+    )
+
+
+def is_ex_pokemon(card):
+    """Return whether the card is classified as Pokémon ex."""
+    return has_card_variant(card, "ex")
+
+
+def is_mega_pokemon(card):
+    """Return whether the card is a Mega Pokémon ex."""
+    return (
+        is_ex_pokemon(card)
+        and has_card_variant(card, "Mega")
+    )
+
+
+def is_tera_pokemon(card):
+    """Return whether the card is a Tera Pokémon ex."""
+    return (
+        is_ex_pokemon(card)
+        and has_card_variant(card, "Tera")
+    )
+
 def load_cards(input_path):
     """Load and validate the JSON input."""
     try:
@@ -278,6 +315,9 @@ def build_database(input_path, output_path):
                     INSERT INTO pokemon (
                         name,
                         card_type,
+                        is_ex,
+                        is_mega,
+                        is_tera,
                         card_number,
                         set_code,
                         card_mark,
@@ -288,11 +328,14 @@ def build_database(input_path, output_path):
                         retreat_cost,
                         source_url
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         name,
                         card.get("card_type"),
+                        int(is_ex_pokemon(card)),
+                        int(is_mega_pokemon(card)),
+                        int(is_tera_pokemon(card)),
                         (
                             str(card["card_number"])
                             if card.get("card_number") is not None
@@ -376,7 +419,7 @@ def build_database(input_path, output_path):
             connection.executemany(
                 "INSERT INTO metadata (key, value) VALUES (?, ?)",
                 [
-                    ("schema_version", "1"),
+                    ("schema_version", "2"),
                     ("source_file", input_path.name),
                     ("pokemon_count", str(pokemon_count)),
                     ("move_count", str(move_count)),

@@ -70,6 +70,9 @@ async function findCandidateMoves(defenderId) {
         SELECT
             attacker.id AS attacker_id,
             attacker.name AS attacker_name,
+            attacker.is_ex AS attacker_is_ex,
+            attacker.is_mega AS attacker_is_mega,
+            attacker.is_tera AS attacker_is_tera,
             attacker.pokemon_type AS attacker_type,
             attacker.set_code AS attacker_set_code,
             attacker.card_number AS attacker_card_number,

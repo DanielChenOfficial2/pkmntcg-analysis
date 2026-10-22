@@ -20,6 +20,9 @@ const statusElement = document.getElementById("status");
 const typeFilterOptions = document.getElementById("type-filter-options");
 const clearTypeFilterButton = document.getElementById("clear-type-filter");
 
+const pokemonFilterOptions = document.getElementById("pokemon-filter-options");
+const clearPokemonFilterButton = document.getElementById("clear-pokemon-filter");
+
 let allPokemon = [];
 let filteredPokemon = [];
 let currentMoves = [];
@@ -630,18 +633,71 @@ function renderFilteredResults() {
         )].map(button => button.dataset.type.toLowerCase())
     );
 
-    const filteredMoves = selectedTypes.size === 0
-        ? currentMoves
-        : currentMoves.filter(move =>
-            selectedTypes.has((move.attacker_type || "").toLowerCase())
-        );
+    const selectedCategory =
+        pokemonFilterOptions.querySelector(
+            ".pokemon-filter-option[aria-pressed='true']"
+        )?.dataset.category || "all";
+
+    const filteredMoves = currentMoves.filter(move => {
+        const matchesType =
+            selectedTypes.size === 0 ||
+            selectedTypes.has(
+                (move.attacker_type || "").toLowerCase()
+            );
+
+        const isEx = Number(move.attacker_is_ex) === 1;
+        const isMega = Number(move.attacker_is_mega) === 1;
+        const isTera = Number(move.attacker_is_tera) === 1;
+
+        let matchesCategory;
+
+        switch (selectedCategory) {
+            case "ex":
+                matchesCategory = isEx;
+                break;
+
+            case "mega":
+                matchesCategory = isMega;
+                break;
+
+            case "tera":
+                matchesCategory = isTera;
+                break;
+
+            case "nonex":
+                matchesCategory = !isEx;
+                break;
+
+            case "all":
+            default:
+                matchesCategory = true;
+                break;
+        }
+
+        return matchesType && matchesCategory;
+    });
 
     if (filteredMoves.length === 0) {
-        showEmptyResults(
-            selectedTypes.size > 0
-                ? "No moves match the selected attacking types."
-                : "No moves met the current damage thresholds for this Pokemon."
-        );
+        const hasTypeFilter = selectedTypes.size > 0;
+        const hasCategoryFilter = selectedCategory !== "all";
+
+        let emptyMessage;
+
+        if (hasTypeFilter && hasCategoryFilter) {
+            emptyMessage =
+                "No moves match the selected attacking types and category.";
+        } else if (hasTypeFilter) {
+            emptyMessage =
+                "No moves match the selected attacking types.";
+        } else if (hasCategoryFilter) {
+            emptyMessage =
+                "No moves match the selected attacking category.";
+        } else {
+            emptyMessage =
+                "No moves met the current damage thresholds for this Pokemon.";
+        }
+
+        showEmptyResults(emptyMessage);
         return;
     }
 
@@ -668,6 +724,40 @@ clearTypeFilterButton.addEventListener("click", () => {
         .querySelectorAll(".type-filter-option")
         .forEach(button => {
             button.setAttribute("aria-pressed", "false");
+        });
+
+    renderFilteredResults();
+});
+
+
+// ---------- Attacking Pokémon category filters ----------
+
+pokemonFilterOptions.addEventListener("click", event => {
+    const button = event.target.closest(".pokemon-filter-option");
+
+    if (!button) return;
+
+    pokemonFilterOptions
+        .querySelectorAll(".pokemon-filter-option")
+        .forEach(option => {
+            option.setAttribute(
+                "aria-pressed",
+                String(option === button)
+            );
+        });
+
+    renderFilteredResults();
+});
+
+
+clearPokemonFilterButton.addEventListener("click", () => {
+    pokemonFilterOptions
+        .querySelectorAll(".pokemon-filter-option")
+        .forEach(button => {
+            button.setAttribute(
+                "aria-pressed",
+                String(button.dataset.category === "all")
+            );
         });
 
     renderFilteredResults();

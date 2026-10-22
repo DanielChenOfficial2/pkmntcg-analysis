@@ -104,17 +104,84 @@
                 <span id="result-count">No search yet</span>
             </div>
 
+            <div class="pokemon-filter">
+                <div class="pokemon-filter-header">
+                    <span class="pokemon-filter-label">Attacking Pokémon Category</span>
+                    <button id="clear-pokemon-filter" type="button">
+                        Clear category
+                    </button>
+                </div>
+
+                <div
+                    id="pokemon-filter-options"
+                    class="pokemon-filter-options"
+                    role="group"
+                    aria-label="Filter by attacking Pokémon category"
+                >
+                    <button
+                        class="pokemon-filter-option"
+                        type="button"
+                        data-category="all"
+                        aria-pressed="true"
+                        title="All Pokémon"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        class="pokemon-filter-option"
+                        type="button"
+                        data-category="ex"
+                        aria-pressed="false"
+                        title="All Pokémon ex, including Mega ex and Tera ex"
+                    >
+                        ex
+                    </button>
+
+                    <button
+                        class="pokemon-filter-option"
+                        type="button"
+                        data-category="mega"
+                        aria-pressed="false"
+                        title="Mega ex Pokémon only"
+                    >
+                        Mega ex
+                    </button>
+
+                    <button
+                        class="pokemon-filter-option"
+                        type="button"
+                        data-category="tera"
+                        aria-pressed="false"
+                        title="Tera Pokémon ex only"
+                    >
+                        Tera ex
+                    </button>
+
+                    <button
+                        class="pokemon-filter-option"
+                        type="button"
+                        data-category="nonex"
+                        aria-pressed="false"
+                        title="Pokémon that are not ex"
+                    >
+                        Non-ex
+                    </button>
+                </div>
+            </div>
+
             <div class="type-filter">
                 <div class="type-filter-header">
                     <span class="type-filter-label">Attacking Pokemon Type</span>
                     <button id="clear-type-filter" type="button">Clear types</button>
                 </div>
 
-                <div id="type-filter-options"
+                <div
+                    id="type-filter-options"
                     class="type-filter-options"
                     role="group"
-                    aria-label="Filter by attacking Pokémon type">
-
+                    aria-label="Filter by attacking Pokémon type"
+                >
                     <button class="type-filter-option"
                             type="button"
                             data-type="Grass"
@@ -204,9 +271,7 @@
                             title="Colorless">
                         <img src="./images/energy/Colorless-20px.png" alt="">
                     </button>
-
                 </div>
-
             </div>
 
             <div class="table-wrapper">

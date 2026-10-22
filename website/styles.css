@@ -70,6 +70,30 @@ h1 {
     width: 100%;
 }
 
+.autocomplete-hint {
+    margin: 6px 0 0;
+    color: #6b7280;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.autocomplete-hint kbd {
+    padding: 1px 4px;
+    border: 1px solid #d1d5db;
+    border-radius: 3px;
+    background: #f9fafb;
+    color: #374151;
+    font: inherit;
+    font-size: 11px;
+}
+
+/* Hide the hint on mobile and small screens. */
+@media (max-width: 650px) {
+    .autocomplete-hint {
+        display: none;
+    }
+}
+
 #search-button {
     flex-shrink: 0;
 }

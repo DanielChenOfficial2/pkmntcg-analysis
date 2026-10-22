@@ -207,15 +207,42 @@ defenderInput.addEventListener("click", () => {
 
 
 defenderInput.addEventListener("input", () => {
-    // Typing invalidates the previous selection.
-    defenderSelect.value = "";
-    searchButton.disabled = true;
-
-    renderSuggestions(defenderInput.value);
-});
-
-
 defenderInput.addEventListener("keydown", event => {
+    const options = defenderOptions.querySelectorAll(
+        ".autocomplete-option"
+    );
+    const count = options.length;
+
+    // Tab and Shift + Tab navigate autocomplete suggestions.
+    if (event.key === "Tab") {
+        if (defenderOptions.hidden || count === 0) {
+            return;
+        }
+
+        event.preventDefault();
+
+        if (event.shiftKey) {
+            // Move backward, wrapping from the first to the last suggestion.
+            const previousIndex =
+                activeSuggestionIndex <= 0
+                    ? count - 1
+                    : activeSuggestionIndex - 1;
+
+            highlightSuggestion(previousIndex);
+        } else {
+            // Move forward, wrapping from the last to the first suggestion.
+            const nextIndex =
+                activeSuggestionIndex === -1 ||
+                activeSuggestionIndex === count - 1
+                    ? 0
+                    : activeSuggestionIndex + 1;
+
+            highlightSuggestion(nextIndex);
+        }
+
+        return;
+    }
+
     if (event.key === "ArrowDown") {
         event.preventDefault();
 
@@ -223,7 +250,13 @@ defenderInput.addEventListener("keydown", event => {
             renderSuggestions(defenderInput.value);
         }
 
-        highlightSuggestion(activeSuggestionIndex + 1);
+        const optionCount = defenderOptions.querySelectorAll(
+            ".autocomplete-option"
+        ).length;
+
+        if (optionCount > 0) {
+            highlightSuggestion(activeSuggestionIndex + 1);
+        }
     } else if (event.key === "ArrowUp") {
         event.preventDefault();
 
@@ -231,21 +264,46 @@ defenderInput.addEventListener("keydown", event => {
             renderSuggestions(defenderInput.value);
         }
 
-        highlightSuggestion(
-            activeSuggestionIndex === -1
-                ? filteredPokemon.length - 1
-                : activeSuggestionIndex - 1
-        );
-    } else if (event.key === "Enter" && !defenderOptions.hidden) {
-        if (activeSuggestionIndex >= 0) {
+        const optionCount = defenderOptions.querySelectorAll(
+            ".autocomplete-option"
+        ).length;
+
+        if (optionCount > 0) {
+            const previousIndex =
+                activeSuggestionIndex === -1
+                    ? optionCount - 1
+                    : activeSuggestionIndex - 1;
+
+            highlightSuggestion(previousIndex);
+        }
+    } else if (event.key === "Enter") {
+        if (
+            activeSuggestionIndex >= 0 &&
+            filteredPokemon[activeSuggestionIndex]
+        ) {
             event.preventDefault();
             selectPokemon(filteredPokemon[activeSuggestionIndex]);
-        } else {
-            event.preventDefault();
         }
     } else if (event.key === "Escape") {
-        closeSuggestions();
+        if (!defenderOptions.hidden) {
+            event.preventDefault();
+            closeSuggestions();
+        }
     }
+});
+
+
+defenderInput.addEventListener("blur", () => {
+    closeSuggestions();
+});
+
+
+defenderInput.addEventListener("input", () => {
+    // Typing invalidates the previous selection.
+    defenderSelect.value = "";
+    searchButton.disabled = true;
+
+    renderSuggestions(defenderInput.value);
 });
 
 

@@ -335,32 +335,7 @@ tbody tr:hover {
     }
 }
 
-/* Results */
-#results-body td {
-    vertical-align: top;
-}
-
-.damage-type {
-    margin-top: 0;
-    margin-bottom: 0;
-    font-size: 1rem;
-    font-weight: 600;
-    line-height: 1.5;
-}
-
-.damage-type-weakness {
-    color: #dc2626;
-}
-
-.damage-type-resistance {
-    color: #2563eb;
-}
-
-.damage-type-neutral {
-    color: #000000;
-}
-
-/* Status messages */
+/* Status messages follow the search controls in index.html. */
 #status {
     color: #626a73;
     margin: 16px 0 0;
@@ -390,6 +365,86 @@ tbody tr:hover {
     .status-responsive-break {
         display: block;
     }
+}
+
+/* Defending Pokémon panel */
+.defender-panel {
+    background: white;
+    border: 1px solid #e0e3e7;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.defender-panel h2 {
+    margin: 0 0 16px;
+    font-size: 1.25rem;
+}
+
+@media (max-width: 650px) {
+    .defender-panel {
+        padding: 16px;
+    }
+}
+
+.defender-table {
+    width: 100%;
+    max-width: 600px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.defender-table th,
+.defender-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e8eaed;
+    line-height: 1.5;
+}
+
+.defender-table th {
+    width: 140px;
+    background: #f8f9fa;
+    font-weight: 600;
+}
+
+.defender-table tr:last-child th,
+.defender-table tr:last-child td {
+    border-bottom: none;
+}
+
+#defender-help span {
+    display: inline;
+}
+
+@media (max-width: 378px) {
+    #defender-help span {
+        display: block;
+    }
+}
+
+/* Results */
+#results-body td {
+    vertical-align: top;
+}
+
+.damage-type {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.5;
+}
+
+.damage-type-weakness {
+    color: #dc2626;
+}
+
+.damage-type-resistance {
+    color: #2563eb;
+}
+
+.damage-type-neutral {
+    color: #000000;
 }
 
 /* Empty states */
@@ -469,61 +524,6 @@ tbody tr:hover {
     hyphens: none;
     overflow-wrap: normal;
     word-break: normal;
-}
-
-/* Defending Pokémon panel */
-.defender-panel {
-    background: white;
-    border: 1px solid #e0e3e7;
-    border-radius: 10px;
-    padding: 24px;
-    margin-bottom: 24px;
-}
-
-.defender-panel h2 {
-    margin: 0 0 16px;
-    font-size: 1.25rem;
-}
-
-@media (max-width: 650px) {
-    .defender-panel {
-        padding: 16px;
-    }
-}
-
-.defender-table {
-    width: 100%;
-    max-width: 600px;
-    border-collapse: collapse;
-    text-align: left;
-}
-
-.defender-table th,
-.defender-table td {
-    padding: 12px;
-    border-bottom: 1px solid #e8eaed;
-    line-height: 1.5;
-}
-
-.defender-table th {
-    width: 140px;
-    background: #f8f9fa;
-    font-weight: 600;
-}
-
-.defender-table tr:last-child th,
-.defender-table tr:last-child td {
-    border-bottom: none;
-}
-
-#defender-help span {
-    display: inline;
-}
-
-@media (max-width: 378px) {
-    #defender-help span {
-        display: block;
-    }
 }
 
 /* Energy and cost icons */

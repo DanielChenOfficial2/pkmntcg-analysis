@@ -30,6 +30,33 @@ h1 {
     text-align: center;
 }
 
+.top-panels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    align-items: stretch;
+}
+
+.top-panels .search-panel,
+.top-panels .defender-panel {
+    width: 100%;
+    min-width: 0;
+}
+
+@media (max-width: 830px) {
+    .top-panels {
+        grid-template-columns: 1fr;
+    }
+
+    .top-panels .search-panel {
+        margin-bottom: 0;
+    }
+
+    .top-panels:not(:has(.defender-panel:not([hidden]))) .search-panel {
+        margin-bottom: 24px;
+    }
+}
+
 .search-panel,
 .results-panel {
     background: white;
@@ -56,6 +83,20 @@ h1 {
     display: flex;
     align-items: stretch;
     gap: 12px;
+    width: 100%;
+}
+
+.search-input-row .autocomplete {
+    position: relative;
+    flex: 2 1 0;
+    min-width: 0;
+    width: auto;
+}
+
+#defender-input {
+    display: block;
+    width: 100%;
+    min-width: 0;
 }
 
 .autocomplete-field {
@@ -71,12 +112,19 @@ h1 {
 }
 
 .autocomplete-hint {
+    /* display: flex; */
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
     margin: 6px 0 0;
     color: #6b7280;
     font-size: 12px;
     line-height: 1.5;
 }
 
+.autocomplete-hint span {
+    display: block;
+}
 .autocomplete-hint kbd {
     padding: 1px 4px;
     border: 1px solid #d1d5db;
@@ -94,10 +142,6 @@ h1 {
     }
 }
 
-#search-button {
-    flex-shrink: 0;
-}
-
 @media (max-width: 650px) {
     .search-input-row {
         gap: 8px;
@@ -108,24 +152,8 @@ h1 {
     }
 }
 
-#clear-button {
-    flex-shrink: 0;
-    background: #e5e7eb;
-    color: #202124;
-}
-
-#clear-button:hover {
-    background: #d1d5db;
-}
-
-@media (max-width: 650px) {
-    #clear-button {
-        padding: 8px 12px;
-    }
-}
-
 /* Stack input and buttons on narrow screens */
-@media (max-width: 400px) {
+@media (max-width: 1150px) {
     .search-input-row {
         flex-wrap: wrap;
     }
@@ -136,7 +164,54 @@ h1 {
 
     .search-input-row #search-button,
     .search-input-row #clear-button {
-        flex: 1;
+        flex: 1 1 0;
+        width: auto;
+        box-sizing: border-box;
+    }
+}
+
+/* Large screens: fixed input width, flexible buttons */
+@media (min-width: 1150px) {
+    .search-input-row {
+        flex-wrap: nowrap;
+    }
+
+    .search-input-row .autocomplete {
+        flex: 0 0 300px;
+        width: 300px;
+        max-width: 300px;
+    }
+
+    .search-input-row #search-button,
+    .search-input-row #clear-button {
+        flex: 0 1 auto;
+        min-width: 0;
+        padding-left: clamp(8px, 1.5vw, 20px);
+        padding-right: clamp(8px, 1.5vw, 20px);
+        white-space: nowrap;
+    }
+}
+
+#clear-button {
+    background: #e5e7eb;
+    color: #202124;
+}
+
+#clear-button:hover {
+    background: #d1d5db;
+}
+
+#search-button,
+#clear-button {
+    height: 44px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+@media (max-width: 650px) {
+    #search-button,
+    #clear-button {
+        padding: 8px 12px;
     }
 }
 
@@ -411,6 +486,12 @@ tbody tr:hover {
 .defender-table tr:last-child td {
     border-bottom: none;
 }
+
+/* #defender-help {
+    font-size: 12px;
+    line-height: 1.5;
+    max-width: 100%;
+} */
 
 #defender-help span {
     display: inline;

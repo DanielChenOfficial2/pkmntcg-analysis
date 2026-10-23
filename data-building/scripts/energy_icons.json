@@ -1,0 +1,76 @@
+{
+  "output_size": 30,
+  "padding": 1,
+  "icons": {
+    "darkness.png": {
+      "output": "Darkness-30px.png",
+      "crop_box": [404, 23, 434, 53],
+      "center": [419.5, 38],
+      "mask_radius": 14.5,
+      "mask_inset": 0
+    },
+    "dragon.png": {
+      "output": "Dragon-30px.png",
+      "crop_box": [404, 23, 434, 53],
+      "center": [419.5, 38],
+      "mask_radius": 14.5,
+      "mask_inset": 0
+    },
+    "fighting.png": {
+      "output": "Fighting-30px.png",
+      "crop_box": [404, 23, 434, 53],
+      "center": [419.5, 38],
+      "mask_radius": 14.5,
+      "mask_inset": 0
+    },
+    "fire.png": {
+      "output": "Fire-30px.png",
+      "crop_box": [404, 23, 434, 53],
+      "center": [419.5, 38],
+      "mask_radius": 14.5,
+      "mask_inset": 0
+    },
+    "grass.png": {
+      "output": "Grass-30px.png",
+      "crop_box": [404, 23, 434, 53],
+      "center": [419.5, 38],
+      "mask_radius": 14.5,
+      "mask_inset": 0
+    },
+    "lightning.png": {
+      "output": "Lightning-30px.png",
+      "crop_box": [404, 23, 434, 53],
+      "center": [419.5, 38],
+      "mask_radius": 14.5,
+      "mask_inset": 0
+    },
+    "metal.png": {
+      "output": "Metal-30px.png",
+      "crop_box": [404, 23, 434, 53],
+      "center": [419.5, 38],
+      "mask_radius": 14.5,
+      "mask_inset": 0
+    },
+    "normal.png": {
+      "output": "Colorless-30px.png",
+      "crop_box": [404, 23, 434, 53],
+      "center": [419.5, 38],
+      "mask_radius": 14.5,
+      "mask_inset": 0
+    },
+    "psychic.png": {
+      "output": "Psychic-30px.png",
+      "crop_box": [404, 23, 434, 53],
+      "center": [419.5, 38],
+      "mask_radius": 14.5,
+      "mask_inset": 0
+    },
+    "water.png": {
+      "output": "Water-30px.png",
+      "crop_box": [404, 23, 434, 53],
+      "center": [419.5, 38],
+      "mask_radius": 14.5,
+      "mask_inset": 0
+    }
+  }
+}

@@ -422,16 +422,16 @@ function addPokemonCell(row, name, details) {
 
 // Map recognized Energy names to local image filenames.
 const ENERGY_ICON_FILES = {
-    grass: "Grass-20px.png",
-    fire: "Fire-20px.png",
-    water: "Water-20px.png",
-    lightning: "Lightning-20px.png",
-    psychic: "Psychic-20px.png",
-    fighting: "Fighting-20px.png",
-    darkness: "Darkness-20px.png",
-    metal: "Metal-20px.png",
-    dragon: "Dragon-20px.png",
-    colorless: "Colorless-20px.png",
+    grass: "Grass-30px.png",
+    fire: "Fire-30px.png",
+    water: "Water-30px.png",
+    lightning: "Lightning-30px.png",
+    psychic: "Psychic-30px.png",
+    fighting: "Fighting-30px.png",
+    darkness: "Darkness-30px.png",
+    metal: "Metal-30px.png",
+    dragon: "Dragon-30px.png",
+    colorless: "Colorless-30px.png",
 };
 
 

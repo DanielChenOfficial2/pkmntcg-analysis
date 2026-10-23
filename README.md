@@ -78,6 +78,39 @@ Build the database separately from the saved file (no network access needed):
 python database/build_database.py
 ```
 
+## Energy icon assets
+
+`data-building/scripts/process_energy_icons.py` extracts configured Energy
+symbols from the PNG card images in `data-building/data/raw` and writes
+32×32 transparent masters at the source symbol's native resolution to
+`website/images/energy`. The existing
+`*-20px.png` assets and website references are left unchanged.
+
+Install the Python dependencies and run the workflow from the repository root:
+
+```sh
+python -m pip install -r requirements.txt
+python data-building/scripts/process_energy_icons.py
+```
+
+The per-image crop box, symbol center, mask radius, and optional mask inset are
+in `data-building/scripts/energy_icons.json`; coordinates are source-image
+pixels from the top-left, and `crop_box` is `[left, top, right, bottom]`.
+`output_size` and `padding` are configurable at the top of that file, while
+`mask_inset` trims the circular mask inward without changing pixel colors.
+Adjust an entry and regenerate only that image with, for example:
+
+```sh
+python data-building/scripts/process_energy_icons.py --only fire.png --overwrite
+```
+
+The script creates `energy-contact-sheet.png` with light and dark previews,
+reports skipped or unconfigured inputs, and skips existing master files unless
+`--overwrite` is supplied. The current raw images are 460×640 card images and their printed symbols are
+about 25 pixels across. The default 29px circular mask is centered at x=419.5
+in each 460px-wide source image, with 1px of transparent padding in the 30×30
+output. Review the contact sheet and adjust crop settings if needed.
+
 The scraper accepts `--output`; the builder accepts `--input` and `--database`
 to choose different file paths. Pokémon attacks, their energy costs, and their original
 effect text are stored in related tables. Effect text and ability text remain

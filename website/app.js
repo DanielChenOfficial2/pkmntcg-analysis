@@ -782,10 +782,11 @@ function renderFilteredResults() {
         )].map(button => button.dataset.type.toLowerCase())
     );
 
-    const selectedMechanic =
-        pokemonFilterOptions.querySelector(
+    const selectedMechanics = new Set(
+        [...pokemonFilterOptions.querySelectorAll(
             ".pokemon-filter-option[aria-pressed='true']"
-        )?.dataset.mechanic || "all";
+        )].map(button => button.dataset.mechanic)
+    );
 
     const selectedStages = new Set(
         [...evolutionFilterOptions.querySelectorAll(
@@ -816,33 +817,22 @@ function renderFilteredResults() {
             );
 
         const isEx = Number(move.attacker_is_ex) === 1;
-        const isMega = Number(move.attacker_is_mega) === 1;
-        const isTera = Number(move.attacker_is_tera) === 1;
-
-        let matchesMechanic;
-
-        switch (selectedMechanic) {
-            case "ex":
-                matchesMechanic = isEx;
-                break;
-
-            case "mega":
-                matchesMechanic = isMega;
-                break;
-
-            case "tera":
-                matchesMechanic = isTera;
-                break;
-
-            case "nonex":
-                matchesMechanic = !isEx;
-                break;
-
-            case "all":
-            default:
-                matchesMechanic = true;
-                break;
-        }
+        const matchesMechanic =
+            selectedMechanics.size === 0 ||
+            [...selectedMechanics].some(mechanic => {
+                switch (mechanic) {
+                    case "ex":
+                        return isEx;
+                    case "mega":
+                        return Number(move.attacker_is_mega) === 1;
+                    case "tera":
+                        return Number(move.attacker_is_tera) === 1;
+                    case "nonex":
+                        return !isEx;
+                    default:
+                        return false;
+                }
+            });
 
         const matchesStage =
             selectedStages.size === 0 ||
@@ -885,7 +875,7 @@ function renderFilteredResults() {
         if (selectedTypes.size > 0) {
             activeFilters.push("attacking types");
         }
-        if (selectedMechanic !== "all") {
+        if (selectedMechanics.size > 0) {
             activeFilters.push("attacking mechanic");
         }
         if (selectedStages.size > 0) {
@@ -1027,15 +1017,7 @@ pokemonFilterOptions.addEventListener("click", event => {
     if (!button) return;
 
     const isSelected = button.getAttribute("aria-pressed") === "true";
-
-    pokemonFilterOptions
-        .querySelectorAll(".pokemon-filter-option")
-        .forEach(option => {
-            option.setAttribute(
-                "aria-pressed",
-                String(option === button && !isSelected)
-            );
-        });
+    button.setAttribute("aria-pressed", String(!isSelected));
 
     renderFilteredResults();
 });

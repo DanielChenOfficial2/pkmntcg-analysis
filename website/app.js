@@ -28,6 +28,19 @@ const evolutionFilterOptions =
 const clearEvolutionFilterButton =
     document.getElementById("clear-evolution-filter");
 
+const attackCostEnergyOptions =
+    document.getElementById("attack-cost-energy-options");
+const attackCostTypeComparison =
+    document.getElementById("attack-cost-type-comparison");
+const attackCostColorlessSubstitution =
+    document.getElementById("attack-cost-colorless-substitution");
+const attackCostTotalComparison =
+    document.getElementById("attack-cost-total-comparison");
+const attackCostTotalCount =
+    document.getElementById("attack-cost-total-count");
+const clearAttackCostFilterButton =
+    document.getElementById("clear-attack-cost-filter");
+
 let allPokemon = [];
 let filteredPokemon = [];
 let currentMoves = [];
@@ -780,6 +793,21 @@ function renderFilteredResults() {
         )].map(button => button.dataset.stage.toLowerCase())
     );
 
+    const energyCostCriteria = [
+        ...attackCostEnergyOptions.querySelectorAll(
+            ".attack-cost-energy-count"
+        )
+    ]
+        .filter(input => input.value !== "")
+        .map(input => ({
+            code: input.dataset.energyCode,
+            count: Number(input.value)
+        }));
+    const totalCostCount =
+        attackCostTotalCount.value === ""
+            ? null
+            : Number(attackCostTotalCount.value);
+
     const filteredMoves = currentMoves.filter(move => {
         const matchesType =
             selectedTypes.size === 0 ||
@@ -822,40 +850,66 @@ function renderFilteredResults() {
                 (move.attacker_evolution_stage || "").toLowerCase()
             );
 
-        return matchesType && matchesMechanic && matchesStage;
+        const energyCounts = getAttackEnergyCounts(move.move_cost);
+        const matchesEnergyTypes = energyCostCriteria.every(
+            ({ code, count }) => {
+                return matchesEnergyTypeCount(
+                    energyCounts,
+                    code,
+                    attackCostTypeComparison.value,
+                    count,
+                    attackCostColorlessSubstitution.checked
+                );
+            }
+        );
+        const matchesTotalCost =
+            totalCostCount === null ||
+            compareEnergyCounts(
+                energyCounts.total,
+                attackCostTotalComparison.value,
+                totalCostCount
+            );
+
+        return (
+            matchesType &&
+            matchesMechanic &&
+            matchesStage &&
+            matchesEnergyTypes &&
+            matchesTotalCost
+        );
     });
 
     if (filteredMoves.length === 0) {
-        const hasTypeFilter = selectedTypes.size > 0;
-        const hasMechanicFilter = selectedMechanic !== "all";
-        const hasStageFilter = selectedStages.size > 0;
+        const activeFilters = [];
+
+        if (selectedTypes.size > 0) {
+            activeFilters.push("attacking types");
+        }
+        if (selectedMechanic !== "all") {
+            activeFilters.push("attacking mechanic");
+        }
+        if (selectedStages.size > 0) {
+            activeFilters.push("evolution stages");
+        }
+        if (energyCostCriteria.length > 0) {
+            activeFilters.push("attack energy types");
+        }
+        if (totalCostCount !== null) {
+            activeFilters.push("total attack energy cost");
+        }
 
         let emptyMessage;
-
-        if (hasTypeFilter && hasMechanicFilter && hasStageFilter) {
-            emptyMessage =
-                "No moves match the selected attacking types, mechanic, and evolution stages.";
-        } else if (hasTypeFilter && hasMechanicFilter) {
-            emptyMessage =
-                "No moves match the selected attacking types and mechanic.";
-        } else if (hasTypeFilter && hasStageFilter) {
-            emptyMessage =
-                "No moves match the selected attacking types and evolution stages.";
-        } else if (hasMechanicFilter && hasStageFilter) {
-            emptyMessage =
-                "No moves match the selected attacking mechanic and evolution stages.";
-        } else if (hasTypeFilter) {
-            emptyMessage =
-                "No moves match the selected attacking types.";
-        } else if (hasMechanicFilter) {
-            emptyMessage =
-                "No moves match the selected attacking mechanic.";
-        } else if (hasStageFilter) {
-            emptyMessage =
-                "No moves match the selected evolution stages.";
-        } else {
+        if (activeFilters.length === 0) {
             emptyMessage =
                 "No moves met the current damage thresholds for this Pokemon.";
+        } else {
+            const filterDescription = activeFilters.length < 2
+                ? activeFilters[0]
+                : `${activeFilters.slice(0, -1).join(", ")} and ${
+                    activeFilters[activeFilters.length - 1]
+                }`;
+            emptyMessage =
+                `No moves match the selected ${filterDescription}.`;
         }
 
         showEmptyResults(emptyMessage);
@@ -863,6 +917,80 @@ function renderFilteredResults() {
     }
 
     renderResults(filteredMoves);
+}
+
+
+function getAttackEnergyCounts(cost) {
+    const counts = {
+        G: 0,
+        R: 0,
+        W: 0,
+        L: 0,
+        P: 0,
+        F: 0,
+        D: 0,
+        M: 0,
+        C: 0,
+        total: 0
+    };
+
+    for (const code of String(cost ?? "").toUpperCase()) {
+        if (Object.hasOwn(counts, code) && code !== "total") {
+            counts[code] += 1;
+            counts.total += 1;
+        }
+    }
+
+    return counts;
+}
+
+
+function compareEnergyCounts(actual, comparison, expected) {
+    switch (comparison) {
+        case "<":
+            return actual < expected;
+        case "<=":
+            return actual <= expected;
+        case "=":
+            return actual === expected;
+        case ">=":
+            return actual >= expected;
+        case ">":
+            return actual > expected;
+        default:
+            return false;
+    }
+}
+
+
+function matchesEnergyTypeCount(
+    energyCounts,
+    code,
+    comparison,
+    expected,
+    colorlessSubstitution
+) {
+    let minimumCount = energyCounts[code];
+    let maximumCount = minimumCount;
+
+    if (colorlessSubstitution && code !== "C") {
+        maximumCount += energyCounts.C;
+    }
+
+    switch (comparison) {
+        case "<":
+            return minimumCount < expected;
+        case "<=":
+            return minimumCount <= expected;
+        case "=":
+            return minimumCount <= expected && maximumCount >= expected;
+        case ">=":
+            return maximumCount >= expected;
+        case ">":
+            return maximumCount > expected;
+        default:
+            return false;
+    }
 }
 
 
@@ -944,6 +1072,33 @@ clearEvolutionFilterButton.addEventListener("click", () => {
         .forEach(button => {
             button.setAttribute("aria-pressed", "false");
         });
+
+    renderFilteredResults();
+});
+
+
+[
+    attackCostEnergyOptions,
+    attackCostTypeComparison,
+    attackCostColorlessSubstitution,
+    attackCostTotalComparison,
+    attackCostTotalCount
+].forEach(control => {
+    control.addEventListener("input", renderFilteredResults);
+    control.addEventListener("change", renderFilteredResults);
+});
+
+
+clearAttackCostFilterButton.addEventListener("click", () => {
+    attackCostEnergyOptions
+        .querySelectorAll(".attack-cost-energy-count")
+        .forEach(input => {
+            input.value = "";
+        });
+    attackCostTypeComparison.value = "=";
+    attackCostColorlessSubstitution.checked = true;
+    attackCostTotalComparison.value = "=";
+    attackCostTotalCount.value = "";
 
     renderFilteredResults();
 });

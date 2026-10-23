@@ -330,6 +330,185 @@
                 </div>
             </div>
 
+            <div class="pokemon-filter attack-cost-filter">
+                <div class="pokemon-filter-header">
+                    <span class="pokemon-filter-label">
+                        Attacking Pokemon Attack Cost
+                    </span>
+                    <button id="clear-attack-cost-filter" type="button">
+                        Clear Cost
+                    </button>
+                </div>
+
+                <div class="attack-cost-filter-controls">
+                    <div class="attack-cost-type-filter">
+                        <label for="attack-cost-type-comparison">
+                            Compare each selected energy type
+                        </label>
+                        <select id="attack-cost-type-comparison">
+                            <option value="<">Less than</option>
+                            <option value="<=">Less than or equal to</option>
+                            <option value="=" selected>Equal to</option>
+                            <option value=">=">Greater than or equal to</option>
+                            <option value=">">Greater than</option>
+                        </select>
+
+                        <div
+                            id="attack-cost-energy-options"
+                            class="attack-cost-energy-options"
+                            role="group"
+                            aria-label="Energy counts to compare"
+                        >
+                            <label class="attack-cost-energy-option">
+                                <img src="./images/energy/Grass-30px.png" alt="">
+                                <input
+                                    class="attack-cost-energy-count"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    data-energy-code="G"
+                                    aria-label="Grass energy count"
+                                    placeholder="—"
+                                >
+                            </label>
+                            <label class="attack-cost-energy-option">
+                                <img src="./images/energy/Fire-30px.png" alt="">
+                                <input
+                                    class="attack-cost-energy-count"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    data-energy-code="R"
+                                    aria-label="Fire energy count"
+                                    placeholder="—"
+                                >
+                            </label>
+                            <label class="attack-cost-energy-option">
+                                <img src="./images/energy/Water-30px.png" alt="">
+                                <input
+                                    class="attack-cost-energy-count"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    data-energy-code="W"
+                                    aria-label="Water energy count"
+                                    placeholder="—"
+                                >
+                            </label>
+                            <label class="attack-cost-energy-option">
+                                <img src="./images/energy/Lightning-30px.png" alt="">
+                                <input
+                                    class="attack-cost-energy-count"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    data-energy-code="L"
+                                    aria-label="Lightning energy count"
+                                    placeholder="—"
+                                >
+                            </label>
+                            <label class="attack-cost-energy-option">
+                                <img src="./images/energy/Psychic-30px.png" alt="">
+                                <input
+                                    class="attack-cost-energy-count"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    data-energy-code="P"
+                                    aria-label="Psychic energy count"
+                                    placeholder="—"
+                                >
+                            </label>
+                            <label class="attack-cost-energy-option">
+                                <img src="./images/energy/Fighting-30px.png" alt="">
+                                <input
+                                    class="attack-cost-energy-count"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    data-energy-code="F"
+                                    aria-label="Fighting energy count"
+                                    placeholder="—"
+                                >
+                            </label>
+                            <label class="attack-cost-energy-option">
+                                <img src="./images/energy/Darkness-30px.png" alt="">
+                                <input
+                                    class="attack-cost-energy-count"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    data-energy-code="D"
+                                    aria-label="Darkness energy count"
+                                    placeholder="—"
+                                >
+                            </label>
+                            <label class="attack-cost-energy-option">
+                                <img src="./images/energy/Metal-30px.png" alt="">
+                                <input
+                                    class="attack-cost-energy-count"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    data-energy-code="M"
+                                    aria-label="Metal energy count"
+                                    placeholder="—"
+                                >
+                            </label>
+                            <label class="attack-cost-energy-option">
+                                <img src="./images/energy/Colorless-30px.png" alt="">
+                                <input
+                                    class="attack-cost-energy-count"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    data-energy-code="C"
+                                    aria-label="Colorless energy count"
+                                    placeholder="—"
+                                >
+                            </label>
+                        </div>
+
+                        <p class="attack-cost-help">
+                            Leave a count blank to ignore that energy type.
+                            Enter 0 to compare against no energy of that type.
+                        </p>
+                        <label class="attack-cost-colorless-toggle">
+                            <input
+                                id="attack-cost-colorless-substitution"
+                                type="checkbox"
+                                checked
+                            >
+                            Treat Colorless as interchangeable with selected
+                            energy types
+                        </label>
+                    </div>
+
+                    <div class="attack-cost-total-filter">
+                        <label for="attack-cost-total-comparison">
+                            Compare total energy count
+                        </label>
+                        <div class="attack-cost-total-controls">
+                            <select id="attack-cost-total-comparison">
+                                <option value="<">Less than</option>
+                                <option value="<=">Less than or equal to</option>
+                                <option value="=" selected>Equal to</option>
+                                <option value=">=">Greater than or equal to</option>
+                                <option value=">">Greater than</option>
+                            </select>
+                            <input
+                                id="attack-cost-total-count"
+                                type="number"
+                                min="0"
+                                step="1"
+                                aria-label="Total attack energy count"
+                                placeholder="Count"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="table-wrapper">
                 <table>
                     <thead>

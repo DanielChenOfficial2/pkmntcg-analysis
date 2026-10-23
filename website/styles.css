@@ -842,6 +842,114 @@ tbody tr:hover {
     border: none;
 }
 
+#clear-attack-cost-filter {
+    background: #e5e7eb;
+    color: #202124;
+    border: none;
+}
+
+#clear-attack-cost-filter:hover {
+    background: #d1d5db;
+}
+
+.attack-cost-filter-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+    align-items: start;
+    gap: var(--space-s);
+}
+
+.attack-cost-type-filter,
+.attack-cost-total-filter {
+    display: grid;
+    gap: var(--space-2xs);
+    min-width: 0;
+}
+
+.attack-cost-type-filter > label:not(.attack-cost-colorless-toggle),
+.attack-cost-total-filter > label {
+    font-size: var(--step--1);
+    font-weight: 600;
+}
+
+.attack-cost-energy-options {
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    gap: var(--space-3xs);
+}
+
+.attack-cost-energy-option {
+    display: grid;
+    grid-template-rows: 24px 38px;
+    align-items: center;
+    justify-items: center;
+    gap: 2px;
+    margin: 0;
+}
+
+.attack-cost-energy-option img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.attack-cost-energy-option input,
+.attack-cost-total-controls input {
+    width: 100%;
+    min-width: 0;
+    min-height: 38px;
+    padding: 2px;
+    border: 1px solid #c8cdd3;
+    border-radius: 6px;
+    font: inherit;
+    text-align: center;
+}
+
+.attack-cost-colorless-toggle {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2xs);
+    margin: var(--space-2xs) 0 0;
+    font-size: var(--step--1);
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.attack-cost-colorless-toggle input {
+    margin-top: 0.2em;
+}
+
+.attack-cost-help {
+    margin: 0;
+    color: #5f6368;
+    font-size: var(--step--1);
+}
+
+.attack-cost-total-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 7rem;
+    gap: var(--space-2xs);
+}
+
+@media (max-width: 750px) {
+    .attack-cost-filter-controls {
+        grid-template-columns: 1fr;
+    }
+
+    .attack-cost-energy-option {
+        grid-template-rows: 20px 34px;
+    }
+
+    .attack-cost-energy-option img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .attack-cost-energy-option input {
+        font-size: var(--step--1);
+    }
+}
+
 /* Type filter */
 .type-filter {
     display: flex;

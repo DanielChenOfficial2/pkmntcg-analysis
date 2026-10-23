@@ -898,12 +898,14 @@ pokemonFilterOptions.addEventListener("click", event => {
 
     if (!button) return;
 
+    const isSelected = button.getAttribute("aria-pressed") === "true";
+
     pokemonFilterOptions
         .querySelectorAll(".pokemon-filter-option")
         .forEach(option => {
             option.setAttribute(
                 "aria-pressed",
-                String(option === button)
+                String(option === button && !isSelected)
             );
         });
 
@@ -915,10 +917,7 @@ clearPokemonFilterButton.addEventListener("click", () => {
     pokemonFilterOptions
         .querySelectorAll(".pokemon-filter-option")
         .forEach(button => {
-            button.setAttribute(
-                "aria-pressed",
-                String(button.dataset.mechanic === "all")
-            );
+            button.setAttribute("aria-pressed", "false");
         });
 
     renderFilteredResults();

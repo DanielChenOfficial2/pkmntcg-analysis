@@ -762,12 +762,12 @@ tbody tr:hover {
 }
 
 @media (max-width: 650px) {
-    .pokemon-filter-options {
+    #pokemon-filter-options {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .pokemon-filter-option {
+    #pokemon-filter-options .pokemon-filter-option {
         min-width: 0;
         padding-inline: 0.25rem;
     }

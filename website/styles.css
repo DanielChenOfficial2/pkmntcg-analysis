@@ -1,3 +1,4 @@
+/* Base styles */
 :root {
     font-family: Arial, Helvetica, sans-serif;
     color: #202124;
@@ -19,6 +20,7 @@ body {
     }
 }
 
+/* Shared layout and panel surfaces */
 main {
     max-width: 1100px;
     margin: 0 auto;
@@ -28,6 +30,73 @@ h1 {
     margin: 0 0 28px;
     font-size: 2rem;
     text-align: center;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+select,
+button {
+    font: inherit;
+    min-height: 42px;
+    border-radius: 6px;
+}
+
+select {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #c8cdd3;
+    background: white;
+}
+
+button {
+    padding: 8px 24px;
+    border: none;
+    background: #2459c4;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1947a6;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+h2 {
+    margin: 0;
+    font-size: 1.25rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #e8eaed;
+    vertical-align: top;
+    line-height: 1.5;
+}
+
+th {
+    background: #f8f9fa;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+tbody tr:hover {
+    background: #f8faff;
 }
 
 .top-panels {
@@ -58,6 +127,7 @@ h1 {
 }
 
 .search-panel,
+.defender-panel,
 .results-panel {
     background: white;
     border: 1px solid #e0e3e7;
@@ -74,7 +144,7 @@ h1 {
     }
 }
 
-/* Search form */
+/* Search */
 .search-form {
     display: block;
 }
@@ -135,24 +205,14 @@ h1 {
     font-size: 11px;
 }
 
-/* Hide the hint on mobile and small screens. */
+/* Autocomplete hint */
 @media (max-width: 650px) {
     .autocomplete-hint {
         display: none;
     }
 }
 
-@media (max-width: 650px) {
-    .search-input-row {
-        gap: 8px;
-    }
-
-    #search-button {
-        padding: 8px 16px;
-    }
-}
-
-/* Stack input and buttons on narrow screens */
+/* Search row: wider max-width rules precede narrower overrides. */
 @media (max-width: 1150px) {
     .search-input-row {
         flex-wrap: wrap;
@@ -167,6 +227,12 @@ h1 {
         flex: 1 1 0;
         width: auto;
         box-sizing: border-box;
+    }
+}
+
+@media (max-width: 650px) {
+    .search-input-row {
+        gap: 8px;
     }
 }
 
@@ -213,114 +279,6 @@ h1 {
     #clear-button {
         padding: 8px 12px;
     }
-}
-
-label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-select,
-button {
-    font: inherit;
-    min-height: 42px;
-    border-radius: 6px;
-}
-
-select {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px solid #c8cdd3;
-    background: white;
-}
-
-button {
-    padding: 8px 24px;
-    border: none;
-    background: #2459c4;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #1947a6;
-}
-
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.results-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 16px;
-    margin-bottom: 16px;
-}
-
-@media (max-width: 650px) {
-    .results-heading {
-        align-items: start;
-        flex-direction: column;
-    }
-}
-
-h2 {
-    margin: 0;
-    font-size: 1.25rem;
-}
-
-#result-count {
-    color: #626a73;
-    font-size: 0.9rem;
-}
-
-.table-wrapper {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-}
-
-th,
-td {
-    padding: 14px 12px;
-    border-bottom: 1px solid #e8eaed;
-    vertical-align: top;
-    line-height: 1.5;
-}
-
-th {
-    background: #f8f9fa;
-    font-size: 0.9rem;
-    white-space: nowrap;
-}
-
-tbody tr:hover {
-    background: #f8faff;
-}
-
-.pokemon-name {
-    font-weight: 600;
-}
-
-.card-details {
-    display: block;
-    margin-top: 3px;
-}
-
-.card-details .cost-label,
-.card-details .cost-value {
-    display: inline;
-    color: black;
-    font-size: 1rem;
-    font-weight: normal;
 }
 
 /* Autocomplete */
@@ -410,7 +368,7 @@ tbody tr:hover {
     }
 }
 
-/* Status messages follow the search controls in index.html. */
+/* Search status */
 #status {
     color: #626a73;
     margin: 16px 0 0;
@@ -442,24 +400,10 @@ tbody tr:hover {
     }
 }
 
-/* Defending Pokémon panel */
-.defender-panel {
-    background: white;
-    border: 1px solid #e0e3e7;
-    border-radius: 10px;
-    padding: 24px;
-    margin-bottom: 24px;
-}
-
+/* Defender panel */
 .defender-panel h2 {
     margin: 0 0 16px;
     font-size: 1.25rem;
-}
-
-@media (max-width: 650px) {
-    .defender-panel {
-        padding: 16px;
-    }
 }
 
 .defender-table {
@@ -504,6 +448,48 @@ tbody tr:hover {
 }
 
 /* Results */
+.results-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+@media (max-width: 650px) {
+    .results-heading {
+        align-items: start;
+        flex-direction: column;
+    }
+}
+
+#result-count {
+    color: #626a73;
+    font-size: 0.9rem;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.pokemon-name {
+    font-weight: 600;
+}
+
+.card-details {
+    display: block;
+    margin-top: 3px;
+}
+
+.card-details .cost-label,
+.card-details .cost-value {
+    display: inline;
+    color: black;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+/* Results: damage details */
 #results-body td {
     vertical-align: top;
 }
@@ -526,6 +512,88 @@ tbody tr:hover {
 
 .damage-type-neutral {
     color: #000000;
+}
+
+/* Energy and cost icons */
+.energy-icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    object-fit: contain;
+    vertical-align: -0.15em;
+    margin-right: 2px;
+}
+
+.cost-label {
+    font-size: 1rem;
+    font-weight: normal;
+    color: black;
+}
+
+/* Results: responsive table layout */
+@media (max-width: 650px) {
+    .table-wrapper {
+        overflow-x: visible;
+    }
+
+    .results-panel table:not(.defender-table),
+    .results-panel thead,
+    .results-panel tbody,
+    .results-panel tr,
+    .results-panel th,
+    .results-panel td {
+        display: block;
+        width: 100%;
+    }
+
+    .results-panel thead {
+        display: none;
+    }
+
+    .results-panel tbody tr {
+        margin-bottom: 12px;
+        padding: 12px;
+        border: 1px solid #e0e3e7;
+        border-radius: 8px;
+        background: white;
+    }
+
+    .results-panel tbody tr:last-child {
+        margin-bottom: 0;
+    }
+
+    .results-panel tbody td {
+        padding: 6px 0;
+        border-bottom: none;
+        overflow-wrap: break-word;
+        word-break: normal;
+        hyphens: auto;
+    }
+
+    .results-panel tbody td:first-child {
+        font-weight: 600;
+        font-size: 1.05rem;
+    }
+
+    .results-panel tbody td:nth-child(2)::before {
+        content: "Move: ";
+        font-weight: 600;
+    }
+
+    .results-panel tbody td:nth-child(3)::before {
+        content: "Damage Calculation: ";
+        font-weight: 600;
+    }
+
+    .results-panel tbody td[colspan] {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .results-panel tbody td.empty-state {
+        font-weight: normal;
+        font-size: 1rem;
+    }
 }
 
 /* Empty states */
@@ -607,89 +675,7 @@ tbody tr:hover {
     word-break: normal;
 }
 
-/* Energy and cost icons */
-.energy-icon {
-    display: inline-block;
-    width: 1em;
-    height: 1em;
-    object-fit: contain;
-    vertical-align: -0.15em;
-    margin-right: 2px;
-}
-
-.cost-label {
-    font-size: 1rem;
-    font-weight: normal;
-    color: black;
-}
-
-/* Responsive results table */
-@media (max-width: 650px) {
-    .table-wrapper {
-        overflow-x: visible;
-    }
-
-    .results-panel table:not(.defender-table),
-    .results-panel thead,
-    .results-panel tbody,
-    .results-panel tr,
-    .results-panel th,
-    .results-panel td {
-        display: block;
-        width: 100%;
-    }
-
-    .results-panel thead {
-        display: none;
-    }
-
-    .results-panel tbody tr {
-        margin-bottom: 12px;
-        padding: 12px;
-        border: 1px solid #e0e3e7;
-        border-radius: 8px;
-        background: white;
-    }
-
-    .results-panel tbody tr:last-child {
-        margin-bottom: 0;
-    }
-
-    .results-panel tbody td {
-        padding: 6px 0;
-        border-bottom: none;
-        overflow-wrap: break-word;
-        word-break: normal;
-        hyphens: auto;
-    }
-
-    .results-panel tbody td:first-child {
-        font-weight: 600;
-        font-size: 1.05rem;
-    }
-
-    .results-panel tbody td:nth-child(2)::before {
-        content: "Move: ";
-        font-weight: 600;
-    }
-
-    .results-panel tbody td:nth-child(3)::before {
-        content: "Damage Calculation: ";
-        font-weight: 600;
-    }
-
-    .results-panel tbody td[colspan] {
-        text-align: center;
-        padding: 20px 0;
-    }
-
-    .results-panel tbody td.empty-state {
-        font-weight: normal;
-        font-size: 1rem;
-    }
-}
-
-/* Attacking Pokémon category filter */
+/* Category filter */
 .pokemon-filter {
     display: flex;
     flex-direction: column;
@@ -777,7 +763,7 @@ tbody tr:hover {
     background: #d1d5db;
 }
 
-/* Attacking Pokémon type filter */
+/* Type filter */
 .type-filter {
     display: flex;
     flex-direction: column;
@@ -885,12 +871,6 @@ tbody tr:hover {
 }
 
 /* Keyboard accessibility without changing selection colors */
-.type-filter-option:focus-visible {
-    outline: 2px solid #2563eb;
-    outline-offset: 2px;
-}
-
-/* Keyboard accessibility */
 .type-filter-option:focus-visible {
     outline: 2px solid #2563eb;
     outline-offset: 2px;

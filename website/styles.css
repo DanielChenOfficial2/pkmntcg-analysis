@@ -198,19 +198,27 @@ tbody tr:hover {
 }
 
 .autocomplete-hint {
-    /* display: flex; */
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--space-xs);
+    display: grid;
+    gap: var(--space-3xs);
     margin: var(--space-3xs) 0 0;
     color: #6b7280;
     font-size: var(--step--1);
     line-height: 1.5;
 }
 
-.autocomplete-hint span {
-    display: block;
+.autocomplete-hint-item {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    align-items: center;
+    gap: var(--space-2xs);
 }
+
+.autocomplete-hint-keys {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3xs);
+}
+
 .autocomplete-hint kbd {
     padding: 1px 4px;
     border: 1px solid #d1d5db;
@@ -375,6 +383,7 @@ tbody tr:hover {
     margin: var(--space-3xs) 0 0;
     color: #6b7280;
     font-size: var(--step--1);
+    white-space: nowrap;
 }
 
 @media (max-width: 472px) {
@@ -389,6 +398,11 @@ tbody tr:hover {
     color: #626a73;
     margin: var(--space-s) 0 0;
     line-height: 1.5;
+}
+
+#status.status-fit {
+    white-space: nowrap;
+    font-size: var(--step--1);
 }
 
 #status.error {
@@ -412,7 +426,7 @@ tbody tr:hover {
 
 @media (max-width: 386px) {
     .status-responsive-break {
-        display: block;
+        display: none;
     }
 }
 

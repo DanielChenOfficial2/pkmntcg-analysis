@@ -735,7 +735,7 @@ tbody tr:hover {
     word-break: normal;
 }
 
-/* Category filter */
+/* Mechanic filter */
 .pokemon-filter {
     display: flex;
     flex-direction: column;
@@ -793,13 +793,13 @@ tbody tr:hover {
     -webkit-touch-callout: none;
 }
 
-/* Unselected category buttons */
+/* Unselected mechanic buttons */
 .pokemon-filter-option:not([aria-pressed="true"]) {
     background-color: #f9fafb;
     border-color: #d1d5db;
 }
 
-/* Selected category */
+/* Selected mechanic */
 .pokemon-filter-option[aria-pressed="true"] {
     background-color: #bfdbfe;
     border-color: #2563eb;
@@ -824,7 +824,7 @@ tbody tr:hover {
     outline-offset: 2px;
 }
 
-/* Clear category button */
+/* Clear mechanic button */
 #clear-pokemon-filter {
     background: #e5e7eb;
     color: #202124;

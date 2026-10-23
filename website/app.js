@@ -764,10 +764,10 @@ function renderFilteredResults() {
         )].map(button => button.dataset.type.toLowerCase())
     );
 
-    const selectedCategory =
+    const selectedMechanic =
         pokemonFilterOptions.querySelector(
             ".pokemon-filter-option[aria-pressed='true']"
-        )?.dataset.category || "all";
+        )?.dataset.mechanic || "all";
 
     const filteredMoves = currentMoves.filter(move => {
         const matchesType =
@@ -780,49 +780,49 @@ function renderFilteredResults() {
         const isMega = Number(move.attacker_is_mega) === 1;
         const isTera = Number(move.attacker_is_tera) === 1;
 
-        let matchesCategory;
+        let matchesMechanic;
 
-        switch (selectedCategory) {
+        switch (selectedMechanic) {
             case "ex":
-                matchesCategory = isEx;
+                matchesMechanic = isEx;
                 break;
 
             case "mega":
-                matchesCategory = isMega;
+                matchesMechanic = isMega;
                 break;
 
             case "tera":
-                matchesCategory = isTera;
+                matchesMechanic = isTera;
                 break;
 
             case "nonex":
-                matchesCategory = !isEx;
+                matchesMechanic = !isEx;
                 break;
 
             case "all":
             default:
-                matchesCategory = true;
+                matchesMechanic = true;
                 break;
         }
 
-        return matchesType && matchesCategory;
+        return matchesType && matchesMechanic;
     });
 
     if (filteredMoves.length === 0) {
         const hasTypeFilter = selectedTypes.size > 0;
-        const hasCategoryFilter = selectedCategory !== "all";
+        const hasMechanicFilter = selectedMechanic !== "all";
 
         let emptyMessage;
 
-        if (hasTypeFilter && hasCategoryFilter) {
+        if (hasTypeFilter && hasMechanicFilter) {
             emptyMessage =
-                "No moves match the selected attacking types and category.";
+                "No moves match the selected attacking types and mechanic.";
         } else if (hasTypeFilter) {
             emptyMessage =
                 "No moves match the selected attacking types.";
-        } else if (hasCategoryFilter) {
+        } else if (hasMechanicFilter) {
             emptyMessage =
-                "No moves match the selected attacking category.";
+                "No moves match the selected attacking mechanic.";
         } else {
             emptyMessage =
                 "No moves met the current damage thresholds for this Pokemon.";
@@ -861,7 +861,7 @@ clearTypeFilterButton.addEventListener("click", () => {
 });
 
 
-// ---------- Attacking Pokémon category filters ----------
+// ---------- Attacking Pokémon mechanic filters ----------
 
 pokemonFilterOptions.addEventListener("click", event => {
     const button = event.target.closest(".pokemon-filter-option");
@@ -887,7 +887,7 @@ clearPokemonFilterButton.addEventListener("click", () => {
         .forEach(button => {
             button.setAttribute(
                 "aria-pressed",
-                String(button.dataset.category === "all")
+                String(button.dataset.mechanic === "all")
             );
         });
 

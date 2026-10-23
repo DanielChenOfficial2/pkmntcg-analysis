@@ -3,6 +3,21 @@
     font-family: Arial, Helvetica, sans-serif;
     color: #202124;
     background: #f5f6f8;
+
+    /* Fluid scales interpolate between 320px and 1200px viewports. */
+    --step--1: clamp(0.8333rem, 0.8091rem + 0.1212vw, 0.9rem);
+    --step-0: clamp(1rem, 0.9545rem + 0.2273vw, 1.125rem);
+    --step-1: clamp(1.2rem, 1.125rem + 0.375vw, 1.4063rem);
+    --step-2: clamp(1.44rem, 1.3244rem + 0.5778vw, 1.7578rem);
+    --step-3: clamp(1.728rem, 1.5574rem + 0.8533vw, 2.1973rem);
+
+    --space-3xs: clamp(0.25rem, 0.2273rem + 0.1136vw, 0.3125rem);
+    --space-2xs: clamp(0.5rem, 0.4545rem + 0.2273vw, 0.625rem);
+    --space-xs: clamp(0.75rem, 0.6818rem + 0.3409vw, 0.9375rem);
+    --space-s: clamp(1rem, 0.9091rem + 0.4545vw, 1.25rem);
+    --space-m: clamp(1.5rem, 1.3636rem + 0.6818vw, 1.875rem);
+    --space-l: clamp(2rem, 1.8182rem + 0.9091vw, 2.5rem);
+    --space-xl: clamp(2.5rem, 2.2727rem + 1.1364vw, 3.125rem);
 }
 
 * {
@@ -11,12 +26,13 @@
 
 body {
     margin: 0;
-    padding: 40px 24px;
+    padding: var(--space-xl) var(--space-m);
+    font-size: var(--step-0);
 }
 
 @media (max-width: 650px) {
     body {
-        padding: 24px 12px;
+        padding: var(--space-m) var(--space-xs);
     }
 }
 
@@ -27,15 +43,15 @@ main {
 }
 
 h1 {
-    margin: 0 0 28px;
-    font-size: 2rem;
+    margin: 0 0 var(--space-m);
+    font-size: var(--step-3);
     text-align: center;
 }
 
 label {
     display: block;
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: var(--space-2xs);
 }
 
 select,
@@ -47,13 +63,13 @@ button {
 
 select {
     width: 100%;
-    padding: 8px 12px;
+    padding: var(--space-2xs) var(--space-xs);
     border: 1px solid #c8cdd3;
     background: white;
 }
 
 button {
-    padding: 8px 24px;
+    padding: var(--space-2xs) var(--space-m);
     border: none;
     background: #2459c4;
     color: white;
@@ -72,7 +88,7 @@ button:disabled {
 
 h2 {
     margin: 0;
-    font-size: 1.25rem;
+    font-size: var(--step-1);
 }
 
 table {
@@ -83,7 +99,7 @@ table {
 
 th,
 td {
-    padding: 14px 12px;
+    padding: var(--space-s) var(--space-xs);
     border-bottom: 1px solid #e8eaed;
     vertical-align: top;
     line-height: 1.5;
@@ -91,7 +107,7 @@ td {
 
 th {
     background: #f8f9fa;
-    font-size: 0.9rem;
+    font-size: var(--step--1);
     white-space: nowrap;
 }
 
@@ -102,7 +118,7 @@ tbody tr:hover {
 .top-panels {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 24px;
+    gap: var(--space-m);
     align-items: stretch;
 }
 
@@ -122,7 +138,7 @@ tbody tr:hover {
     }
 
     .top-panels:not(:has(.defender-panel:not([hidden]))) .search-panel {
-        margin-bottom: 24px;
+        margin-bottom: var(--space-m);
     }
 }
 
@@ -132,15 +148,15 @@ tbody tr:hover {
     background: white;
     border: 1px solid #e0e3e7;
     border-radius: 10px;
-    padding: 24px;
-    margin-bottom: 24px;
+    padding: var(--space-m);
+    margin-bottom: var(--space-m);
 }
 
 @media (max-width: 650px) {
     .search-panel,
     .defender-panel,
     .results-panel {
-        padding: 16px;
+        padding: var(--space-s);
     }
 }
 
@@ -152,7 +168,7 @@ tbody tr:hover {
 .search-input-row {
     display: flex;
     align-items: stretch;
-    gap: 12px;
+    gap: var(--space-xs);
     width: 100%;
 }
 
@@ -185,10 +201,10 @@ tbody tr:hover {
     /* display: flex; */
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
-    margin: 6px 0 0;
+    gap: var(--space-xs);
+    margin: var(--space-3xs) 0 0;
     color: #6b7280;
-    font-size: 12px;
+    font-size: var(--step--1);
     line-height: 1.5;
 }
 
@@ -232,26 +248,26 @@ tbody tr:hover {
 
 @media (max-width: 650px) {
     .search-input-row {
-        gap: 8px;
+        gap: var(--space-2xs);
     }
 }
 
-/* Large screens: fixed input width, flexible buttons */
+/* Large screens: let the input give up space before button labels are clipped. */
 @media (min-width: 1150px) {
     .search-input-row {
         flex-wrap: nowrap;
     }
 
     .search-input-row .autocomplete {
-        flex: 0 0 300px;
-        width: 300px;
-        max-width: 300px;
+        flex: 1 1 300px;
+        width: auto;
+        max-width: none;
     }
 
     .search-input-row #search-button,
     .search-input-row #clear-button {
-        flex: 0 1 auto;
-        min-width: 0;
+        flex: 1 1 0;
+        min-width: 6em;
         padding-left: clamp(8px, 1.5vw, 20px);
         padding-right: clamp(8px, 1.5vw, 20px);
         white-space: nowrap;
@@ -277,7 +293,7 @@ tbody tr:hover {
 @media (max-width: 650px) {
     #search-button,
     #clear-button {
-        padding: 8px 12px;
+        padding: var(--space-2xs) var(--space-xs);
     }
 }
 
@@ -286,7 +302,7 @@ tbody tr:hover {
     display: block;
     width: 100%;
     min-width: 0;
-    padding: 12px;
+    padding: var(--space-xs);
     border: 1px solid #cfd4dc;
     border-radius: 6px;
     background: white;
@@ -321,7 +337,7 @@ tbody tr:hover {
 .autocomplete-option {
     display: block;
     width: 100%;
-    padding: 12px;
+    padding: var(--space-xs);
     border: none;
     border-bottom: 1px solid #e5e7eb;
     background: white;
@@ -337,7 +353,7 @@ tbody tr:hover {
     }
 
     .autocomplete-option {
-        padding: 14px 12px;
+        padding: var(--space-s) var(--space-xs);
     }
 }
 
@@ -351,14 +367,14 @@ tbody tr:hover {
 }
 
 .autocomplete-empty {
-    padding: 12px;
+    padding: var(--space-xs);
     color: #6b7280;
 }
 
 .autocomplete-help {
-    margin: 6px 0 0;
+    margin: var(--space-3xs) 0 0;
     color: #6b7280;
-    font-size: 0.85rem;
+    font-size: var(--step--1);
 }
 
 @media (max-width: 472px) {
@@ -371,7 +387,7 @@ tbody tr:hover {
 /* Search status */
 #status {
     color: #626a73;
-    margin: 16px 0 0;
+    margin: var(--space-s) 0 0;
     line-height: 1.5;
 }
 
@@ -402,8 +418,8 @@ tbody tr:hover {
 
 /* Defender panel */
 .defender-panel h2 {
-    margin: 0 0 16px;
-    font-size: 1.25rem;
+    margin: 0 0 var(--space-s);
+    font-size: var(--step-1);
 }
 
 .defender-table {
@@ -415,7 +431,7 @@ tbody tr:hover {
 
 .defender-table th,
 .defender-table td {
-    padding: 12px;
+    padding: var(--space-xs);
     border-bottom: 1px solid #e8eaed;
     line-height: 1.5;
 }
@@ -452,8 +468,8 @@ tbody tr:hover {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 16px;
-    margin-bottom: 16px;
+    gap: var(--space-s);
+    margin-bottom: var(--space-s);
 }
 
 @media (max-width: 650px) {
@@ -465,7 +481,7 @@ tbody tr:hover {
 
 #result-count {
     color: #626a73;
-    font-size: 0.9rem;
+    font-size: var(--step--1);
 }
 
 .table-wrapper {
@@ -478,14 +494,14 @@ tbody tr:hover {
 
 .card-details {
     display: block;
-    margin-top: 3px;
+    margin-top: var(--space-3xs);
 }
 
 .card-details .cost-label,
 .card-details .cost-value {
     display: inline;
     color: black;
-    font-size: 1rem;
+    font-size: var(--step-0);
     font-weight: normal;
 }
 
@@ -497,7 +513,7 @@ tbody tr:hover {
 .damage-type {
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 1rem;
+    font-size: var(--step-0);
     font-weight: 600;
     line-height: 1.5;
 }
@@ -525,7 +541,7 @@ tbody tr:hover {
 }
 
 .cost-label {
-    font-size: 1rem;
+    font-size: var(--step-0);
     font-weight: normal;
     color: black;
 }
@@ -551,8 +567,8 @@ tbody tr:hover {
     }
 
     .results-panel tbody tr {
-        margin-bottom: 12px;
-        padding: 12px;
+        margin-bottom: var(--space-xs);
+        padding: var(--space-xs);
         border: 1px solid #e0e3e7;
         border-radius: 8px;
         background: white;
@@ -572,7 +588,7 @@ tbody tr:hover {
 
     .results-panel tbody td:first-child {
         font-weight: 600;
-        font-size: 1.05rem;
+        font-size: var(--step-0);
     }
 
     .results-panel tbody td:nth-child(2)::before {
@@ -592,7 +608,7 @@ tbody tr:hover {
 
     .results-panel tbody td.empty-state {
         font-weight: normal;
-        font-size: 1rem;
+        font-size: var(--step-0);
     }
 }
 
@@ -600,7 +616,7 @@ tbody tr:hover {
 .empty-state {
     text-align: center;
     color: #626a73;
-    padding: 32px 12px;
+    padding: var(--space-l) var(--space-xs);
 }
 
 .empty-state span {
@@ -679,8 +695,8 @@ tbody tr:hover {
 .pokemon-filter {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin: 1rem 0;
+    gap: var(--space-xs);
+    margin: var(--space-s) 0;
 }
 
 .pokemon-filter-header {
@@ -688,7 +704,7 @@ tbody tr:hover {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    gap: 1rem;
+    gap: var(--space-s);
 }
 
 .pokemon-filter-label {
@@ -767,8 +783,8 @@ tbody tr:hover {
 .type-filter {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin: 1rem 0;
+    gap: var(--space-xs);
+    margin: var(--space-s) 0;
 }
 
 .type-filter-header {
@@ -776,7 +792,7 @@ tbody tr:hover {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    gap: 1rem;
+    gap: var(--space-s);
 }
 
 .type-filter-label {

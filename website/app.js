@@ -630,7 +630,7 @@ function showEmptyResults(message) {
                 className: "empty-layout-medium",
                 lines: [
                     "No moves meet the current",
-                    "damage threshold for this Pokemon"
+                    "damage threshold for this Pokemon."
                 ]
             },
             {

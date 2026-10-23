@@ -69,8 +69,10 @@ function setStatus(message, isError = false) {
 
     const readyMessage =
         `Database ready. ${allPokemon.length} Pokemon cards loaded.`;
+    const isReadyMessage = message === readyMessage;
+    statusElement.classList.toggle("status-fit", isReadyMessage);
 
-    if (message === readyMessage) {
+    if (isReadyMessage) {
         messageElement.textContent =
             `Database ready. ${allPokemon.length}`;
         suffixElement.textContent = "Pokemon cards loaded.";
@@ -82,7 +84,79 @@ function setStatus(message, isError = false) {
         breakElement.textContent = "";
         breakElement.classList.remove("status-responsive-break");
     }
+
+    fitResponsiveText(statusElement);
 }
+
+
+const fitTextCanvas = document.createElement("canvas");
+const fitTextContext = fitTextCanvas.getContext("2d");
+
+function fitTextToWidth(element, text) {
+    element.style.fontSize = "";
+
+    const style = getComputedStyle(element);
+    const availableWidth = element.clientWidth;
+    const baseFontSize = parseFloat(style.fontSize);
+
+    if (!text || !availableWidth || !baseFontSize || !fitTextContext) {
+        return;
+    }
+
+    fitTextContext.font = style.font;
+    const textWidth = fitTextContext.measureText(text).width;
+
+    if (textWidth > 0) {
+        element.style.fontSize =
+            `${baseFontSize * Math.min(1, availableWidth / textWidth)}px`;
+    }
+}
+
+
+function fitResponsiveText(element) {
+    if (
+        element === statusElement &&
+        !element.classList.contains("status-fit")
+    ) {
+        element.style.fontSize = "";
+        Array.from(element.children).forEach(
+            child => { child.style.fontSize = ""; }
+        );
+        return;
+    }
+
+    const textLines = Array.from(element.children)
+        .map(child => child.textContent.trim())
+        .filter(Boolean);
+    const text = textLines.join(" ");
+    const lineElements = Array.from(element.children).filter(
+        child => child.textContent.trim()
+    );
+    const hasSeparateLines = lineElements.some(
+        line => getComputedStyle(line).display === "block"
+    );
+
+    if (hasSeparateLines) {
+        element.style.fontSize = "";
+        lineElements.forEach((line, index) => {
+            fitTextToWidth(line, textLines[index]);
+        });
+    } else {
+        lineElements.forEach(line => {
+            line.style.fontSize = "";
+        });
+        fitTextToWidth(element, text);
+    }
+}
+
+
+const responsiveTextObserver = new ResizeObserver(entries => {
+    entries.forEach(({ target }) => fitResponsiveText(target));
+});
+
+responsiveTextObserver.observe(document.getElementById("defender-help"));
+responsiveTextObserver.observe(statusElement);
+fitResponsiveText(document.getElementById("defender-help"));
 
 
 // ---------- Autocomplete ----------
@@ -206,7 +280,6 @@ defenderInput.addEventListener("click", () => {
 });
 
 
-defenderInput.addEventListener("input", () => {
 defenderInput.addEventListener("keydown", event => {
     const options = defenderOptions.querySelectorAll(
         ".autocomplete-option"

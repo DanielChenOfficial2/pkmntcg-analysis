@@ -130,7 +130,7 @@ tbody tr:hover {
     min-width: 0;
 }
 
-@media (max-width: 830px) {
+@media (max-width: 1000px) {
     .top-panels {
         grid-template-columns: 1fr;
     }
@@ -248,7 +248,7 @@ tbody tr:hover {
 }
 
 /* Search row: wider max-width rules precede narrower overrides. */
-@media (max-width: 1150px) {
+@media (max-width: 1450px) {
     .search-input-row {
         flex-wrap: wrap;
     }
@@ -272,7 +272,7 @@ tbody tr:hover {
 }
 
 /* Large screens: let the input give up space before button labels are clipped. */
-@media (min-width: 1150px) {
+@media (min-width: 1450px) {
     .search-input-row {
         flex-wrap: nowrap;
     }
@@ -285,10 +285,9 @@ tbody tr:hover {
 
     .search-input-row #search-button,
     .search-input-row #clear-button {
-        flex: 1 1 0;
-        min-width: 6em;
-        padding-left: clamp(8px, 1.5vw, 20px);
-        padding-right: clamp(8px, 1.5vw, 20px);
+        flex: 0 0 4em;
+        padding-left: 6px;
+        padding-right: 6px;
         white-space: nowrap;
     }
 }
@@ -304,7 +303,6 @@ tbody tr:hover {
 
 #search-button,
 #clear-button {
-    height: 44px;
     padding-left: 20px;
     padding-right: 20px;
 }
@@ -342,7 +340,7 @@ tbody tr:hover {
     right: 0;
     z-index: 1000;
     max-height: 280px;
-    overflow-y: auto;
+    overflow: auto;
     background: white;
     border: 1px solid #d1d5db;
     border-radius: 6px;
@@ -356,6 +354,7 @@ tbody tr:hover {
 .autocomplete-option {
     display: block;
     width: 100%;
+    white-space: nowrap;
     padding: var(--space-xs);
     border: none;
     border-bottom: 1px solid #e5e7eb;

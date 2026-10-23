@@ -503,7 +503,7 @@ tbody tr:hover {
 }
 
 /* Results */
-.results-heading {
+.results-header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
@@ -512,10 +512,15 @@ tbody tr:hover {
 }
 
 @media (max-width: 650px) {
-    .results-heading {
+    .results-header {
         align-items: start;
         flex-direction: column;
     }
+}
+
+#results-heading {
+    margin: 0 0 var(--space-s);
+    font-size: var(--step-2);
 }
 
 #result-count {
@@ -756,6 +761,18 @@ tbody tr:hover {
     gap: 0.4rem;
 }
 
+@media (max-width: 650px) {
+    .pokemon-filter-options {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .pokemon-filter-option {
+        min-width: 0;
+        padding-inline: 0.25rem;
+    }
+}
+
 .pokemon-filter-option {
     display: flex;
     align-items: center;
@@ -962,4 +979,11 @@ tbody tr:hover {
 
 #clear-type-filter:hover {
     background: #d1d5db;
+}
+
+@media (max-width: 650px) {
+    .pokemon-filter,
+    .type-filter {
+        font-size: clamp(0.8rem, calc(0.72rem + 0.4vw), 0.95rem);
+    }
 }

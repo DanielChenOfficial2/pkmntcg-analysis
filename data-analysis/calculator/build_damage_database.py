@@ -56,6 +56,7 @@ CREATE TABLE pokemon (
     is_ex INTEGER NOT NULL DEFAULT 0,
     is_mega INTEGER NOT NULL DEFAULT 0,
     is_tera INTEGER NOT NULL DEFAULT 0,
+    evolution_stage TEXT,
     set_code TEXT,
     card_mark TEXT,
     hp INTEGER,
@@ -318,6 +319,7 @@ def build_database(input_path, output_path):
                         is_ex,
                         is_mega,
                         is_tera,
+                        evolution_stage,
                         card_number,
                         set_code,
                         card_mark,
@@ -328,7 +330,7 @@ def build_database(input_path, output_path):
                         retreat_cost,
                         source_url
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         name,
@@ -336,6 +338,7 @@ def build_database(input_path, output_path):
                         int(is_ex_pokemon(card)),
                         int(is_mega_pokemon(card)),
                         int(is_tera_pokemon(card)),
+                        card.get("evolution_stage"),
                         (
                             str(card["card_number"])
                             if card.get("card_number") is not None
@@ -419,7 +422,7 @@ def build_database(input_path, output_path):
             connection.executemany(
                 "INSERT INTO metadata (key, value) VALUES (?, ?)",
                 [
-                    ("schema_version", "2"),
+                    ("schema_version", "3"),
                     ("source_file", input_path.name),
                     ("pokemon_count", str(pokemon_count)),
                     ("move_count", str(move_count)),

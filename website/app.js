@@ -23,6 +23,11 @@ const clearTypeFilterButton = document.getElementById("clear-type-filter");
 const pokemonFilterOptions = document.getElementById("pokemon-filter-options");
 const clearPokemonFilterButton = document.getElementById("clear-pokemon-filter");
 
+const evolutionFilterOptions =
+    document.getElementById("evolution-filter-options");
+const clearEvolutionFilterButton =
+    document.getElementById("clear-evolution-filter");
+
 let allPokemon = [];
 let filteredPokemon = [];
 let currentMoves = [];
@@ -769,6 +774,12 @@ function renderFilteredResults() {
             ".pokemon-filter-option[aria-pressed='true']"
         )?.dataset.mechanic || "all";
 
+    const selectedStages = new Set(
+        [...evolutionFilterOptions.querySelectorAll(
+            ".pokemon-filter-option[aria-pressed='true']"
+        )].map(button => button.dataset.stage.toLowerCase())
+    );
+
     const filteredMoves = currentMoves.filter(move => {
         const matchesType =
             selectedTypes.size === 0 ||
@@ -805,24 +816,43 @@ function renderFilteredResults() {
                 break;
         }
 
-        return matchesType && matchesMechanic;
+        const matchesStage =
+            selectedStages.size === 0 ||
+            selectedStages.has(
+                (move.attacker_evolution_stage || "").toLowerCase()
+            );
+
+        return matchesType && matchesMechanic && matchesStage;
     });
 
     if (filteredMoves.length === 0) {
         const hasTypeFilter = selectedTypes.size > 0;
         const hasMechanicFilter = selectedMechanic !== "all";
+        const hasStageFilter = selectedStages.size > 0;
 
         let emptyMessage;
 
-        if (hasTypeFilter && hasMechanicFilter) {
+        if (hasTypeFilter && hasMechanicFilter && hasStageFilter) {
+            emptyMessage =
+                "No moves match the selected attacking types, mechanic, and evolution stages.";
+        } else if (hasTypeFilter && hasMechanicFilter) {
             emptyMessage =
                 "No moves match the selected attacking types and mechanic.";
+        } else if (hasTypeFilter && hasStageFilter) {
+            emptyMessage =
+                "No moves match the selected attacking types and evolution stages.";
+        } else if (hasMechanicFilter && hasStageFilter) {
+            emptyMessage =
+                "No moves match the selected attacking mechanic and evolution stages.";
         } else if (hasTypeFilter) {
             emptyMessage =
                 "No moves match the selected attacking types.";
         } else if (hasMechanicFilter) {
             emptyMessage =
                 "No moves match the selected attacking mechanic.";
+        } else if (hasStageFilter) {
+            emptyMessage =
+                "No moves match the selected evolution stages.";
         } else {
             emptyMessage =
                 "No moves met the current damage thresholds for this Pokemon.";
@@ -889,6 +919,31 @@ clearPokemonFilterButton.addEventListener("click", () => {
                 "aria-pressed",
                 String(button.dataset.mechanic === "all")
             );
+        });
+
+    renderFilteredResults();
+});
+
+
+// ---------- Evolution stage filters ----------
+
+evolutionFilterOptions.addEventListener("click", event => {
+    const button = event.target.closest(".pokemon-filter-option");
+
+    if (!button) return;
+
+    const isSelected = button.getAttribute("aria-pressed") === "true";
+    button.setAttribute("aria-pressed", String(!isSelected));
+
+    renderFilteredResults();
+});
+
+
+clearEvolutionFilterButton.addEventListener("click", () => {
+    evolutionFilterOptions
+        .querySelectorAll(".pokemon-filter-option")
+        .forEach(button => {
+            button.setAttribute("aria-pressed", "false");
         });
 
     renderFilteredResults();

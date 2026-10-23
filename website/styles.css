@@ -831,8 +831,15 @@ tbody tr:hover {
     border: none;
 }
 
-#clear-pokemon-filter:hover {
+#clear-pokemon-filter:hover,
+#clear-evolution-filter:hover {
     background: #d1d5db;
+}
+
+#clear-evolution-filter {
+    background: #e5e7eb;
+    color: #202124;
+    border: none;
 }
 
 /* Type filter */

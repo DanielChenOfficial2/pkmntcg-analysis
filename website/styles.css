@@ -862,36 +862,14 @@ tbody tr:hover {
 }
 
 .type-filter-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 0.5rem;
 }
 
-@media (max-width: 456px) {
+@media (max-width: 750px) {
     .type-filter-options {
-        display: grid;
-        grid-template-columns: repeat(5, max-content);
-        gap: 0.4rem;
-        justify-content: start;
-    }
-}
-
-@media (max-width: 253px) {
-    .type-filter-options {
-        display: grid;
-        grid-template-columns: repeat(12, max-content);
-        gap: 0.4rem;
-        justify-content: start;
-    }
-
-    /* First row: 4 icons */
-    .type-filter-option:nth-child(-n + 4) {
-        grid-column: span 3;
-    }
-
-    /* Second and third rows: 3 icons each */
-    .type-filter-option:nth-child(n + 5) {
-        grid-column: span 4;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 }
 
@@ -899,7 +877,9 @@ tbody tr:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.4rem;
+    min-width: 0;
+    min-height: 56px;
+    padding: 0.5rem;
     border: 1px solid #d1d5db;
     border-radius: 0.4rem;
     background-color: #f9fafb;
@@ -913,8 +893,8 @@ tbody tr:hover {
 
 .type-filter-option img {
     display: block;
-    width: 20px;
-    height: 20px;
+    width: 32px;
+    height: 32px;
 }
 
 /* Unselected type buttons */

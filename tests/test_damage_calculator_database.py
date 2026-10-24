@@ -302,15 +302,15 @@ class DamageCalculatorToolTests(unittest.TestCase):
                 candidate_query = sql_match.group(1)
                 boosted_results = connection.execute(
                     candidate_query,
-                    (defender_id,),
+                    (0, defender_id),
                 ).fetchall()
                 non_ex_results = connection.execute(
                     candidate_query,
-                    (non_ex_defender_id,),
+                    (0, non_ex_defender_id),
                 ).fetchall()
                 low_hp_results = connection.execute(
                     candidate_query,
-                    (low_hp_defender_id,),
+                    (0, low_hp_defender_id),
                 ).fetchall()
             finally:
                 connection.close()
@@ -491,14 +491,14 @@ class DamageCalculatorToolTests(unittest.TestCase):
             try:
                 query = sql_match.group(1)
 
-                def results_for(defender_name):
+                def results_for(defender_name, include_survival_brace=False):
                     defender_id = connection.execute(
                         "SELECT id FROM pokemon WHERE name = ?",
                         (defender_name,),
                     ).fetchone()["id"]
                     return connection.execute(
                         query,
-                        (defender_id,),
+                        (int(include_survival_brace), defender_id),
                     ).fetchall()
 
                 ex_results = results_for("Target ex")
@@ -506,6 +506,10 @@ class DamageCalculatorToolTests(unittest.TestCase):
                 sacred_results = results_for("Sacred Target")
                 cynthia_results = results_for("Cynthia's Gible")
                 survival_results = results_for("Survival Target")
+                included_survival_results = results_for(
+                    "Survival Target",
+                    include_survival_brace=True,
+                )
                 cape_results = results_for("Cape Target")
                 haban_results = results_for("Haban Target")
             finally:
@@ -566,8 +570,24 @@ class DamageCalculatorToolTests(unittest.TestCase):
         self.assertEqual(len(cynthia_weight), 1)
         self.assertEqual(cynthia_weight[0]["effective_defender_hp"], 320)
 
-        self.assertFalse(
-            any(row["defender_tool_name"] == "Survival Brace" for row in survival_results)
+        survival_excluded_fire = matching(survival_results, "Ability Fire")
+        survival_included_fire = matching(
+            included_survival_results,
+            "Ability Fire",
+        )
+        self.assertTrue(survival_excluded_fire)
+        self.assertTrue(survival_included_fire)
+        self.assertTrue(
+            all(
+                row["knocks_out_with_any_defender_tool"] == 1
+                for row in survival_excluded_fire
+            )
+        )
+        self.assertTrue(
+            all(
+                row["knocks_out_with_any_defender_tool"] == 0
+                for row in survival_included_fire
+            )
         )
         hero_cape = matching(
             cape_results,

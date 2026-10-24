@@ -59,9 +59,10 @@ async function loadDatabase() {
  * Finds move and Tool combinations whose final damage reaches defender HP.
  *
  * @param {number} defenderId - ID from the pokemon table.
+ * @param {boolean} includeSurvivalBrace - Whether to include Survival Brace.
  * @returns {Promise<Array<object>>}
  */
-async function findCandidateMoves(defenderId) {
+async function findCandidateMoves(defenderId, includeSurvivalBrace = false) {
     const db = await loadDatabase();
 
     const statement = db.prepare(`
@@ -122,6 +123,7 @@ async function findCandidateMoves(defenderId) {
                     'knockout_prevention'
                 )
                 AND classification IN ('defensive', 'both')
+                AND (? = 1 OR card_name != 'Survival Brace')
             UNION ALL
             SELECT
                 NULL, NULL, NULL, 0, NULL, 0, 0, NULL, NULL, NULL, 0, 0,
@@ -151,6 +153,7 @@ async function findCandidateMoves(defenderId) {
                 defender.weakness,
                 defender.resistance,
                 attacker.has_ability AS attacker_has_ability,
+                moves.id AS move_id,
                 attacking_tool.card_name AS attacker_tool_name,
                 defending_tool.card_name AS defender_tool_name,
                 attacking_tool.effect_type AS attacker_tool_effect_type,
@@ -291,9 +294,28 @@ async function findCandidateMoves(defenderId) {
                     ELSE damage
                 END AS damage_without_tools
             FROM eligible_moves
+        ),
+        tool_outcomes AS (
+            SELECT
+                *,
+                COUNT(*) OVER (
+                    PARTITION BY attacker_id, move_id, attacker_tool_name
+                ) AS applicable_defender_tool_count,
+                SUM(
+                    CASE
+                        WHEN final_damage >= effective_defender_hp
+                            AND COALESCE(prevents_knockout, 0) = 0
+                            THEN 1
+                        ELSE 0
+                    END
+                ) OVER (
+                    PARTITION BY attacker_id, move_id, attacker_tool_name
+                ) AS knockout_defender_tool_count
+            FROM calculated_damage
         )
         SELECT
             attacker_id,
+            move_id,
             attacker_name,
             attacker_is_ex,
             attacker_is_mega,
@@ -328,8 +350,13 @@ async function findCandidateMoves(defenderId) {
             applied_hp_modifier,
             effective_defender_hp,
             final_damage,
-            match_type
-        FROM calculated_damage
+            match_type,
+            CASE
+                WHEN knockout_defender_tool_count =
+                    applicable_defender_tool_count THEN 1
+                ELSE 0
+            END AS knocks_out_with_any_defender_tool
+        FROM tool_outcomes
         WHERE defender_hp IS NOT NULL
             AND attacker_type IS NOT NULL
             AND final_damage >= effective_defender_hp
@@ -348,7 +375,7 @@ async function findCandidateMoves(defenderId) {
     `);
 
     try {
-        statement.bind([defenderId]);
+        statement.bind([includeSurvivalBrace ? 1 : 0, defenderId]);
 
         const results = [];
 

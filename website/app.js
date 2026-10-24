@@ -40,11 +40,16 @@ const attackCostTotalCount =
     document.getElementById("attack-cost-total-count");
 const clearAttackCostFilterButton =
     document.getElementById("clear-attack-cost-filter");
+const summarizePoketoolResults =
+    document.getElementById("summarize-poketool-results");
+const includeSurvivalBrace =
+    document.getElementById("include-survival-brace");
 const themeToggle = document.getElementById("theme-toggle");
 
 let allPokemon = [];
 let filteredPokemon = [];
 let currentMoves = [];
+let currentDefenderId = null;
 let activeSuggestionIndex = -1;
 
 function updateThemeToggle(isDark) {
@@ -424,6 +429,7 @@ defenderInput.addEventListener("blur", () => {
 defenderInput.addEventListener("input", () => {
     // Typing invalidates the previous selection.
     defenderSelect.value = "";
+    currentDefenderId = null;
     searchButton.disabled = true;
 
     renderSuggestions(defenderInput.value);
@@ -442,6 +448,7 @@ document.addEventListener("click", event => {
 clearButton.addEventListener("click", () => {
     defenderInput.value = "";
     defenderSelect.value = "";
+    currentDefenderId = null;
     searchButton.disabled = true;
 
     closeSuggestions();
@@ -775,7 +782,10 @@ function renderResults(
 
     for (const move of moves) {
         const row = document.createElement("tr");
-        const calculation = formatDamage(move);
+        row.classList.toggle("summarized-result", Boolean(move.is_summarized));
+        const calculation = move.is_summarized
+            ? null
+            : formatDamage(move);
 
         // Attacking Pokémon and its type.
         const attackerCell = addPokemonCell(
@@ -817,29 +827,36 @@ function renderResults(
 
         const attackerToolCell = document.createElement("td");
         attackerToolCell.textContent =
-            move.attacker_tool_name || "No Poketool";
+            move.is_summarized
+                ? move.attacker_tool_name
+                : move.attacker_tool_name || "No Poketool";
         row.appendChild(attackerToolCell);
 
         const defenderToolCell = document.createElement("td");
         defenderToolCell.textContent =
-            move.defender_tool_name || "No Poketool";
+            move.is_summarized
+                ? move.defender_tool_name
+                : move.defender_tool_name || "No Poketool";
         row.appendChild(defenderToolCell);
 
         // Damage calculation and interaction type.
         const damageCell = document.createElement("td");
 
-        const typeLabel = document.createElement("div");
-        typeLabel.className =
-            `damage-type damage-type-${calculation.type.toLowerCase()}`;
-        typeLabel.textContent = calculation.type;
+        if (calculation) {
+            const typeLabel = document.createElement("div");
+            typeLabel.className =
+                `damage-type damage-type-${calculation.type.toLowerCase()}`;
+            typeLabel.textContent = calculation.type;
 
-        const firstLine = document.createElement("div");
-        firstLine.textContent = calculation.firstLine;
+            const firstLine = document.createElement("div");
+            firstLine.textContent = calculation.firstLine;
 
-        const secondLine = document.createElement("div");
-        secondLine.textContent = calculation.secondLine;
+            const secondLine = document.createElement("div");
+            secondLine.textContent = calculation.secondLine;
 
-        damageCell.append(typeLabel, firstLine, secondLine);
+            damageCell.append(typeLabel, firstLine, secondLine);
+        }
+
         row.appendChild(damageCell);
 
         fragment.appendChild(row);
@@ -849,6 +866,93 @@ function renderResults(
 
     resultCount.textContent =
         `${moves.length} result${moves.length === 1 ? "" : "s"}`;
+}
+
+function summarizeMoves(moves) {
+    const movesByAttack = new Map();
+
+    for (const move of moves) {
+        const key = `${move.attacker_id}:${move.move_id}`;
+        const group = movesByAttack.get(key) || [];
+        group.push(move);
+        movesByAttack.set(key, group);
+    }
+
+    const summarizedMoves = [];
+
+    for (const group of movesByAttack.values()) {
+        const noToolKnockouts = group.filter(
+            move =>
+                !move.attacker_tool_name &&
+                Number(move.final_damage) >=
+                    Number(move.effective_defender_hp)
+        );
+
+        if (noToolKnockouts.some(
+            move =>
+                Number(move.knocks_out_with_any_defender_tool) === 1
+        )) {
+            summarizedMoves.push({
+                ...noToolKnockouts[0],
+                attacker_tool_name: "Any Poketool",
+                defender_tool_name: "Any Poketool",
+                is_summarized: true
+            });
+            continue;
+        }
+
+        const noToolKnockoutsByDefenderTool = new Map();
+
+        for (const move of noToolKnockouts) {
+            const defenderToolName =
+                move.defender_tool_name || "No Poketool";
+            if (!noToolKnockoutsByDefenderTool.has(defenderToolName)) {
+                noToolKnockoutsByDefenderTool.set(defenderToolName, move);
+            }
+        }
+
+        for (
+            const [defenderToolName, move]
+            of noToolKnockoutsByDefenderTool
+        ) {
+            summarizedMoves.push({
+                ...move,
+                attacker_tool_name: "Any Poketool",
+                defender_tool_name: defenderToolName,
+                is_summarized: true
+            });
+        }
+
+        const movesRequiringAttackerTool = group.filter(
+            move => move.attacker_tool_name
+        );
+        const universalToolKnockouts = new Map();
+
+        for (const move of movesRequiringAttackerTool) {
+            if (
+                Number(move.knocks_out_with_any_defender_tool) === 1 &&
+                !universalToolKnockouts.has(move.attacker_tool_name)
+            ) {
+                universalToolKnockouts.set(move.attacker_tool_name, move);
+            }
+        }
+
+        if (universalToolKnockouts.size > 0) {
+            for (const [toolName, move] of universalToolKnockouts) {
+                summarizedMoves.push({
+                    ...move,
+                    attacker_tool_name: toolName,
+                    defender_tool_name: "Any Poketool",
+                    is_summarized: true
+                });
+            }
+            continue;
+        }
+
+        summarizedMoves.push(...movesRequiringAttackerTool);
+    }
+
+    return summarizedMoves;
 }
 
 
@@ -983,7 +1087,11 @@ function renderFilteredResults() {
         return;
     }
 
-    renderResults(filteredMoves);
+    renderResults(
+        summarizePoketoolResults.checked
+            ? summarizeMoves(filteredMoves)
+            : filteredMoves
+    );
 }
 
 
@@ -1147,6 +1255,26 @@ clearEvolutionFilterButton.addEventListener("click", () => {
     control.addEventListener("change", renderFilteredResults);
 });
 
+summarizePoketoolResults.addEventListener(
+    "change",
+    renderFilteredResults
+);
+
+includeSurvivalBrace.addEventListener("change", async () => {
+    if (!currentDefenderId) return;
+
+    try {
+        currentMoves = await OneShotDatabase.findCandidateMoves(
+            currentDefenderId,
+            includeSurvivalBrace.checked
+        );
+        renderFilteredResults();
+    } catch (error) {
+        console.error(error);
+        setStatus(`Search failed: ${error.message}`, true);
+    }
+});
+
 
 clearAttackCostFilterButton.addEventListener("click", () => {
     attackCostEnergyOptions
@@ -1223,8 +1351,11 @@ searchForm.addEventListener("submit", async event => {
 
         setStatus("Searching for one-shot moves...");
 
-        currentMoves =
-            await OneShotDatabase.findCandidateMoves(defenderId);
+        currentDefenderId = defenderId;
+        currentMoves = await OneShotDatabase.findCandidateMoves(
+            defenderId,
+            includeSurvivalBrace.checked
+        );
 
         renderFilteredResults();
         setStatus("Search complete.");

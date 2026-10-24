@@ -575,6 +575,23 @@ tbody tr:hover {
     font-size: var(--step--1);
 }
 
+.results-options,
+.results-options label {
+    display: flex;
+    align-items: center;
+}
+
+.results-options {
+    flex-wrap: wrap;
+    gap: var(--space-s);
+    margin-top: var(--space-s);
+}
+
+.results-options label {
+    gap: var(--space-3xs);
+    font-size: var(--step--1);
+}
+
 .table-wrapper {
     overflow-x: auto;
 }
@@ -700,6 +717,10 @@ tbody tr:hover {
     .results-panel tbody td:nth-child(5)::before {
         content: "Damage Calculation: ";
         font-weight: 600;
+    }
+
+    .results-panel tbody tr.summarized-result td:last-child::before {
+        content: none;
     }
 
     .results-panel tbody td[colspan] {

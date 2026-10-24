@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Resolve the repository root relative to this script.
-ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
+ROOT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT_DIR"
 
 # Build the SQLite database.

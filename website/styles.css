@@ -688,6 +688,16 @@ tbody tr:hover {
     }
 
     .results-panel tbody td:nth-child(3)::before {
+        content: "Attacking Pokemon's Poketool: ";
+        font-weight: 600;
+    }
+
+    .results-panel tbody td:nth-child(4)::before {
+        content: "Defending Pokemon's Poketool: ";
+        font-weight: 600;
+    }
+
+    .results-panel tbody td:nth-child(5)::before {
         content: "Damage Calculation: ";
         font-weight: 600;
     }

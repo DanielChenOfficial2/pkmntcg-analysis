@@ -56,9 +56,7 @@ async function loadDatabase() {
  * Find Pokémon cards that can meet the initial damage thresholds
  * against a selected defending Pokémon.
  *
- * Weakness match: damage >= half of defender HP.
- * Resistance match: damage >= defender HP + 30.
- * Neither match: damage >= defender HP.
+ * Finds move and Tool combinations whose final damage reaches defender HP.
  *
  * @param {number} defenderId - ID from the pokemon table.
  * @returns {Promise<Array<object>>}
@@ -67,64 +65,172 @@ async function findCandidateMoves(defenderId) {
     const db = await loadDatabase();
 
     const statement = db.prepare(`
+        WITH attacker_tools AS (
+            SELECT DISTINCT
+                card_name,
+                classification,
+                damage_modifier,
+                requires_attached_no_rule_box,
+                requires_opponent_ex
+            FROM tools
+            WHERE supported = 1
+                AND effect_type = 'damage_modifier'
+                AND classification IN ('offensive', 'both')
+            UNION ALL
+            SELECT NULL, NULL, 0, NULL, NULL
+        ),
+        defender_tools AS (
+            SELECT DISTINCT
+                card_name,
+                classification,
+                damage_modifier,
+                requires_attached_no_rule_box,
+                requires_opponent_ex
+            FROM tools
+            WHERE supported = 1
+                AND effect_type = 'damage_modifier'
+                AND classification IN ('defensive', 'both')
+            UNION ALL
+            SELECT NULL, NULL, 0, NULL, NULL
+        ),
+        move_data AS (
+            SELECT
+                attacker.id AS attacker_id,
+                attacker.name AS attacker_name,
+                attacker.is_ex AS attacker_is_ex,
+                attacker.is_mega AS attacker_is_mega,
+                attacker.is_tera AS attacker_is_tera,
+                attacker.has_rule_box AS attacker_has_rule_box,
+                attacker.evolution_stage AS attacker_evolution_stage,
+                attacker.pokemon_type AS attacker_type,
+                attacker.set_code AS attacker_set_code,
+                attacker.card_number AS attacker_card_number,
+                moves.name AS move_name,
+                moves.cost AS move_cost,
+                moves.damage,
+                moves.damage_text,
+                moves.damage_kind,
+                defender.id AS defender_id,
+                defender.name AS defender_name,
+                defender.hp AS defender_hp,
+                defender.is_ex AS defender_is_ex,
+                defender.weakness,
+                defender.resistance,
+                attacking_tool.card_name AS attacker_tool_name,
+                defending_tool.card_name AS defender_tool_name,
+                CASE
+                    WHEN attacking_tool.card_name IS NOT NULL
+                        AND (
+                            attacking_tool.requires_attached_no_rule_box IS NULL
+                            OR attacker.has_rule_box = 0
+                        )
+                        AND (
+                            attacking_tool.requires_opponent_ex IS NULL
+                            OR defender.is_ex =
+                                attacking_tool.requires_opponent_ex
+                        )
+                        THEN attacking_tool.damage_modifier
+                    ELSE 0
+                END AS attacker_damage_modifier,
+                CASE
+                    WHEN defending_tool.card_name IS NOT NULL
+                        AND (
+                            defending_tool.requires_attached_no_rule_box IS NULL
+                            OR defender.has_rule_box = 0
+                        )
+                        AND (
+                            defending_tool.requires_opponent_ex IS NULL
+                            OR attacker.is_ex =
+                                defending_tool.requires_opponent_ex
+                        )
+                        THEN defending_tool.damage_modifier
+                    ELSE 0
+                END AS defender_damage_modifier,
+                CASE
+                    WHEN defender.weakness IS NOT NULL
+                        AND attacker.pokemon_type = defender.weakness
+                        THEN 'weakness'
+                    WHEN defender.resistance IS NOT NULL
+                        AND attacker.pokemon_type = defender.resistance
+                        THEN 'resistance'
+                    ELSE 'neither'
+                END AS match_type
+            FROM moves
+            JOIN pokemon AS attacker
+                ON attacker.id = moves.pokemon_id
+            JOIN pokemon AS defender
+                ON defender.id = ?
+            CROSS JOIN attacker_tools AS attacking_tool
+            CROSS JOIN defender_tools AS defending_tool
+        ),
+        calculated_damage AS (
+            SELECT
+                *,
+                CASE match_type
+                    WHEN 'weakness'
+                        THEN (damage + attacker_damage_modifier) * 2
+                    WHEN 'resistance'
+                        THEN damage + attacker_damage_modifier - 30
+                    ELSE damage + attacker_damage_modifier
+                END + defender_damage_modifier AS final_damage,
+                CASE match_type
+                    WHEN 'weakness' THEN damage * 2
+                    WHEN 'resistance' THEN damage - 30
+                    ELSE damage
+                END + defender_damage_modifier AS damage_without_attacker_tool
+            FROM move_data
+        )
         SELECT
-            attacker.id AS attacker_id,
-            attacker.name AS attacker_name,
-            attacker.is_ex AS attacker_is_ex,
-            attacker.is_mega AS attacker_is_mega,
-            attacker.is_tera AS attacker_is_tera,
-            attacker.evolution_stage AS attacker_evolution_stage,
-            attacker.pokemon_type AS attacker_type,
-            attacker.set_code AS attacker_set_code,
-            attacker.card_number AS attacker_card_number,
-            moves.name AS move_name,
-            moves.cost AS move_cost,
-            moves.damage,
-            moves.damage_text,
-            moves.damage_kind,
-            defender.id AS defender_id,
-            defender.name AS defender_name,
-            defender.hp AS defender_hp,
-            defender.weakness,
-            defender.resistance,
-            CASE
-                WHEN defender.weakness IS NOT NULL
-                    AND attacker.pokemon_type = defender.weakness
-                    THEN 'weakness'
-                WHEN defender.resistance IS NOT NULL
-                    AND attacker.pokemon_type = defender.resistance
-                    THEN 'resistance'
-                ELSE 'neither'
-            END AS match_type
-        FROM moves
-        JOIN pokemon AS attacker
-            ON attacker.id = moves.pokemon_id
-        JOIN pokemon AS defender
-            ON defender.id = ?
-        WHERE defender.hp IS NOT NULL
-            AND attacker.pokemon_type IS NOT NULL
+            attacker_id,
+            attacker_name,
+            attacker_is_ex,
+            attacker_is_mega,
+            attacker_is_tera,
+            attacker_has_rule_box,
+            attacker_evolution_stage,
+            attacker_type,
+            attacker_set_code,
+            attacker_card_number,
+            move_name,
+            move_cost,
+            damage,
+            damage_text,
+            damage_kind,
+            defender_id,
+            defender_name,
+            defender_hp,
+            defender_is_ex,
+            weakness,
+            resistance,
+            attacker_tool_name,
+            defender_tool_name,
+            attacker_damage_modifier,
+            defender_damage_modifier,
+            final_damage,
+            match_type
+        FROM calculated_damage
+        WHERE defender_hp IS NOT NULL
+            AND attacker_type IS NOT NULL
+            AND final_damage >= defender_hp
             AND (
-                (
-                    attacker.pokemon_type = defender.weakness
-                    AND defender.weakness IS NOT NULL
-                    AND moves.damage >= defender.hp / 2.0
-                )
-                OR (
-                    attacker.pokemon_type = defender.resistance
-                    AND defender.resistance IS NOT NULL
-                    AND moves.damage >= defender.hp + 30
-                )
-                OR (
-                    attacker.pokemon_type IS NOT defender.weakness
-                    AND attacker.pokemon_type IS NOT defender.resistance
-                    AND moves.damage >= defender.hp
-                )
+                attacker_tool_name IS NULL
+                OR attacker_damage_modifier <> 0
+            )
+            AND (
+                defender_tool_name IS NULL
+                OR defender_damage_modifier <> 0
+            )
+            AND (
+                attacker_tool_name IS NULL
+                OR damage_without_attacker_tool < defender_hp
             )
         ORDER BY
-            attacker.name COLLATE NOCASE ASC,
-            moves.name COLLATE NOCASE ASC,
-            attacker.set_code COLLATE NOCASE ASC,
-            attacker.card_number COLLATE NOCASE ASC
+            attacker_name COLLATE NOCASE ASC,
+            move_name COLLATE NOCASE ASC,
+            attacker_tool_name COLLATE NOCASE ASC,
+            defender_tool_name COLLATE NOCASE ASC,
+            attacker_set_code COLLATE NOCASE ASC,
+            attacker_card_number COLLATE NOCASE ASC
     `);
 
     try {

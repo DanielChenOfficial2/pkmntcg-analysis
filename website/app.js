@@ -609,7 +609,16 @@ function renderEnergyCost(cost, container) {
 
 function formatDamage(move) {
     const hp = Number(move.defender_hp);
-    const damage = Number(move.damage);
+    const baseDamage = Number(move.damage);
+    const attackerModifier = Number(move.attacker_damage_modifier);
+    const defenderModifier = Number(move.defender_damage_modifier);
+    const damage = Number(move.final_damage);
+    const attackDamageText = attackerModifier === 0
+        ? String(baseDamage)
+        : `(${baseDamage} + ${attackerModifier})`;
+    const defenderModifierText = defenderModifier === 0
+        ? ""
+        : ` ${defenderModifier > 0 ? "+" : "−"} ${Math.abs(defenderModifier)}`;
 
     switch (move.match_type) {
         case "weakness":
@@ -617,7 +626,7 @@ function formatDamage(move) {
                 type: "Weakness",
                 firstLine: `${move.defender_name} has ${hp} HP.`,
                 secondLine:
-                    `${move.move_name} does ${damage} × 2 = ${damage * 2} damage.`
+                    `${move.move_name} does ${attackDamageText} × 2${defenderModifierText} = ${damage} damage.`
             };
 
         case "resistance":
@@ -625,14 +634,15 @@ function formatDamage(move) {
                 type: "Resistance",
                 firstLine: `${move.defender_name} has ${hp} HP.`,
                 secondLine:
-                    `${move.move_name} does ${damage} − 30 = ${damage - 30} damage.`
+                    `${move.move_name} does ${attackDamageText} − 30${defenderModifierText} = ${damage} damage.`
             };
 
         default:
             return {
                 type: "Neutral",
                 firstLine: `${move.defender_name} has ${hp} HP.`,
-                secondLine: `${move.move_name} does ${damage} damage.`
+                secondLine:
+                    `${move.move_name} does ${attackDamageText}${defenderModifierText} = ${damage} damage.`
             };
     }
 }
@@ -647,7 +657,7 @@ function showEmptyResults(message) {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
 
-    cell.colSpan = 3;
+    cell.colSpan = 5;
     cell.className = "empty-state";
 
     if (message === "No moves match the selected attacking types.") {
@@ -779,6 +789,16 @@ function renderResults(
         if (costDetails) {
             renderEnergyCost(move.move_cost, costDetails);
         }
+
+        const attackerToolCell = document.createElement("td");
+        attackerToolCell.textContent =
+            move.attacker_tool_name || "No Poketool";
+        row.appendChild(attackerToolCell);
+
+        const defenderToolCell = document.createElement("td");
+        defenderToolCell.textContent =
+            move.defender_tool_name || "No Poketool";
+        row.appendChild(defenderToolCell);
 
         // Damage calculation and interaction type.
         const damageCell = document.createElement("td");

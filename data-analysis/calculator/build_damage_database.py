@@ -5,11 +5,13 @@
 
 Reads:
     data-building/data/raw/pokemon_cards.json
+    data-analysis/calculator/review/supported_tools.json
 
 Writes:
-    data-analysis/calculator/damage_calculator.sqlite3
+    data-analysis/datasets/damage_calculator.sqlite3
 
-Only Pokémon cards and their moves are stored. Moves without a
+Pokémon cards and their moves are stored, and supported Tool effects are
+parsed into structured fields for the website calculator. Moves without a
 recognizable numeric damage value are skipped.
 
 The numeric damage field stores the printed numeric base. For example,
@@ -44,6 +46,12 @@ DEFAULT_OUTPUT = (
     / "damage_calculator.sqlite3"
 )
 
+DEFAULT_TOOLS_INPUT = (
+    SCRIPT_DIR
+    / "review"
+    / "supported_tools.json"
+)
+
 
 SCHEMA = """
 PRAGMA foreign_keys = ON;
@@ -54,6 +62,7 @@ CREATE TABLE pokemon (
     card_type TEXT NOT NULL,
     card_number TEXT,
     is_ex INTEGER NOT NULL DEFAULT 0,
+    has_rule_box INTEGER NOT NULL DEFAULT 0,
     is_mega INTEGER NOT NULL DEFAULT 0,
     is_tera INTEGER NOT NULL DEFAULT 0,
     evolution_stage TEXT,
@@ -84,6 +93,21 @@ CREATE TABLE moves (
     UNIQUE (pokemon_id, move_index)
 );
 
+CREATE TABLE tools (
+    id INTEGER PRIMARY KEY,
+    card_name TEXT NOT NULL,
+    set_code TEXT,
+    card_number TEXT,
+    source_url TEXT,
+    effect_text TEXT,
+    classification TEXT,
+    supported INTEGER NOT NULL DEFAULT 0,
+    effect_type TEXT,
+    damage_modifier INTEGER,
+    requires_attached_no_rule_box INTEGER,
+    requires_opponent_ex INTEGER
+);
+
 CREATE INDEX idx_pokemon_name
     ON pokemon(name);
 
@@ -104,7 +128,14 @@ CREATE INDEX idx_moves_pokemon_id
 
 CREATE INDEX idx_moves_damage
     ON moves(damage);
+
+CREATE INDEX idx_tools_effect_lookup
+    ON tools(supported, effect_type, classification);
 """
+
+RULE_BOX_VARIANTS = {
+    "ex",
+}
 
 
 def normalize_type(value):
@@ -224,6 +255,20 @@ def is_ex_pokemon(card):
     return has_card_variant(card, "ex")
 
 
+def has_rule_box(card):
+    """Return whether the card has a Pokémon Rule Box variant."""
+    variants = card.get("card_variants", [])
+
+    if not isinstance(variants, list):
+        return False
+
+    return any(
+        isinstance(variant, str)
+        and variant.strip().casefold() in RULE_BOX_VARIANTS
+        for variant in variants
+    )
+
+
 def is_mega_pokemon(card):
     """Return whether the card is a Mega Pokémon ex."""
     return (
@@ -263,12 +308,97 @@ def load_cards(input_path):
     return cards
 
 
-def build_database(input_path, output_path):
+def load_tools(input_path):
+    """Load and validate the supported Pokémon Tool entries."""
+    try:
+        with input_path.open("r", encoding="utf-8") as file:
+            tools = json.load(file)
+    except FileNotFoundError:
+        raise ValueError(f"Tool file not found: {input_path}")
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            f"Invalid JSON in {input_path}: {exc}"
+        ) from exc
+
+    if not isinstance(tools, list):
+        raise ValueError("The tools JSON root must be a list.")
+
+    for index, tool in enumerate(tools):
+        if not isinstance(tool, dict):
+            raise ValueError(f"Tool entry {index} must be an object.")
+
+        card_name = tool.get("card_name")
+        if not isinstance(card_name, str) or not card_name.strip():
+            raise ValueError(
+                f"Tool entry {index} must have a non-empty card_name."
+            )
+
+        if tool.get("classification") not in (
+            None,
+            "offensive",
+            "defensive",
+            "both",
+        ):
+            raise ValueError(
+                f"Tool entry {index} has an invalid classification."
+            )
+
+    return tools
+
+
+def parse_tool_effect(effect_text):
+    """Parse the currently modeled, pre-Weakness Tool damage effects."""
+    if not isinstance(effect_text, str):
+        return None
+
+    normalized = re.sub(r"\s+", " ", effect_text.strip())
+    normalized = normalized.replace(" .", ".")
+
+    brave_bangle_pattern = re.compile(
+        r"^If the Pokémon this card is attached to doesn't have a Rule Box, "
+        r"the attacks it uses do (?P<amount>\d+) more damage to your "
+        r"opponent's Active Pokémon(?P<opponent_ex> ex)? "
+        r"\(before applying Weakness and Resistance\)",
+        re.IGNORECASE,
+    )
+    general_pattern = re.compile(
+        r"^Attacks used by the Pokémon this card is attached to do "
+        r"(?P<amount>\d+) more damage to your opponent's Active Pokémon"
+        r"(?P<opponent_ex> ex)? "
+        r"\(before applying Weakness and Resistance\)",
+        re.IGNORECASE,
+    )
+
+    match = brave_bangle_pattern.match(normalized)
+    requires_attached_no_rule_box = 1 if match is not None else None
+    if match is None:
+        match = general_pattern.match(normalized)
+
+    if match is None:
+        return None
+
+    return {
+        "effect_type": "damage_modifier",
+        "damage_modifier": int(match.group("amount")),
+        "requires_attached_no_rule_box": requires_attached_no_rule_box,
+        "requires_opponent_ex": (
+            1 if match.group("opponent_ex") is not None else None
+        ),
+    }
+
+
+def build_database(
+    input_path,
+    output_path,
+    tools_path=DEFAULT_TOOLS_INPUT,
+):
     """Create the SQLite database from the card JSON."""
     cards = load_cards(input_path)
+    tools = load_tools(tools_path)
 
     pokemon_count = 0
     move_count = 0
+    tool_count = 0
     skipped_moves = 0
     skipped_cards = 0
 
@@ -317,6 +447,7 @@ def build_database(input_path, output_path):
                         name,
                         card_type,
                         is_ex,
+                        has_rule_box,
                         is_mega,
                         is_tera,
                         evolution_stage,
@@ -330,12 +461,13 @@ def build_database(input_path, output_path):
                         retreat_cost,
                         source_url
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         name,
                         card.get("card_type"),
                         int(is_ex_pokemon(card)),
+                        int(has_rule_box(card)),
                         int(is_mega_pokemon(card)),
                         int(is_tera_pokemon(card)),
                         card.get("evolution_stage"),
@@ -408,6 +540,50 @@ def build_database(input_path, output_path):
 
                     move_count += 1
 
+            tool_rows = []
+            for tool in tools:
+                parsed = parse_tool_effect(tool.get("effect_text")) or {}
+                tool_rows.append(
+                    (
+                        tool["card_name"].strip(),
+                        tool.get("set"),
+                        (
+                            str(tool["card_number"])
+                            if tool.get("card_number") is not None
+                            else None
+                        ),
+                        tool.get("source_url"),
+                        tool.get("effect_text"),
+                        tool.get("classification"),
+                        int(tool.get("supported") is True),
+                        parsed.get("effect_type"),
+                        parsed.get("damage_modifier"),
+                        parsed.get("requires_attached_no_rule_box"),
+                        parsed.get("requires_opponent_ex"),
+                    )
+                )
+
+            connection.executemany(
+                """
+                INSERT INTO tools (
+                    card_name,
+                    set_code,
+                    card_number,
+                    source_url,
+                    effect_text,
+                    classification,
+                    supported,
+                    effect_type,
+                    damage_modifier,
+                    requires_attached_no_rule_box,
+                    requires_opponent_ex
+                )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """,
+                tool_rows,
+            )
+            tool_count = len(tools)
+
             # Store a schema version so future migrations can be
             # handled deliberately as the calculator grows.
             connection.execute(
@@ -422,10 +598,11 @@ def build_database(input_path, output_path):
             connection.executemany(
                 "INSERT INTO metadata (key, value) VALUES (?, ?)",
                 [
-                    ("schema_version", "3"),
+                    ("schema_version", "5"),
                     ("source_file", input_path.name),
                     ("pokemon_count", str(pokemon_count)),
                     ("move_count", str(move_count)),
+                    ("tool_count", str(tool_count)),
                 ],
             )
 
@@ -444,6 +621,7 @@ def build_database(input_path, output_path):
     print(f"Moves stored:   {move_count}")
     print(f"Moves skipped:  {skipped_moves}")
     print(f"Cards skipped:  {skipped_cards}")
+    print(f"Tools stored:   {tool_count}")
 
 
 def main():
@@ -467,12 +645,20 @@ def main():
         help="Path for the generated SQLite database",
     )
 
+    parser.add_argument(
+        "--tools",
+        type=Path,
+        default=DEFAULT_TOOLS_INPUT,
+        help="Path to supported_tools.json",
+    )
+
     args = parser.parse_args()
 
     try:
         build_database(
             args.input.resolve(),
             args.output.resolve(),
+            args.tools.resolve(),
         )
     except (ValueError, OSError, sqlite3.Error) as exc:
         print(f"Error: {exc}", file=sys.stderr)

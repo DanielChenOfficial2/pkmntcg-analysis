@@ -24,6 +24,17 @@ CATEGORIES = {
 }
 
 
+def effect_key(effect):
+    """Identify an effect across first-pass and category-specific files."""
+    return (
+        effect.get("source_url"),
+        effect.get("card_type"),
+        effect.get("entry_index"),
+        effect.get("entry_name"),
+        effect.get("effect_text"),
+    )
+
+
 def load_effects(input_path):
     """Load and validate the supported-effects JSON list."""
     try:
@@ -66,7 +77,6 @@ def select_effects(effects):
                 ):
                     continue
 
-            effect.setdefault("implemented", False)
             selected[filename].append(effect)
 
     missing = [name for name, matches in selected.items() if not matches]
@@ -76,6 +86,28 @@ def select_effects(effects):
         )
 
     return selected
+
+
+def preserve_implemented_status(selected, output_dir):
+    """Carry implementation decisions forward from existing category files."""
+    for name, effects in selected.items():
+        existing_path = output_dir / f"{name}.json"
+        if existing_path.exists():
+            previous = load_effects(existing_path)
+            implemented_by_key = {
+                effect_key(effect): effect["implemented"]
+                for effect in previous
+                if isinstance(effect, dict)
+                and isinstance(effect.get("implemented"), bool)
+            }
+        else:
+            implemented_by_key = {}
+
+        for effect in effects:
+            effect["implemented"] = implemented_by_key.get(
+                effect_key(effect),
+                effect.get("implemented", False),
+            )
 
 
 def write_effects(selected, output_dir):
@@ -113,6 +145,7 @@ def main():
 
     try:
         selected = select_effects(load_effects(args.input))
+        preserve_implemented_status(selected, args.output_dir)
         write_effects(selected, args.output_dir)
     except (ValueError, OSError) as exc:
         print(f"Error: {exc}", file=sys.stderr)

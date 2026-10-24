@@ -3427,11 +3427,11 @@
     "entry_index": 0,
     "entry_name": "Tremendous Bomb",
     "effect_text": "If the Pokémon this card is attached to isn't a Mega Evolution Pokémon ex, is in the Active Spot, and takes 240 or more damage from an attack from your opponent's Mega Evolution Pokémon ex (even if this Pokémon is Knocked Out) , place 12 damage counters on the Attacking Pokémon. If you placed any damage counters in this way, discard this card.",
-    "supported": true,
-    "classification": "offensive",
+    "supported": false,
+    "classification": "neither",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "offensive_damage_and_knockout"
   },
   {
     "card_name": "Brave Bangle",
@@ -4792,11 +4792,11 @@
     "entry_index": 0,
     "entry_name": "Adversity Policy",
     "effect_text": "If the Pokémon this card is attached to has Weakness to your opponent's Active Pokémon's type, is in the Active Spot, and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , draw 3 cards.",
-    "supported": true,
-    "classification": "offensive",
+    "supported": false,
+    "classification": "neither",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "offensive_damage_and_knockout"
   },
   {
     "card_name": "Ange Floette",
@@ -10153,11 +10153,11 @@
     "entry_index": 0,
     "entry_name": "Team Rocket's Hypnotizer",
     "effect_text": "If the Team Rocket's Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Team Rocket's Pokémon is Knocked Out) , the Attacking Pokémon is now Asleep.",
-    "supported": true,
-    "classification": "offensive",
+    "supported": false,
+    "classification": "neither",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "offensive_special_conditions+offensive_damage_and_knockout"
   },
   {
     "card_name": "Team Rocket's Petrel",
@@ -11748,7 +11748,7 @@
     "classification": "offensive",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "offensive_damage_and_knockout"
   },
   {
     "card_name": "Sacred Charm",
@@ -20670,11 +20670,11 @@
     "entry_index": 0,
     "entry_name": "Lillie's Pearl",
     "effect_text": "If the Lillie's Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes 1 fewer Prize card.",
-    "supported": true,
-    "classification": "offensive",
+    "supported": false,
+    "classification": "neither",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "offensive_damage_and_knockout"
   },
   {
     "card_name": "N's Castle",
@@ -22408,7 +22408,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Janine's Secret Art",
@@ -23047,11 +23047,11 @@
     "entry_index": 0,
     "entry_name": "Calming Light",
     "effect_text": "Once during your turn, if this Pokémon is in the Active Spot, you may make your opponent's Active Pokémon Asleep.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Shiinotic",
@@ -23077,11 +23077,11 @@
     "entry_index": 0,
     "entry_name": "Rescue Kedge",
     "effect_text": "Put up to 2 Pokémon from your discard pile into your hand.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Dhelmise",
@@ -23122,11 +23122,11 @@
     "entry_index": 1,
     "entry_name": "Jungle Whip",
     "effect_text": "You may put all Energy attached to this Pokémon into your hand to have this attack do 80 more damage.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "offensive"
+    "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Rabsca",
@@ -23272,11 +23272,11 @@
     "entry_index": 1,
     "entry_name": "Sunny Assist",
     "effect_text": "Move all Energy from this Pokémon to 1 of your Benched Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Victini",
@@ -23287,10 +23287,10 @@
     "entry_index": 0,
     "entry_name": "Victory Cheer",
     "effect_text": "Attacks used by your Evolution [ R ] Pokémon do 10 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Simisear",
@@ -23316,11 +23316,11 @@
     "entry_index": 0,
     "entry_name": "Leech Life",
     "effect_text": "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Volcarona",
@@ -23346,11 +23346,11 @@
     "entry_index": 0,
     "entry_name": "Energy Assist",
     "effect_text": "Attach up to 2 Basic Energy cards from your discard pile to 1 of your Benched Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Oricorio",
@@ -23555,11 +23555,11 @@
     "entry_index": 0,
     "entry_name": "Upthrusting Horns",
     "effect_text": "You may put 2 Energy attached to your opponent's Active Stage 2 Pokémon into their hand.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Mantine",
@@ -23645,10 +23645,10 @@
     "entry_index": 0,
     "entry_name": "Frigid Fangs",
     "effect_text": "During your opponent's next turn, Pokémon that have 2 or less Energy attached can't attack. (This includes new Pokémon that come into play.)",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Walrein",
@@ -24017,11 +24017,11 @@
     "entry_index": 1,
     "entry_name": "Storm Bolt",
     "effect_text": "Move all Energy from this Pokémon to your Benched Pokémon in any way you like.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Kilowattrel ex",
@@ -24077,10 +24077,10 @@
     "entry_index": 0,
     "entry_name": "Glistening Bubbles",
     "effect_text": "If you have any Tera Pokémon in play, this Pokémon can use the Double-Edge attack for [ P ] .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Azumarill",
@@ -24121,10 +24121,10 @@
     "entry_index": 0,
     "entry_name": "Skyliner",
     "effect_text": "Your Basic Pokémon in play have no Retreat Cost.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Latias ex",
@@ -24180,11 +24180,11 @@
     "entry_index": 0,
     "entry_name": "Full Heart",
     "effect_text": "Attach up to 2 Basic [ P ] Energy cards from your hand to your Pokémon in any way you like.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Mesprit",
@@ -24300,11 +24300,11 @@
     "entry_index": 0,
     "entry_name": "Electromagnetic Sonar",
     "effect_text": "Put a Trainer card from your discard pile into your hand.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Xerneas",
@@ -24345,11 +24345,11 @@
     "entry_index": 0,
     "entry_name": "Energy Assist",
     "effect_text": "Attach up to 2 Basic Energy cards from your discard pile to 1 of your Benched Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Oricorio",
@@ -24405,10 +24405,10 @@
     "entry_index": 1,
     "entry_name": "Barite Jail",
     "effect_text": "Put damage counters on each of your opponent's Benched Pokémon until its remaining HP is 100.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Tapu Lele",
@@ -24479,10 +24479,10 @@
     "entry_index": 0,
     "entry_name": "Mystical Eyes",
     "effect_text": "Devolve 1 of your opponent's evolved Pokémon by putting the highest Stage Evolution card on it into your opponent's hand.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Espathra",
@@ -24508,11 +24508,11 @@
     "entry_index": 0,
     "entry_name": "Perplexing Transfer",
     "effect_text": "Move all damage counters from 1 of your Benched Ancient Pokémon to your opponent's Active Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Flutter Mane",
@@ -24598,11 +24598,11 @@
     "entry_index": 1,
     "entry_name": "Destined Fight",
     "effect_text": "Both Active Pokémon are Knocked Out.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "offensive"
+    "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Paldean Tauros",
@@ -24729,10 +24729,10 @@
     "entry_index": 0,
     "entry_name": "Sticky Bind",
     "effect_text": "As long as this Pokémon is on your Bench, Benched Stage 2 Pokémon (both yours and your opponent's) have no Abilities.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Drilbur",
@@ -24788,11 +24788,11 @@
     "entry_index": 0,
     "entry_name": "Fist of Focus",
     "effect_text": "Attach an Energy card from your discard pile to this Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Landorus",
@@ -24848,10 +24848,10 @@
     "entry_index": 1,
     "entry_name": "Raging Tentacles",
     "effect_text": "If this Pokémon has any damage counters on it, this attack can be used for [ F ] .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Glimmet",
@@ -24982,11 +24982,11 @@
     "entry_index": 0,
     "entry_name": "Mischievous Painting",
     "effect_text": "Attach up to 3 Energy cards from your opponent's discard pile to their Pokémon in any way you like.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Grafaiai",
@@ -25131,11 +25131,11 @@
     "entry_index": 0,
     "entry_name": "Assemble Alloy",
     "effect_text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may attach up to 2 Basic [ M ] Energy cards from your discard pile to your [ M ] Pokémon in any way you like.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Archaludon ex",
@@ -25146,10 +25146,10 @@
     "entry_index": 0,
     "entry_name": "Metal Defender",
     "effect_text": "During your opponent's next turn, this Pokémon has no Weakness.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Gholdengo",
@@ -25220,11 +25220,11 @@
     "entry_index": 0,
     "entry_name": "Tropical Frenzy",
     "effect_text": "You may attach any number of Basic Energy cards from your hand to your Pokémon in any way you like.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Alolan Exeggutor ex",
@@ -25370,11 +25370,11 @@
     "entry_index": 0,
     "entry_name": "Melting Sweetness",
     "effect_text": "During your opponent's next turn, the Defending Pokémon can't attack.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Appletun",
@@ -25505,11 +25505,11 @@
     "entry_index": 0,
     "entry_name": "Born to Slack",
     "effect_text": "If your opponent has no Pokémon ex or Pokémon V in play, this Pokémon can't attack.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "offensive"
+    "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Slaking ex",
@@ -25670,10 +25670,10 @@
     "entry_index": 0,
     "entry_name": "Now You're in My Power",
     "effect_text": "Until the end of your next turn, the Defending Pokémon's Weakness is now [ C ] . (The amount of Weakness doesn't change.)",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Tandemaus",
@@ -25805,11 +25805,11 @@
     "entry_index": 0,
     "entry_name": "Amulet of Hope",
     "effect_text": "If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck.",
-    "supported": true,
-    "classification": "offensive",
+    "supported": false,
+    "classification": "neither",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "offensive_damage_and_knockout"
   },
   {
     "card_name": "Babiri Berry",
@@ -25825,7 +25825,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Brilliant Blender",
@@ -25869,11 +25869,11 @@
     "entry_index": 0,
     "entry_name": "Chill Teaser Toy",
     "effect_text": "You can use this card only if you go second, and only during your first turn. Put an Energy attached to 1 of your opponent's Pokémon into their hand.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Clemont's Quick Wit",
@@ -25905,7 +25905,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Cyrano",
@@ -26013,11 +26013,11 @@
     "entry_index": 0,
     "entry_name": "Gravity Mountain",
     "effect_text": "Each Stage 2 Pokémon in play (both yours and your opponent's) gets -30 HP.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "offensive"
+    "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Jasmine's Gaze",
@@ -26077,11 +26077,11 @@
     "entry_index": 0,
     "entry_name": "Meddling Memo",
     "effect_text": "Your opponent counts the cards in their hand, shuffles those cards, and puts them on the bottom of their deck. If they do, they draw that many cards.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Megaton Blower",
@@ -26109,11 +26109,11 @@
     "entry_index": 0,
     "entry_name": "Miracle Headset",
     "effect_text": "Put up to 2 Supporter cards from your discard pile into your hand.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Passho Berry",
@@ -26129,7 +26129,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Precious Trolley",
@@ -26157,11 +26157,11 @@
     "entry_index": 0,
     "entry_name": "Scramble Switch",
     "effect_text": "Switch your Active Pokémon with 1 of your Benched Pokémon. Then, you may move as many Energy attached to the old Active Pokémon to the new Active Pokémon as you like.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Technical Machine: Fluorite",
@@ -26204,11 +26204,11 @@
     "entry_index": 0,
     "entry_name": "Glittering Star Pattern",
     "effect_text": "When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may switch in 1 of your opponent's Benched Pokémon that has 90 HP or less remaining to the Active Spot.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Ledian",
@@ -26534,10 +26534,10 @@
     "entry_index": 0,
     "entry_name": "Primal Knowledge",
     "effect_text": "Attacks used by your Pokémon do 30 more damage to your opponent's Active Evolution Pokémon (before applying Weakness and Resistance) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Greninja ex",
@@ -26563,10 +26563,10 @@
     "entry_index": 0,
     "entry_name": "Food Prep",
     "effect_text": "Attacks used by this Pokémon cost [ C ] less for each Kofu card in your discard pile.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Crabominable",
@@ -26622,10 +26622,10 @@
     "entry_index": 0,
     "entry_name": "Food Prep",
     "effect_text": "Attacks used by this Pokémon cost [ C ] less for each Kofu card in your discard pile.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Veluza",
@@ -26666,11 +26666,11 @@
     "entry_index": 1,
     "entry_name": "Unleash Lightning",
     "effect_text": "During your next turn, your Pokémon can't attack. (This includes new Pokémon that come into play.)",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Chinchou",
@@ -26845,11 +26845,11 @@
     "entry_index": 0,
     "entry_name": "Dangle Tail",
     "effect_text": "Put a Pokémon from your discard pile into your hand.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Slowking",
@@ -26904,11 +26904,11 @@
     "entry_index": 0,
     "entry_name": "Flower Shower",
     "effect_text": "Each player draws 3 cards.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Comfey",
@@ -27054,10 +27054,10 @@
     "entry_index": 0,
     "entry_name": "Wide Wall",
     "effect_text": "As long as this Pokémon is in the Active Spot, whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to all of your Pokémon.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Rhyperior",
@@ -27113,10 +27113,10 @@
     "entry_index": 0,
     "entry_name": "Chi-Atsu",
     "effect_text": "Put damage counters on your opponent's Active Pokémon until its remaining HP is 50.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Medicham ex",
@@ -27367,11 +27367,11 @@
     "entry_index": 0,
     "entry_name": "Swelling Wish",
     "effect_text": "Attach a Basic Energy card from your discard pile to 1 of your Benched Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Klink",
@@ -27412,11 +27412,11 @@
     "entry_index": 0,
     "entry_name": "Emergency Rotation",
     "effect_text": "Once during your turn, if this Pokémon is in your hand and your opponent has any Stage 2 Pokémon in play, you may put this Pokémon onto your Bench.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Klinklang",
@@ -27666,11 +27666,11 @@
     "entry_index": 0,
     "entry_name": "Knock Over",
     "effect_text": "You may discard a Stadium in play.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Dubwool",
@@ -27696,11 +27696,11 @@
     "entry_index": 0,
     "entry_name": "Knock Over",
     "effect_text": "You may discard a Stadium in play.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Antique Root Fossil",
@@ -27728,11 +27728,11 @@
     "entry_index": 0,
     "entry_name": "Deluxe Bomb",
     "effect_text": "If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , put 12 damage counters on the Attacking Pokémon. If you placed any damage counters in this way, discard this card.",
-    "supported": true,
-    "classification": "offensive",
+    "supported": false,
+    "classification": "neither",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "offensive_damage_and_knockout"
   },
   {
     "card_name": "Grand Tree",
@@ -27744,11 +27744,11 @@
     "entry_index": 0,
     "entry_name": "Grand Tree",
     "effect_text": "Once during each player's turn, that player may search their deck for a Stage 1 Pokémon that evolves from 1 of their Basic Pokémon and put it onto that Pokémon to evolve it. If that Pokémon was evolved in this way, that player may search their deck for a Stage 2 Pokémon that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, that player shuffles their deck. (Players can't evolve a Basic Pokémon during their first turn or a Basic Pokémon that was put into play this turn.)",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Gravity Gemstone",
@@ -27760,11 +27760,11 @@
     "entry_index": 0,
     "entry_name": "Gravity Gemstone",
     "effect_text": "As long as the Pokémon this card is attached to is in the Active Spot, the Retreat Cost of both Active Pokémon is [Colorless] more.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "both"
+    "classification": "both",
+    "classification_reviewed": true,
+    "auto_classification": "both",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Kofu",
@@ -27796,7 +27796,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Payapa Berry",
@@ -27812,7 +27812,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Joltik",
@@ -27838,10 +27838,10 @@
     "entry_index": 0,
     "entry_name": "Compound Eyes",
     "effect_text": "Attacks used by this Pokémon do 50 more damage to your opponent's Active Pokémon that has an Ability (before applying Weakness and Resistance) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Galvantula",
@@ -27957,11 +27957,11 @@
     "entry_index": 0,
     "entry_name": "Suction",
     "effect_text": "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Iron Moth",
@@ -28017,11 +28017,11 @@
     "entry_index": 0,
     "entry_name": "King's Order",
     "effect_text": "Put up to 3 [ W ] Pokémon from your discard pile onto your Bench.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Kingdra ex",
@@ -28077,11 +28077,11 @@
     "entry_index": 1,
     "entry_name": "Shattering Speed",
     "effect_text": "Discard this Pokémon and all attached cards.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Drowzee",
@@ -28107,11 +28107,11 @@
     "entry_index": 0,
     "entry_name": "Daydream",
     "effect_text": "During your opponent's next turn, if they attach an Energy card from their hand to the Defending Pokémon, their turn ends.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Cresselia",
@@ -28347,11 +28347,11 @@
     "entry_index": 0,
     "entry_name": "Mischievous Tentacles",
     "effect_text": "Look at the top card of your opponent's deck. You may have your opponent shuffle their deck.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Malamar",
@@ -28482,10 +28482,10 @@
     "entry_index": 0,
     "entry_name": "Massive Body",
     "effect_text": "As long as this Pokémon is in the Active Spot, your opponent can't play any Stadium cards from their hand.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Copperajah",
@@ -28585,10 +28585,10 @@
     "entry_index": 0,
     "entry_name": "Plasma Bane",
     "effect_text": "If your opponent has any cards in their discard pile that have \"Colress\" in the name, this Pokémon can use the Trifrost attack for [ C ] .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Kyurem",
@@ -28644,11 +28644,11 @@
     "entry_index": 0,
     "entry_name": "Energy Assist",
     "effect_text": "Attach a Basic Energy card from your discard pile to 1 of your Benched Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Stufful",
@@ -28690,11 +28690,11 @@
     "entry_index": 0,
     "entry_name": "Academy at Night",
     "effect_text": "Once during each player's turn, that player may put a card from their hand on top of their deck.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Cassiopeia",
@@ -28786,11 +28786,11 @@
     "entry_index": 0,
     "entry_name": "Powerglass",
     "effect_text": "At the end of your turn (after your attack) , if the Pokémon this card is attached to is in the Active Spot, you may attach a Basic Energy card from your discard pile to it.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Xerosic's Machinations",
@@ -28802,11 +28802,11 @@
     "entry_index": 0,
     "entry_name": "Xerosic's Machinations",
     "effect_text": "Your opponent discards cards from their hand until they have 3 cards in their hand.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Tangrowth",
@@ -28862,11 +28862,11 @@
     "entry_index": 0,
     "entry_name": "Big Net",
     "effect_text": "Your opponent's Active Evolution Pokémon's Retreat Cost is [ C ] more.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "both"
+    "classification": "both",
+    "classification_reviewed": true,
+    "auto_classification": "both",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Ariados",
@@ -28982,11 +28982,11 @@
     "entry_index": 0,
     "entry_name": "Slowing Perfume",
     "effect_text": "You can use this attack only if you go second, and only during your first turn. Shuffle 1 of your opponent's Benched Pokémon and all attached cards into their deck.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Phantump",
@@ -29012,11 +29012,11 @@
     "entry_index": 0,
     "entry_name": "Giga Drain",
     "effect_text": "Heal from this Pokémon the same amount of damage you did to your opponent's Active Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Thwackey",
@@ -29042,11 +29042,11 @@
     "entry_index": 0,
     "entry_name": "Drum Beating",
     "effect_text": "During your opponent's next turn, attacks used by the Defending Pokémon cost [ C ] more, and its Retreat Cost is [ C ] more.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "defensive"
+    "classification": "defensive",
+    "classification_reviewed": true,
+    "auto_classification": "defensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Rillaboom",
@@ -29087,11 +29087,11 @@
     "entry_index": 0,
     "entry_name": "Recovery Net",
     "effect_text": "Put up to 2 Pokémon from your discard pile into your hand.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Iron Leaves",
@@ -29131,11 +29131,11 @@
     "entry_index": 0,
     "entry_name": "Tea Server",
     "effect_text": "Put a Basic [ G ] Energy card from your discard pile into your hand.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Poltchageist",
@@ -29385,11 +29385,11 @@
     "entry_index": 0,
     "entry_name": "Pyro Dance",
     "effect_text": "Once during your turn, you may attach a Basic [ R ] Energy card, a Basic [ F ] Energy card, or 1 of each from your hand to your Pokémon in any way you like.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Infernape",
@@ -29685,10 +29685,10 @@
     "entry_index": 0,
     "entry_name": "Mentally Calm",
     "effect_text": "Your opponent's Pokémon in play and all attached cards can't be put into your opponent's hand.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Snorunt",
@@ -29699,11 +29699,11 @@
     "entry_index": 0,
     "entry_name": "Astonish",
     "effect_text": "Choose a random card from your opponent's hand. Your opponent reveals that card and shuffles it into their deck.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Glalie",
@@ -29759,11 +29759,11 @@
     "entry_index": 0,
     "entry_name": "Beckon",
     "effect_text": "Put a Supporter card from your discard pile into your hand.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Phione",
@@ -30044,11 +30044,11 @@
     "entry_index": 0,
     "entry_name": "Snack Seek",
     "effect_text": "Once during your turn, you may look at the top card of your deck. You may discard that card.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Morpeko",
@@ -30059,11 +30059,11 @@
     "entry_index": 0,
     "entry_name": "Pick and Stick",
     "effect_text": "Attach up to 2 Basic Energy cards from your discard pile to your Pokémon in any way you like.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Bellibolt",
@@ -30133,11 +30133,11 @@
     "entry_index": 0,
     "entry_name": "Teleporter",
     "effect_text": "Once during your turn, if this Pokémon is in the Active Spot, you may shuffle it and all attached cards into your deck.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Kadabra",
@@ -30238,11 +30238,11 @@
     "entry_index": 1,
     "entry_name": "Homeward Chime",
     "effect_text": "Shuffle 1 of your Benched Pokémon and all attached cards into your deck.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Flabébé",
@@ -30298,11 +30298,11 @@
     "entry_index": 0,
     "entry_name": "Festival Lead",
     "effect_text": "If Festival Grounds is in play, this Pokémon may use an attack it has twice. If the first attack Knocks Out your opponent's Active Pokémon, you may attack again after your opponent chooses a new Active Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Swirlix",
@@ -30388,11 +30388,11 @@
     "entry_index": 0,
     "entry_name": "Scream",
     "effect_text": "You can use this attack only if you go second, and only during your first turn. Your opponent can't play any Supporter cards from their hand during their next turn.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "defensive"
+    "classification": "defensive",
+    "classification_reviewed": true,
+    "auto_classification": "defensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Scream Tail ex",
@@ -30448,11 +30448,11 @@
     "entry_index": 0,
     "entry_name": "Blazing Destruction",
     "effect_text": "Discard a Stadium in play.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Hisuian Growlithe",
@@ -30583,10 +30583,10 @@
     "entry_index": 1,
     "entry_name": "Gutsy Swing",
     "effect_text": "If this Pokémon is affected by a Special Condition, ignore all Energy in this attack's cost.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Greninja ex",
@@ -30792,10 +30792,10 @@
     "entry_index": 0,
     "entry_name": "Dastardly Jab",
     "effect_text": "Put damage counters on your opponent's Active Pokémon until its remaining HP is 10.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Brute Bonnet",
@@ -30836,11 +30836,11 @@
     "entry_index": 1,
     "entry_name": "Big Storm",
     "effect_text": "Discard a Stadium in play.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Aron",
@@ -30940,11 +30940,11 @@
     "entry_index": 0,
     "entry_name": "Metal Coating",
     "effect_text": "Attach a Basic [ M ] Energy card from your discard pile to this Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Revavroom",
@@ -31060,11 +31060,11 @@
     "entry_index": 0,
     "entry_name": "Lucky Attachment",
     "effect_text": "Attach a Basic Energy card from your hand to 1 of your Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Chansey",
@@ -31090,11 +31090,11 @@
     "entry_index": 0,
     "entry_name": "Happy Switch",
     "effect_text": "Once during your turn, you may move a Basic Energy from 1 of your Pokémon to another of your Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Blissey ex",
@@ -31211,11 +31211,11 @@
     "entry_index": 0,
     "entry_name": "Accompanying Flute",
     "effect_text": "Reveal the top 5 cards of your opponent's deck. You may choose any number of Basic Pokémon you find there and put those Pokémon onto their Bench. Your opponent shuffles the other cards back into their deck.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Caretaker",
@@ -31275,11 +31275,11 @@
     "entry_index": 0,
     "entry_name": "Enhanced Hammer",
     "effect_text": "Discard a Special Energy attached to 1 of your opponent's Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Handheld Fan",
@@ -31291,11 +31291,11 @@
     "entry_index": 0,
     "entry_name": "Handheld Fan",
     "effect_text": "If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , move an Energy from the Attacking Pokémon to 1 of your opponent's Benched Pokémon.",
-    "supported": true,
-    "classification": "offensive",
+    "supported": false,
+    "classification": "neither",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "offensive_damage_and_knockout"
   },
   {
     "card_name": "Hassel",
@@ -31339,11 +31339,11 @@
     "entry_index": 0,
     "entry_name": "Lana's Aid",
     "effect_text": "Put up to 3 in any combination of Pokémon that don't have a Rule Box and Basic Energy cards from your discard pile into your hand. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Love Ball",
@@ -31387,11 +31387,11 @@
     "entry_index": 0,
     "entry_name": "Lucky Helmet",
     "effect_text": "Whenever the Pokémon this card is attached to is your Active Pokémon and is damaged by an opponent's attack (even if that Pokémon is Knocked Out) , draw 2 cards.",
-    "supported": true,
-    "classification": "offensive",
+    "supported": false,
+    "classification": "neither",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "offensive_damage_and_knockout"
   },
   {
     "card_name": "Perrin",
@@ -31439,7 +31439,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_hp_and_survival"
   },
   {
     "card_name": "Unfair Stamp",
@@ -31510,11 +31510,11 @@
     "entry_index": 0,
     "entry_name": "Expelling Tornado",
     "effect_text": "Choose 3 of your opponent's Benched Pokémon. If you do, shuffle all of your opponent's Benched Pokémon that you didn't choose, and all cards attached to those Pokémon, into their deck.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Shiftry",
@@ -31959,10 +31959,10 @@
     "entry_index": 0,
     "entry_name": "Hustle Play",
     "effect_text": "Attacks used by this Pokémon cost [ C ] less for each of your opponent's Benched Pokémon.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Incineroar ex",
@@ -32048,11 +32048,11 @@
     "entry_index": 1,
     "entry_name": "Blaze Blitz",
     "effect_text": "This Pokémon can't use Blaze Blitz again until it leaves the Active Spot.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Totodile",
@@ -32168,10 +32168,10 @@
     "entry_index": 0,
     "entry_name": "Freezing Chill",
     "effect_text": "During your opponent's next turn, the Defending Pokémon can't attack.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Wiglett",
@@ -32572,11 +32572,11 @@
     "entry_index": 0,
     "entry_name": "Evolution Jammer",
     "effect_text": "During your opponent's next turn, they can't play any Pokémon from their hand to evolve their Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Solosis",
@@ -32871,11 +32871,11 @@
     "entry_index": 0,
     "entry_name": "Turbo Edge",
     "effect_text": "Attach up to 2 Basic [ F ] Energy cards from your discard pile to your Benched Pokémon in any way you like.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Mudsdale",
@@ -32886,11 +32886,11 @@
     "entry_index": 0,
     "entry_name": "Mud Stock",
     "effect_text": "Attach a Basic [ F ] Energy card from your discard pile to each of your Benched Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Mudsdale",
@@ -33111,11 +33111,11 @@
     "entry_index": 1,
     "entry_name": "Damage Collection",
     "effect_text": "You may move any number of damage counters from your opponent's Benched Pokémon to their Active Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Farigiraf ex",
@@ -33304,11 +33304,11 @@
     "entry_index": 0,
     "entry_name": "Dual Core",
     "effect_text": "As long as this Pokémon has a Future Booster Energy Capsule attached, it is [ F ] and [ M ] type.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Iron Treads",
@@ -33544,11 +33544,11 @@
     "entry_index": 1,
     "entry_name": "Energy Blender",
     "effect_text": "You may move any amount of Energy from your Pokémon to your other Pokémon in any way you like.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Chatot",
@@ -33604,11 +33604,11 @@
     "entry_index": 0,
     "entry_name": "Opposing Winds",
     "effect_text": "You may put 2 Energy attached to your opponent's Active Pokémon into their hand.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Unfezant",
@@ -33634,11 +33634,11 @@
     "entry_index": 1,
     "entry_name": "Cleaning Up",
     "effect_text": "Discard up to 2 Pokémon Tools from your opponent's Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Cinccino",
@@ -33759,11 +33759,11 @@
     "entry_index": 0,
     "entry_name": "Hand Trimmer",
     "effect_text": "Each player discards cards from their hand until they have 5 cards in their hand. Your opponent discards first. (If a player has 5 or fewer cards in their hand, they do not discard.)",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Heavy Baton",
@@ -33775,11 +33775,11 @@
     "entry_index": 0,
     "entry_name": "Heavy Baton",
     "effect_text": "If the Pokémon this card is attached to has a Retreat Cost of exactly 4, is in the Active Spot, and is Knocked Out by damage from an attack from your opponent's Pokémon, move up to 3 Basic Energy cards from that Pokémon to your Benched Pokémon in any way you like.",
-    "supported": true,
-    "classification": "offensive",
+    "supported": false,
+    "classification": "neither",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "offensive_damage_and_knockout"
   },
   {
     "card_name": "Hero's Cape",
@@ -33839,10 +33839,10 @@
     "entry_index": 0,
     "entry_name": "Perilous Jungle",
     "effect_text": "During Pokémon Checkup, put 2 more damage counters on each Poisoned non- [Darkness] Pokémon (both yours and your opponent's) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Reboot Pod",
@@ -33854,11 +33854,11 @@
     "entry_index": 0,
     "entry_name": "Reboot Pod",
     "effect_text": "Attach a Basic Energy card from your discard pile to each of your Future Pokémon.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Salvatore",
@@ -34171,10 +34171,10 @@
     "entry_index": 0,
     "entry_name": "Dopey Face",
     "effect_text": "This Pokémon can't be Confused.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Paradise Resort",
@@ -34186,10 +34186,10 @@
     "entry_index": 0,
     "entry_name": "Paradise Resort",
     "effect_text": "The Retreat Cost of each Psyduck in play (both yours and your opponent's) is [Colorless] less.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Armarouge ex",
@@ -34231,10 +34231,10 @@
     "entry_index": 0,
     "entry_name": "Toxic Subjugation",
     "effect_text": "As long as this Pokémon is in the Active Spot, put 5 more damage counters on your opponent's Poisoned Pokémon during Pokémon Checkup.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Pecharunt",
@@ -34260,11 +34260,11 @@
     "entry_index": 0,
     "entry_name": "Scoop Water",
     "effect_text": "Shuffle up to 3 Basic [ W ] Energy cards from your discard pile into your deck.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": false,
-    "classification": "neither"
+    "classification": "neither",
+    "classification_reviewed": true,
+    "auto_classification": "neither",
+    "auto_rule": "saved_unsupported_decision"
   },
   {
     "card_name": "Quagsire",

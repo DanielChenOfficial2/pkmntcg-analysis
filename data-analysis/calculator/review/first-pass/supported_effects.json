@@ -2029,22 +2029,6 @@
     "auto_rule": "classified_effect_reference"
   },
   {
-    "card_name": "Tremendous Bomb",
-    "set": "PBL",
-    "card_number": "82",
-    "source_url": "https://limitlesstcg.com/cards/PBL/82",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Tremendous Bomb",
-    "effect_text": "If the Pokémon this card is attached to isn't a Mega Evolution Pokémon ex, is in the Active Spot, and takes 240 or more damage from an attack from your opponent's Mega Evolution Pokémon ex (even if this Pokémon is Knocked Out) , place 12 damage counters on the Attacking Pokémon. If you placed any damage counters in this way, discard this card.",
-    "supported": false,
-    "classification": null,
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
-  },
-  {
     "card_name": "Brave Bangle",
     "set": "PBL",
     "card_number": "104",
@@ -2785,22 +2769,6 @@
     "entry_index": 0,
     "entry_name": "Energized Slap",
     "effect_text": "This attack does 40 damage for each Energy attached to this Pokémon.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
-  },
-  {
-    "card_name": "Adversity Policy",
-    "set": "CRI",
-    "card_number": "74",
-    "source_url": "https://limitlesstcg.com/cards/CRI/74",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Adversity Policy",
-    "effect_text": "If the Pokémon this card is attached to has Weakness to your opponent's Active Pokémon's type, is in the Active Spot, and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , draw 3 cards.",
     "supported": true,
     "classification": "offensive",
     "classification_reviewed": true,
@@ -5753,22 +5721,6 @@
     "auto_rule": "classified_effect_reference"
   },
   {
-    "card_name": "Team Rocket's Hypnotizer",
-    "set": "ASC",
-    "card_number": "206",
-    "source_url": "https://limitlesstcg.com/cards/ASC/206",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Team Rocket's Hypnotizer",
-    "effect_text": "If the Team Rocket's Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Team Rocket's Pokémon is Knocked Out) , the Attacking Pokémon is now Asleep.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
-  },
-  {
     "card_name": "Team Rocket's Transceiver",
     "set": "ASC",
     "card_number": "209",
@@ -6702,7 +6654,7 @@
     "classification": "offensive",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "offensive_damage_and_knockout"
   },
   {
     "card_name": "Sacred Charm",
@@ -12052,22 +12004,6 @@
     "auto_rule": "classified_effect_reference"
   },
   {
-    "card_name": "Lillie's Pearl",
-    "set": "JTG",
-    "card_number": "151",
-    "source_url": "https://limitlesstcg.com/cards/JTG/151",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Lillie's Pearl",
-    "effect_text": "If the Lillie's Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes 1 fewer Prize card.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
-  },
-  {
     "card_name": "N's Castle",
     "set": "JTG",
     "card_number": "152",
@@ -13084,7 +13020,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Janine's Secret Art",
@@ -13398,11 +13334,11 @@
     "entry_index": 1,
     "entry_name": "Jungle Whip",
     "effect_text": "You may put all Energy attached to this Pokémon into your hand to have this attack do 80 more damage.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "offensive"
+    "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Rabsca",
@@ -13518,10 +13454,10 @@
     "entry_index": 0,
     "entry_name": "Victory Cheer",
     "effect_text": "Attacks used by your Evolution [ R ] Pokémon do 10 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Simisear",
@@ -13756,10 +13692,10 @@
     "entry_index": 0,
     "entry_name": "Frigid Fangs",
     "effect_text": "During your opponent's next turn, Pokémon that have 2 or less Energy attached can't attack. (This includes new Pokémon that come into play.)",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Walrein",
@@ -14025,10 +13961,10 @@
     "entry_index": 0,
     "entry_name": "Glistening Bubbles",
     "effect_text": "If you have any Tera Pokémon in play, this Pokémon can use the Double-Edge attack for [ P ] .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Azumarill",
@@ -14054,10 +13990,10 @@
     "entry_index": 0,
     "entry_name": "Skyliner",
     "effect_text": "Your Basic Pokémon in play have no Retreat Cost.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Latios",
@@ -14203,10 +14139,10 @@
     "entry_index": 1,
     "entry_name": "Barite Jail",
     "effect_text": "Put damage counters on each of your opponent's Benched Pokémon until its remaining HP is 100.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Tapu Lele",
@@ -14262,10 +14198,10 @@
     "entry_index": 0,
     "entry_name": "Mystical Eyes",
     "effect_text": "Devolve 1 of your opponent's evolved Pokémon by putting the highest Stage Evolution card on it into your opponent's hand.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Mankey",
@@ -14306,11 +14242,11 @@
     "entry_index": 1,
     "entry_name": "Destined Fight",
     "effect_text": "Both Active Pokémon are Knocked Out.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "offensive"
+    "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Donphan",
@@ -14394,10 +14330,10 @@
     "entry_index": 0,
     "entry_name": "Sticky Bind",
     "effect_text": "As long as this Pokémon is on your Bench, Benched Stage 2 Pokémon (both yours and your opponent's) have no Abilities.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Excadrill",
@@ -14468,10 +14404,10 @@
     "entry_index": 1,
     "entry_name": "Raging Tentacles",
     "effect_text": "If this Pokémon has any damage counters on it, this attack can be used for [ F ] .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Glimmet",
@@ -14661,10 +14597,10 @@
     "entry_index": 0,
     "entry_name": "Metal Defender",
     "effect_text": "During your opponent's next turn, this Pokémon has no Weakness.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Gholdengo",
@@ -14870,11 +14806,11 @@
     "entry_index": 0,
     "entry_name": "Born to Slack",
     "effect_text": "If your opponent has no Pokémon ex or Pokémon V in play, this Pokémon can't attack.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "offensive"
+    "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Swablu",
@@ -14975,10 +14911,10 @@
     "entry_index": 0,
     "entry_name": "Now You're in My Power",
     "effect_text": "Until the end of your next turn, the Defending Pokémon's Weakness is now [ C ] . (The amount of Weakness doesn't change.)",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Tandemaus",
@@ -15071,22 +15007,6 @@
     "auto_rule": "classified_effect_reference"
   },
   {
-    "card_name": "Amulet of Hope",
-    "set": "SSP",
-    "card_number": "162",
-    "source_url": "https://limitlesstcg.com/cards/SSP/162",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Amulet of Hope",
-    "effect_text": "If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
-  },
-  {
     "card_name": "Babiri Berry",
     "set": "SSP",
     "card_number": "163",
@@ -15100,7 +15020,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Colbur Berry",
@@ -15116,7 +15036,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Gravity Mountain",
@@ -15128,11 +15048,11 @@
     "entry_index": 0,
     "entry_name": "Gravity Mountain",
     "effect_text": "Each Stage 2 Pokémon in play (both yours and your opponent's) gets -30 HP.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "offensive"
+    "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Jasmine's Gaze",
@@ -15196,7 +15116,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Ledian",
@@ -15387,10 +15307,10 @@
     "entry_index": 0,
     "entry_name": "Primal Knowledge",
     "effect_text": "Attacks used by your Pokémon do 30 more damage to your opponent's Active Evolution Pokémon (before applying Weakness and Resistance) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Greninja ex",
@@ -15416,10 +15336,10 @@
     "entry_index": 0,
     "entry_name": "Food Prep",
     "effect_text": "Attacks used by this Pokémon cost [ C ] less for each Kofu card in your discard pile.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Drednaw",
@@ -15460,10 +15380,10 @@
     "entry_index": 0,
     "entry_name": "Food Prep",
     "effect_text": "Attacks used by this Pokémon cost [ C ] less for each Kofu card in your discard pile.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Veluza",
@@ -15697,10 +15617,10 @@
     "entry_index": 0,
     "entry_name": "Wide Wall",
     "effect_text": "As long as this Pokémon is in the Active Spot, whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to all of your Pokémon.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Medicham",
@@ -15726,10 +15646,10 @@
     "entry_index": 0,
     "entry_name": "Chi-Atsu",
     "effect_text": "Put damage counters on your opponent's Active Pokémon until its remaining HP is 50.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Medicham ex",
@@ -16107,22 +16027,6 @@
     "auto_rule": "classified_effect_reference"
   },
   {
-    "card_name": "Deluxe Bomb",
-    "set": "SCR",
-    "card_number": "134",
-    "source_url": "https://limitlesstcg.com/cards/SCR/134",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Deluxe Bomb",
-    "effect_text": "If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , put 12 damage counters on the Attacking Pokémon. If you placed any damage counters in this way, discard this card.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
-  },
-  {
     "card_name": "Gravity Gemstone",
     "set": "SCR",
     "card_number": "137",
@@ -16132,11 +16036,11 @@
     "entry_index": 0,
     "entry_name": "Gravity Gemstone",
     "effect_text": "As long as the Pokémon this card is attached to is in the Active Spot, the Retreat Cost of both Active Pokémon is [Colorless] more.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "both"
+    "classification": "both",
+    "classification_reviewed": true,
+    "auto_classification": "both",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Occa Berry",
@@ -16152,7 +16056,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Payapa Berry",
@@ -16168,7 +16072,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_prevention_and_reduction"
   },
   {
     "card_name": "Joltik",
@@ -16194,10 +16098,10 @@
     "entry_index": 0,
     "entry_name": "Compound Eyes",
     "effect_text": "Attacks used by this Pokémon do 50 more damage to your opponent's Active Pokémon that has an Ability (before applying Weakness and Resistance) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Galvantula",
@@ -16553,10 +16457,10 @@
     "entry_index": 0,
     "entry_name": "Massive Body",
     "effect_text": "As long as this Pokémon is in the Active Spot, your opponent can't play any Stadium cards from their hand.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Varoom",
@@ -16611,10 +16515,10 @@
     "entry_index": 0,
     "entry_name": "Plasma Bane",
     "effect_text": "If your opponent has any cards in their discard pile that have \"Colress\" in the name, this Pokémon can use the Trifrost attack for [ C ] .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Kyurem",
@@ -16732,11 +16636,11 @@
     "entry_index": 0,
     "entry_name": "Big Net",
     "effect_text": "Your opponent's Active Evolution Pokémon's Retreat Cost is [ C ] more.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "both"
+    "classification": "both",
+    "classification_reviewed": true,
+    "auto_classification": "both",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Ariados",
@@ -16822,11 +16726,11 @@
     "entry_index": 0,
     "entry_name": "Drum Beating",
     "effect_text": "During your opponent's next turn, attacks used by the Defending Pokémon cost [ C ] more, and its Retreat Cost is [ C ] more.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "defensive"
+    "classification": "defensive",
+    "classification_reviewed": true,
+    "auto_classification": "defensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Rillaboom",
@@ -17225,10 +17129,10 @@
     "entry_index": 0,
     "entry_name": "Mentally Calm",
     "effect_text": "Your opponent's Pokémon in play and all attached cards can't be put into your opponent's hand.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Glalie",
@@ -17613,11 +17517,11 @@
     "entry_index": 0,
     "entry_name": "Scream",
     "effect_text": "You can use this attack only if you go second, and only during your first turn. Your opponent can't play any Supporter cards from their hand during their next turn.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
-    "classification": "defensive"
+    "classification": "defensive",
+    "classification_reviewed": true,
+    "auto_classification": "defensive",
+    "auto_rule": "classified_effect_reference"
   },
   {
     "card_name": "Sandshrew",
@@ -17763,10 +17667,10 @@
     "entry_index": 1,
     "entry_name": "Gutsy Swing",
     "effect_text": "If this Pokémon is affected by a Special Condition, ignore all Energy in this attack's cost.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Greninja ex",
@@ -17942,10 +17846,10 @@
     "entry_index": 0,
     "entry_name": "Dastardly Jab",
     "effect_text": "Put damage counters on your opponent's Active Pokémon until its remaining HP is 10.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Brute Bonnet",
@@ -18142,38 +18046,6 @@
     "auto_rule": "classified_effect_reference"
   },
   {
-    "card_name": "Handheld Fan",
-    "set": "TWM",
-    "card_number": "150",
-    "source_url": "https://limitlesstcg.com/cards/TWM/150",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Handheld Fan",
-    "effect_text": "If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , move an Energy from the Attacking Pokémon to 1 of your opponent's Benched Pokémon.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
-  },
-  {
-    "card_name": "Lucky Helmet",
-    "set": "TWM",
-    "card_number": "158",
-    "source_url": "https://limitlesstcg.com/cards/TWM/158",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Lucky Helmet",
-    "effect_text": "Whenever the Pokémon this card is attached to is your Active Pokémon and is damaged by an opponent's attack (even if that Pokémon is Knocked Out) , draw 2 cards.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
-  },
-  {
     "card_name": "Survival Brace",
     "set": "TWM",
     "card_number": "164",
@@ -18187,7 +18059,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference"
+    "auto_rule": "defensive_hp_and_survival"
   },
   {
     "card_name": "Seedot",
@@ -18496,10 +18368,10 @@
     "entry_index": 0,
     "entry_name": "Hustle Play",
     "effect_text": "Attacks used by this Pokémon cost [ C ] less for each of your opponent's Benched Pokémon.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Incineroar ex",
@@ -18630,10 +18502,10 @@
     "entry_index": 0,
     "entry_name": "Freezing Chill",
     "effect_text": "During your opponent's next turn, the Defending Pokémon can't attack.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Wiglett",
@@ -19609,22 +19481,6 @@
     "auto_rule": "classified_effect_reference"
   },
   {
-    "card_name": "Heavy Baton",
-    "set": "TEF",
-    "card_number": "151",
-    "source_url": "https://limitlesstcg.com/cards/TEF/151",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Heavy Baton",
-    "effect_text": "If the Pokémon this card is attached to has a Retreat Cost of exactly 4, is in the Active Spot, and is Knocked Out by damage from an attack from your opponent's Pokémon, move up to 3 Basic Energy cards from that Pokémon to your Benched Pokémon in any way you like.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference"
-  },
-  {
     "card_name": "Hero's Cape",
     "set": "TEF",
     "card_number": "152",
@@ -19650,10 +19506,10 @@
     "entry_index": 0,
     "entry_name": "Perilous Jungle",
     "effect_text": "During Pokémon Checkup, put 2 more damage counters on each Poisoned non- [Darkness] Pokémon (both yours and your opponent's) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Drifblim",
@@ -19799,10 +19655,10 @@
     "entry_index": 0,
     "entry_name": "Dopey Face",
     "effect_text": "This Pokémon can't be Confused.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Paradise Resort",
@@ -19814,10 +19670,10 @@
     "entry_index": 0,
     "entry_name": "Paradise Resort",
     "effect_text": "The Retreat Cost of each Psyduck in play (both yours and your opponent's) is [Colorless] less.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Pecharunt",
@@ -19828,10 +19684,10 @@
     "entry_index": 0,
     "entry_name": "Toxic Subjugation",
     "effect_text": "As long as this Pokémon is in the Active Spot, put 5 more damage counters on your opponent's Poisoned Pokémon during Pokémon Checkup.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
-    "auto_rule": null,
-    "supported": true
+    "auto_rule": null
   },
   {
     "card_name": "Pecharunt",

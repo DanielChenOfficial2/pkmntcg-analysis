@@ -2057,10 +2057,10 @@
     "entry_index": 0,
     "entry_name": "Victory Cheer",
     "effect_text": "Attacks used by your Evolution [ R ] Pokémon do 10 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2167,10 +2167,10 @@
     "entry_index": 0,
     "entry_name": "Glistening Bubbles",
     "effect_text": "If you have any Tera Pokémon in play, this Pokémon can use the Double-Edge attack for [ P ] .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2182,10 +2182,10 @@
     "entry_index": 0,
     "entry_name": "Skyliner",
     "effect_text": "Your Basic Pokémon in play have no Retreat Cost.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2229,10 +2229,10 @@
     "entry_index": 0,
     "entry_name": "Sticky Bind",
     "effect_text": "As long as this Pokémon is on your Bench, Benched Stage 2 Pokémon (both yours and your opponent's) have no Abilities.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2292,11 +2292,11 @@
     "entry_index": 0,
     "entry_name": "Born to Slack",
     "effect_text": "If your opponent has no Pokémon ex or Pokémon V in play, this Pokémon can't attack.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
     "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference",
     "implemented": false
   },
   {
@@ -2340,10 +2340,10 @@
     "entry_index": 0,
     "entry_name": "Primal Knowledge",
     "effect_text": "Attacks used by your Pokémon do 30 more damage to your opponent's Active Evolution Pokémon (before applying Weakness and Resistance) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2355,10 +2355,10 @@
     "entry_index": 0,
     "entry_name": "Food Prep",
     "effect_text": "Attacks used by this Pokémon cost [ C ] less for each Kofu card in your discard pile.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2386,10 +2386,10 @@
     "entry_index": 0,
     "entry_name": "Food Prep",
     "effect_text": "Attacks used by this Pokémon cost [ C ] less for each Kofu card in your discard pile.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2417,10 +2417,10 @@
     "entry_index": 0,
     "entry_name": "Wide Wall",
     "effect_text": "As long as this Pokémon is in the Active Spot, whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to all of your Pokémon.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2480,10 +2480,10 @@
     "entry_index": 0,
     "entry_name": "Compound Eyes",
     "effect_text": "Attacks used by this Pokémon do 50 more damage to your opponent's Active Pokémon that has an Ability (before applying Weakness and Resistance) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2543,10 +2543,10 @@
     "entry_index": 0,
     "entry_name": "Massive Body",
     "effect_text": "As long as this Pokémon is in the Active Spot, your opponent can't play any Stadium cards from their hand.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2574,10 +2574,10 @@
     "entry_index": 0,
     "entry_name": "Plasma Bane",
     "effect_text": "If your opponent has any cards in their discard pile that have \"Colress\" in the name, this Pokémon can use the Trifrost attack for [ C ] .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2605,11 +2605,11 @@
     "entry_index": 0,
     "entry_name": "Big Net",
     "effect_text": "Your opponent's Active Evolution Pokémon's Retreat Cost is [ C ] more.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
     "classification": "both",
+    "classification_reviewed": true,
+    "auto_classification": "both",
+    "auto_rule": "classified_effect_reference",
     "implemented": false
   },
   {
@@ -2652,10 +2652,10 @@
     "entry_index": 0,
     "entry_name": "Mentally Calm",
     "effect_text": "Your opponent's Pokémon in play and all attached cards can't be put into your opponent's hand.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2827,10 +2827,10 @@
     "entry_index": 0,
     "entry_name": "Hustle Play",
     "effect_text": "Attacks used by this Pokémon cost [ C ] less for each of your opponent's Benched Pokémon.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2953,10 +2953,10 @@
     "entry_index": 0,
     "entry_name": "Dopey Face",
     "effect_text": "This Pokémon can't be Confused.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -2968,10 +2968,10 @@
     "entry_index": 0,
     "entry_name": "Toxic Subjugation",
     "effect_text": "As long as this Pokémon is in the Active Spot, put 5 more damage counters on your opponent's Poisoned Pokémon during Pokémon Checkup.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   }
 ]

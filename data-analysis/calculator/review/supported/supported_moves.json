@@ -11417,11 +11417,11 @@
     "entry_index": 1,
     "entry_name": "Jungle Whip",
     "effect_text": "You may put all Energy attached to this Pokémon into your hand to have this attack do 80 more damage.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
     "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference",
     "implemented": false
   },
   {
@@ -11737,10 +11737,10 @@
     "entry_index": 0,
     "entry_name": "Frigid Fangs",
     "effect_text": "During your opponent's next turn, Pokémon that have 2 or less Energy attached can't attack. (This includes new Pokémon that come into play.)",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -12120,10 +12120,10 @@
     "entry_index": 1,
     "entry_name": "Barite Jail",
     "effect_text": "Put damage counters on each of your opponent's Benched Pokémon until its remaining HP is 100.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -12183,10 +12183,10 @@
     "entry_index": 0,
     "entry_name": "Mystical Eyes",
     "effect_text": "Devolve 1 of your opponent's evolved Pokémon by putting the highest Stage Evolution card on it into your opponent's hand.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -12230,11 +12230,11 @@
     "entry_index": 1,
     "entry_name": "Destined Fight",
     "effect_text": "Both Active Pokémon are Knocked Out.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
     "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference",
     "implemented": false
   },
   {
@@ -12372,10 +12372,10 @@
     "entry_index": 1,
     "entry_name": "Raging Tentacles",
     "effect_text": "If this Pokémon has any damage counters on it, this attack can be used for [ F ] .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -12562,10 +12562,10 @@
     "entry_index": 0,
     "entry_name": "Metal Defender",
     "effect_text": "During your opponent's next turn, this Pokémon has no Weakness.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -12849,10 +12849,10 @@
     "entry_index": 0,
     "entry_name": "Now You're in My Power",
     "effect_text": "Until the end of your next turn, the Defending Pokémon's Weakness is now [ C ] . (The amount of Weakness doesn't change.)",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -13390,10 +13390,10 @@
     "entry_index": 0,
     "entry_name": "Chi-Atsu",
     "effect_text": "Put damage counters on your opponent's Active Pokémon until its remaining HP is 50.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -14251,11 +14251,11 @@
     "entry_index": 0,
     "entry_name": "Drum Beating",
     "effect_text": "During your opponent's next turn, attacks used by the Defending Pokémon cost [ C ] more, and its Retreat Cost is [ C ] more.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
     "classification": "defensive",
+    "classification_reviewed": true,
+    "auto_classification": "defensive",
+    "auto_rule": "classified_effect_reference",
     "implemented": false
   },
   {
@@ -15017,11 +15017,11 @@
     "entry_index": 0,
     "entry_name": "Scream",
     "effect_text": "You can use this attack only if you go second, and only during your first turn. Your opponent can't play any Supporter cards from their hand during their next turn.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
     "classification": "defensive",
+    "classification_reviewed": true,
+    "auto_classification": "defensive",
+    "auto_rule": "classified_effect_reference",
     "implemented": false
   },
   {
@@ -15177,10 +15177,10 @@
     "entry_index": 1,
     "entry_name": "Gutsy Swing",
     "effect_text": "If this Pokémon is affected by a Special Condition, ignore all Energy in this attack's cost.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -15352,10 +15352,10 @@
     "entry_index": 0,
     "entry_name": "Dastardly Jab",
     "effect_text": "Put damage counters on your opponent's Active Pokémon until its remaining HP is 10.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -15892,10 +15892,10 @@
     "entry_index": 0,
     "entry_name": "Freezing Chill",
     "effect_text": "During your opponent's next turn, the Defending Pokémon can't attack.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {

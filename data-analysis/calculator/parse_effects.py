@@ -586,6 +586,25 @@ def normalize_effect(text):
     return " ".join(text.split())
 
 
+TOOL_OPPONENT_ATTACK_REACTION = re.compile(
+    r"\b(?:damaged by (?:an attack from your opponent|an opponent's attack)|"
+    r"takes \d+ or more damage from an attack from your opponent|"
+    r"knocked out by damage from an attack from your opponent)\b",
+    re.IGNORECASE,
+)
+
+
+def is_reference_classification_eligible(record):
+    """Exclude Tool effects triggered by taking damage or being Knocked Out."""
+    if (
+        str(record.get("card_type", "")).casefold() == "trainer"
+        and str(record.get("trainer_subtype", "")).casefold() == "tool"
+        and TOOL_OPPONENT_ATTACK_REACTION.search(record["effect_text"])
+    ):
+        return False
+    return True
+
+
 def load_reference_classifications():
     """Use the user's labeled examples as exact-match authoritative cases."""
     if not DEFAULT_SUPPORTED_OUTPUT.exists():
@@ -604,6 +623,7 @@ def load_reference_classifications():
         and isinstance(record.get("effect_text"), str)
         and record.get("supported") is True
         and record.get("classification") in VALID_CLASSIFICATIONS
+        and is_reference_classification_eligible(record)
     }
 
 

@@ -14,23 +14,6 @@
     "classification_reviewed": true,
     "auto_classification": "offensive",
     "auto_rule": "classified_effect_reference",
-    "implemented": true
-  },
-  {
-    "card_name": "Adversity Policy",
-    "set": "CRI",
-    "card_number": "74",
-    "source_url": "https://limitlesstcg.com/cards/CRI/74",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Adversity Policy",
-    "effect_text": "If the Pokémon this card is attached to has Weakness to your opponent's Active Pokémon's type, is in the Active Spot, and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , draw 3 cards.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference",
     "implemented": false
   },
   {
@@ -84,23 +67,6 @@
     "implemented": false
   },
   {
-    "card_name": "Team Rocket's Hypnotizer",
-    "set": "ASC",
-    "card_number": "206",
-    "source_url": "https://limitlesstcg.com/cards/ASC/206",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Team Rocket's Hypnotizer",
-    "effect_text": "If the Team Rocket's Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Team Rocket's Pokémon is Knocked Out) , the Attacking Pokémon is now Asleep.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference",
-    "implemented": false
-  },
-  {
     "card_name": "Thick Scale",
     "set": "ASC",
     "card_number": "211",
@@ -131,7 +97,7 @@
     "classification": "offensive",
     "classification_reviewed": true,
     "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference",
+    "auto_rule": "offensive_damage_and_knockout",
     "implemented": false
   },
   {
@@ -186,23 +152,6 @@
     "implemented": false
   },
   {
-    "card_name": "Lillie's Pearl",
-    "set": "JTG",
-    "card_number": "151",
-    "source_url": "https://limitlesstcg.com/cards/JTG/151",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Lillie's Pearl",
-    "effect_text": "If the Lillie's Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, that player takes 1 fewer Prize card.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference",
-    "implemented": false
-  },
-  {
     "card_name": "Binding Mochi",
     "set": "PRE",
     "card_number": "95",
@@ -233,7 +182,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference",
+    "auto_rule": "defensive_prevention_and_reduction",
     "implemented": false
   },
   {
@@ -251,7 +200,7 @@
     "classification_reviewed": true,
     "auto_classification": "offensive",
     "auto_rule": "classified_effect_reference",
-    "implemented": true
+    "implemented": false
   },
   {
     "card_name": "Rescue Board",
@@ -287,23 +236,6 @@
     "implemented": false
   },
   {
-    "card_name": "Amulet of Hope",
-    "set": "SSP",
-    "card_number": "162",
-    "source_url": "https://limitlesstcg.com/cards/SSP/162",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Amulet of Hope",
-    "effect_text": "If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent's Pokémon, search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference",
-    "implemented": false
-  },
-  {
     "card_name": "Babiri Berry",
     "set": "SSP",
     "card_number": "163",
@@ -317,7 +249,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference",
+    "auto_rule": "defensive_prevention_and_reduction",
     "implemented": false
   },
   {
@@ -334,7 +266,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference",
+    "auto_rule": "defensive_prevention_and_reduction",
     "implemented": false
   },
   {
@@ -351,24 +283,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference",
-    "implemented": false
-  },
-  {
-    "card_name": "Deluxe Bomb",
-    "set": "SCR",
-    "card_number": "134",
-    "source_url": "https://limitlesstcg.com/cards/SCR/134",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Deluxe Bomb",
-    "effect_text": "If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , put 12 damage counters on the Attacking Pokémon. If you placed any damage counters in this way, discard this card.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference",
+    "auto_rule": "defensive_prevention_and_reduction",
     "implemented": false
   },
   {
@@ -381,11 +296,11 @@
     "entry_index": 0,
     "entry_name": "Gravity Gemstone",
     "effect_text": "As long as the Pokémon this card is attached to is in the Active Spot, the Retreat Cost of both Active Pokémon is [Colorless] more.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
     "classification": "both",
+    "classification_reviewed": true,
+    "auto_classification": "both",
+    "auto_rule": "classified_effect_reference",
     "implemented": false
   },
   {
@@ -402,7 +317,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference",
+    "auto_rule": "defensive_prevention_and_reduction",
     "implemented": false
   },
   {
@@ -419,41 +334,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference",
-    "implemented": false
-  },
-  {
-    "card_name": "Handheld Fan",
-    "set": "TWM",
-    "card_number": "150",
-    "source_url": "https://limitlesstcg.com/cards/TWM/150",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Handheld Fan",
-    "effect_text": "If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , move an Energy from the Attacking Pokémon to 1 of your opponent's Benched Pokémon.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference",
-    "implemented": false
-  },
-  {
-    "card_name": "Lucky Helmet",
-    "set": "TWM",
-    "card_number": "158",
-    "source_url": "https://limitlesstcg.com/cards/TWM/158",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Lucky Helmet",
-    "effect_text": "Whenever the Pokémon this card is attached to is your Active Pokémon and is damaged by an opponent's attack (even if that Pokémon is Knocked Out) , draw 2 cards.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference",
+    "auto_rule": "defensive_prevention_and_reduction",
     "implemented": false
   },
   {
@@ -470,24 +351,7 @@
     "classification": "defensive",
     "classification_reviewed": true,
     "auto_classification": "defensive",
-    "auto_rule": "classified_effect_reference",
-    "implemented": false
-  },
-  {
-    "card_name": "Heavy Baton",
-    "set": "TEF",
-    "card_number": "151",
-    "source_url": "https://limitlesstcg.com/cards/TEF/151",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Heavy Baton",
-    "effect_text": "If the Pokémon this card is attached to has a Retreat Cost of exactly 4, is in the Active Spot, and is Knocked Out by damage from an attack from your opponent's Pokémon, move up to 3 Basic Energy cards from that Pokémon to your Benched Pokémon in any way you like.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "classified_effect_reference",
+    "auto_rule": "defensive_hp_and_survival",
     "implemented": false
   },
   {

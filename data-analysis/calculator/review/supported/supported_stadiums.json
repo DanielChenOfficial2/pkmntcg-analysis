@@ -193,11 +193,11 @@
     "entry_index": 0,
     "entry_name": "Gravity Mountain",
     "effect_text": "Each Stage 2 Pokémon in play (both yours and your opponent's) gets -30 HP.",
-    "classification_reviewed": true,
-    "auto_classification": null,
-    "auto_rule": null,
     "supported": true,
     "classification": "offensive",
+    "classification_reviewed": true,
+    "auto_classification": "offensive",
+    "auto_rule": "classified_effect_reference",
     "implemented": false
   },
   {
@@ -261,10 +261,10 @@
     "entry_index": 0,
     "entry_name": "Perilous Jungle",
     "effect_text": "During Pokémon Checkup, put 2 more damage counters on each Poisoned non- [Darkness] Pokémon (both yours and your opponent's) .",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   },
   {
@@ -277,10 +277,10 @@
     "entry_index": 0,
     "entry_name": "Paradise Resort",
     "effect_text": "The Retreat Cost of each Psyduck in play (both yours and your opponent's) is [Colorless] less.",
+    "supported": true,
     "classification_reviewed": false,
     "auto_classification": null,
     "auto_rule": null,
-    "supported": true,
     "implemented": false
   }
 ]

@@ -10,8 +10,9 @@ from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REVIEW_DIR = SCRIPT_DIR / "review"
-DEFAULT_INPUT = REVIEW_DIR / "supported_effects.json"
-DEFAULT_OUTPUT_DIR = REVIEW_DIR
+FIRST_PASS_DIR = REVIEW_DIR / "first-pass"
+DEFAULT_INPUT = FIRST_PASS_DIR / "supported_effects.json"
+DEFAULT_OUTPUT_DIR = REVIEW_DIR / "supported"
 
 CATEGORIES = {
     "supported_moves": ("Move", None),

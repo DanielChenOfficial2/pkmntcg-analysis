@@ -5,7 +5,7 @@
 
 Reads:
     data-building/data/raw/pokemon_cards.json
-    data-analysis/calculator/review/supported_tools.json
+    data-analysis/calculator/review/supported/supported_tools.json
 
 Writes:
     data-analysis/datasets/damage_calculator.sqlite3
@@ -49,6 +49,7 @@ DEFAULT_OUTPUT = (
 DEFAULT_TOOLS_INPUT = (
     SCRIPT_DIR
     / "review"
+    / "supported"
     / "supported_tools.json"
 )
 

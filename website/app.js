@@ -609,40 +609,65 @@ function renderEnergyCost(cost, container) {
 
 function formatDamage(move) {
     const hp = Number(move.defender_hp);
+    const effectiveHp = Number(move.effective_defender_hp);
     const baseDamage = Number(move.damage);
-    const attackerModifier = Number(move.attacker_damage_modifier);
-    const defenderModifier = Number(move.defender_damage_modifier);
     const damage = Number(move.final_damage);
-    const attackDamageText = attackerModifier === 0
+    const damageBeforeWeakness = Number(move.damage_before_weakness);
+    const preWeaknessModifier = damageBeforeWeakness - baseDamage;
+    const unmodifiedPostWeaknessDamage = (() => {
+        switch (move.match_type) {
+            case "weakness":
+                return damageBeforeWeakness * 2;
+            case "resistance":
+                return damageBeforeWeakness - 30;
+            default:
+                return damageBeforeWeakness;
+        }
+    })();
+    const postWeaknessModifier = damage - unmodifiedPostWeaknessDamage;
+    const modifierText = modifier => modifier > 0
+        ? ` + ${modifier}`
+        : ` − ${Math.abs(modifier)}`;
+    const attackDamageText = preWeaknessModifier === 0
         ? String(baseDamage)
-        : `(${baseDamage} + ${attackerModifier})`;
-    const defenderModifierText = defenderModifier === 0
+        : `(${baseDamage}${modifierText(preWeaknessModifier)})`;
+    const postWeaknessText = postWeaknessModifier === 0
         ? ""
-        : ` ${defenderModifier > 0 ? "+" : "−"} ${Math.abs(defenderModifier)}`;
+        : modifierText(postWeaknessModifier);
+    const hpLine = effectiveHp === hp
+        ? `${move.defender_name} has ${hp} HP.`
+        : `${move.defender_name} has ${hp} + ${effectiveHp - hp} = ${effectiveHp} HP.`;
+    const damageCondition = Number(move.attacker_tool_requires_poisoned) === 1
+        ? " when the attacking Pokemon is poisoned"
+        : "";
 
     switch (move.match_type) {
         case "weakness":
             return {
                 type: "Weakness",
-                firstLine: `${move.defender_name} has ${hp} HP.`,
+                firstLine: hpLine,
                 secondLine:
-                    `${move.move_name} does ${attackDamageText} × 2${defenderModifierText} = ${damage} damage.`
+                    `${move.move_name} does ${attackDamageText} × 2${postWeaknessText} = ${damage} damage${damageCondition}.`
             };
 
         case "resistance":
             return {
                 type: "Resistance",
-                firstLine: `${move.defender_name} has ${hp} HP.`,
+                firstLine: hpLine,
                 secondLine:
-                    `${move.move_name} does ${attackDamageText} − 30${defenderModifierText} = ${damage} damage.`
+                    `${move.move_name} does ${attackDamageText} − 30${postWeaknessText} = ${damage} damage${damageCondition}.`
             };
 
         default:
+            const neutralDamageText =
+                preWeaknessModifier === 0 && postWeaknessModifier === 0
+                    ? `${damage} damage${damageCondition}.`
+                    : `${attackDamageText}${postWeaknessText} = ${damage} damage${damageCondition}.`;
+
             return {
                 type: "Neutral",
-                firstLine: `${move.defender_name} has ${hp} HP.`,
-                secondLine:
-                    `${move.move_name} does ${attackDamageText}${defenderModifierText} = ${damage} damage.`
+                firstLine: hpLine,
+                secondLine: `${move.move_name} does ${neutralDamageText}`
             };
     }
 }

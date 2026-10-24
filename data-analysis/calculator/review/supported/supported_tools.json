@@ -64,7 +64,7 @@
     "classification_reviewed": true,
     "auto_classification": "offensive",
     "auto_rule": "classified_effect_reference",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Thick Scale",
@@ -81,24 +81,7 @@
     "classification_reviewed": true,
     "auto_classification": "defensive",
     "auto_rule": "classified_effect_reference",
-    "implemented": false
-  },
-  {
-    "card_name": "Punk Helmet",
-    "set": "PFL",
-    "card_number": "92",
-    "source_url": "https://limitlesstcg.com/cards/PFL/92",
-    "card_type": "Trainer",
-    "trainer_subtype": "Tool",
-    "entry_index": 0,
-    "entry_name": "Punk Helmet",
-    "effect_text": "If the [Darkness] Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , place 4 damage counters on the Attacking Pokémon.",
-    "supported": true,
-    "classification": "offensive",
-    "classification_reviewed": true,
-    "auto_classification": "offensive",
-    "auto_rule": "offensive_damage_and_knockout",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Sacred Charm",
@@ -115,7 +98,7 @@
     "classification_reviewed": true,
     "auto_classification": "defensive",
     "auto_rule": "classified_effect_reference",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Cynthia's Power Weight",
@@ -132,7 +115,7 @@
     "classification_reviewed": true,
     "auto_classification": "defensive",
     "auto_rule": "classified_effect_reference",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Hop's Choice Band",
@@ -149,7 +132,7 @@
     "classification_reviewed": true,
     "auto_classification": "offensive",
     "auto_rule": "classified_effect_reference",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Binding Mochi",
@@ -166,7 +149,7 @@
     "classification_reviewed": true,
     "auto_classification": "offensive",
     "auto_rule": "classified_effect_reference",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Haban Berry",
@@ -183,7 +166,7 @@
     "classification_reviewed": true,
     "auto_classification": "defensive",
     "auto_rule": "defensive_prevention_and_reduction",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Maximum Belt",
@@ -250,7 +233,7 @@
     "classification_reviewed": true,
     "auto_classification": "defensive",
     "auto_rule": "defensive_prevention_and_reduction",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Colbur Berry",
@@ -267,7 +250,7 @@
     "classification_reviewed": true,
     "auto_classification": "defensive",
     "auto_rule": "defensive_prevention_and_reduction",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Passho Berry",
@@ -284,7 +267,7 @@
     "classification_reviewed": true,
     "auto_classification": "defensive",
     "auto_rule": "defensive_prevention_and_reduction",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Gravity Gemstone",
@@ -318,7 +301,7 @@
     "classification_reviewed": true,
     "auto_classification": "defensive",
     "auto_rule": "defensive_prevention_and_reduction",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Payapa Berry",
@@ -335,7 +318,7 @@
     "classification_reviewed": true,
     "auto_classification": "defensive",
     "auto_rule": "defensive_prevention_and_reduction",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Survival Brace",
@@ -352,7 +335,7 @@
     "classification_reviewed": true,
     "auto_classification": "defensive",
     "auto_rule": "defensive_hp_and_survival",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Hero's Cape",
@@ -369,6 +352,6 @@
     "classification_reviewed": true,
     "auto_classification": "defensive",
     "auto_rule": "classified_effect_reference",
-    "implemented": false
+    "implemented": true
   }
 ]

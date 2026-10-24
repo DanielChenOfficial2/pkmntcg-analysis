@@ -69,29 +69,63 @@ async function findCandidateMoves(defenderId) {
             SELECT DISTINCT
                 card_name,
                 classification,
+                effect_type,
                 damage_modifier,
+                damage_modifier_timing,
+                hp_modifier,
+                prevents_knockout,
                 requires_attached_no_rule_box,
-                requires_opponent_ex
+                requires_attached_name,
+                requires_attached_type,
+                requires_attached_poisoned,
+                requires_attached_full_hp,
+                requires_opponent_name,
+                requires_opponent_type,
+                requires_opponent_ex,
+                requires_opponent_ability
             FROM tools
             WHERE supported = 1
-                AND effect_type = 'damage_modifier'
+                AND effect_type IN (
+                    'damage_modifier',
+                    'hp_modifier',
+                    'knockout_prevention'
+                )
                 AND classification IN ('offensive', 'both')
             UNION ALL
-            SELECT NULL, NULL, 0, NULL, NULL
+            SELECT
+                NULL, NULL, NULL, 0, NULL, 0, 0, NULL, NULL, NULL, 0, 0,
+                NULL, NULL, NULL, 0
         ),
         defender_tools AS (
             SELECT DISTINCT
                 card_name,
                 classification,
+                effect_type,
                 damage_modifier,
+                damage_modifier_timing,
+                hp_modifier,
+                prevents_knockout,
                 requires_attached_no_rule_box,
-                requires_opponent_ex
+                requires_attached_name,
+                requires_attached_type,
+                requires_attached_poisoned,
+                requires_attached_full_hp,
+                requires_opponent_name,
+                requires_opponent_type,
+                requires_opponent_ex,
+                requires_opponent_ability
             FROM tools
             WHERE supported = 1
-                AND effect_type = 'damage_modifier'
+                AND effect_type IN (
+                    'damage_modifier',
+                    'hp_modifier',
+                    'knockout_prevention'
+                )
                 AND classification IN ('defensive', 'both')
             UNION ALL
-            SELECT NULL, NULL, 0, NULL, NULL
+            SELECT
+                NULL, NULL, NULL, 0, NULL, 0, 0, NULL, NULL, NULL, 0, 0,
+                NULL, NULL, NULL, 0
         ),
         move_data AS (
             SELECT
@@ -116,36 +150,81 @@ async function findCandidateMoves(defenderId) {
                 defender.is_ex AS defender_is_ex,
                 defender.weakness,
                 defender.resistance,
+                attacker.has_ability AS attacker_has_ability,
                 attacking_tool.card_name AS attacker_tool_name,
                 defending_tool.card_name AS defender_tool_name,
+                attacking_tool.effect_type AS attacker_tool_effect_type,
+                defending_tool.effect_type AS defender_tool_effect_type,
+                attacking_tool.damage_modifier AS attacker_tool_modifier,
+                attacking_tool.damage_modifier_timing
+                    AS attacker_tool_modifier_timing,
+                defending_tool.damage_modifier AS defender_tool_modifier,
+                defending_tool.damage_modifier_timing
+                    AS defender_tool_modifier_timing,
+                defending_tool.hp_modifier AS defender_hp_modifier,
+                defending_tool.prevents_knockout AS prevents_knockout,
+                COALESCE(
+                    attacking_tool.requires_attached_poisoned,
+                    0
+                ) AS attacker_tool_requires_poisoned,
                 CASE
-                    WHEN attacking_tool.card_name IS NOT NULL
-                        AND (
-                            attacking_tool.requires_attached_no_rule_box IS NULL
-                            OR attacker.has_rule_box = 0
-                        )
-                        AND (
-                            attacking_tool.requires_opponent_ex IS NULL
-                            OR defender.is_ex =
-                                attacking_tool.requires_opponent_ex
-                        )
-                        THEN attacking_tool.damage_modifier
-                    ELSE 0
-                END AS attacker_damage_modifier,
+                    WHEN attacking_tool.card_name IS NULL THEN 1
+                    WHEN attacking_tool.requires_attached_no_rule_box = 1
+                        AND attacker.has_rule_box = 1 THEN 0
+                    WHEN attacking_tool.requires_attached_name IS NOT NULL
+                        AND instr(
+                            lower(attacker.name),
+                            lower(attacking_tool.requires_attached_name)
+                        ) = 0 THEN 0
+                    WHEN attacking_tool.requires_attached_type IS NOT NULL
+                        AND COALESCE(lower(attacker.pokemon_type), '') !=
+                            lower(attacking_tool.requires_attached_type)
+                        THEN 0
+                    WHEN attacking_tool.requires_opponent_name IS NOT NULL
+                        AND instr(
+                            lower(defender.name),
+                            lower(attacking_tool.requires_opponent_name)
+                        ) = 0 THEN 0
+                    WHEN attacking_tool.requires_opponent_type IS NOT NULL
+                        AND instr(
+                            lower(attacking_tool.requires_opponent_type),
+                            '|' || COALESCE(lower(defender.pokemon_type), '') || '|'
+                        ) = 0 THEN 0
+                    WHEN attacking_tool.requires_opponent_ex = 1
+                        AND defender.is_ex != 1 THEN 0
+                    WHEN attacking_tool.requires_opponent_ability = 1
+                        AND COALESCE(defender.has_ability, 0) != 1 THEN 0
+                    ELSE 1
+                END AS attacker_tool_is_applicable,
                 CASE
-                    WHEN defending_tool.card_name IS NOT NULL
-                        AND (
-                            defending_tool.requires_attached_no_rule_box IS NULL
-                            OR defender.has_rule_box = 0
-                        )
-                        AND (
-                            defending_tool.requires_opponent_ex IS NULL
-                            OR attacker.is_ex =
-                                defending_tool.requires_opponent_ex
-                        )
-                        THEN defending_tool.damage_modifier
-                    ELSE 0
-                END AS defender_damage_modifier,
+                    WHEN defending_tool.card_name IS NULL THEN 1
+                    WHEN defending_tool.requires_attached_no_rule_box = 1
+                        AND defender.has_rule_box = 1 THEN 0
+                    WHEN defending_tool.requires_attached_name IS NOT NULL
+                        AND instr(
+                            lower(defender.name),
+                            lower(defending_tool.requires_attached_name)
+                        ) = 0 THEN 0
+                    WHEN defending_tool.requires_attached_type IS NOT NULL
+                        AND COALESCE(lower(defender.pokemon_type), '') !=
+                            lower(defending_tool.requires_attached_type)
+                        THEN 0
+                    WHEN defending_tool.requires_opponent_name IS NOT NULL
+                        AND instr(
+                            lower(attacker.name),
+                            lower(defending_tool.requires_opponent_name)
+                        ) = 0 THEN 0
+                    WHEN defending_tool.requires_opponent_type IS NOT NULL
+                        AND instr(
+                            lower(defending_tool.requires_opponent_type),
+                            '|' || COALESCE(lower(attacker.pokemon_type), '') || '|'
+                        ) = 0 THEN 0
+                    WHEN defending_tool.requires_opponent_ex = 1
+                        AND attacker.is_ex != 1 THEN 0
+                    WHEN defending_tool.requires_opponent_ability = 1
+                        AND COALESCE(attacker.has_ability, 0) != 1 THEN 0
+                    ELSE 1
+                END AS defender_tool_is_applicable,
                 CASE
                     WHEN defender.weakness IS NOT NULL
                         AND attacker.pokemon_type = defender.weakness
@@ -163,22 +242,55 @@ async function findCandidateMoves(defenderId) {
             CROSS JOIN attacker_tools AS attacking_tool
             CROSS JOIN defender_tools AS defending_tool
         ),
+        eligible_moves AS (
+            SELECT
+                *,
+                damage
+                    + CASE
+                        WHEN attacker_tool_modifier_timing =
+                            'before_weakness'
+                            THEN COALESCE(attacker_tool_modifier, 0)
+                        ELSE 0
+                    END
+                    + CASE
+                        WHEN defender_tool_modifier_timing =
+                            'before_weakness'
+                            THEN COALESCE(defender_tool_modifier, 0)
+                        ELSE 0
+                    END AS damage_before_weakness,
+                COALESCE(defender_hp_modifier, 0) AS applied_hp_modifier,
+                defender_hp + COALESCE(defender_hp_modifier, 0)
+                    AS effective_defender_hp
+            FROM move_data
+            WHERE attacker_tool_is_applicable = 1
+                AND defender_tool_is_applicable = 1
+        ),
         calculated_damage AS (
             SELECT
                 *,
                 CASE match_type
-                    WHEN 'weakness'
-                        THEN (damage + attacker_damage_modifier) * 2
-                    WHEN 'resistance'
-                        THEN damage + attacker_damage_modifier - 30
-                    ELSE damage + attacker_damage_modifier
-                END + defender_damage_modifier AS final_damage,
+                    WHEN 'weakness' THEN damage_before_weakness * 2
+                    WHEN 'resistance' THEN damage_before_weakness - 30
+                    ELSE damage_before_weakness
+                END
+                    + CASE
+                        WHEN attacker_tool_modifier_timing =
+                            'after_weakness'
+                            THEN COALESCE(attacker_tool_modifier, 0)
+                        ELSE 0
+                    END
+                    + CASE
+                        WHEN defender_tool_modifier_timing =
+                            'after_weakness'
+                            THEN COALESCE(defender_tool_modifier, 0)
+                        ELSE 0
+                    END AS final_damage,
                 CASE match_type
                     WHEN 'weakness' THEN damage * 2
                     WHEN 'resistance' THEN damage - 30
                     ELSE damage
-                END + defender_damage_modifier AS damage_without_attacker_tool
-            FROM move_data
+                END AS damage_without_tools
+            FROM eligible_moves
         )
         SELECT
             attacker_id,
@@ -200,29 +312,31 @@ async function findCandidateMoves(defenderId) {
             defender_name,
             defender_hp,
             defender_is_ex,
+            attacker_has_ability,
             weakness,
             resistance,
             attacker_tool_name,
             defender_tool_name,
-            attacker_damage_modifier,
-            defender_damage_modifier,
+            attacker_tool_effect_type,
+            defender_tool_effect_type,
+            attacker_tool_modifier,
+            attacker_tool_modifier_timing,
+            defender_tool_modifier,
+            defender_tool_modifier_timing,
+            attacker_tool_requires_poisoned,
+            damage_before_weakness,
+            applied_hp_modifier,
+            effective_defender_hp,
             final_damage,
             match_type
         FROM calculated_damage
         WHERE defender_hp IS NOT NULL
             AND attacker_type IS NOT NULL
-            AND final_damage >= defender_hp
+            AND final_damage >= effective_defender_hp
+            AND COALESCE(prevents_knockout, 0) = 0
             AND (
                 attacker_tool_name IS NULL
-                OR attacker_damage_modifier <> 0
-            )
-            AND (
-                defender_tool_name IS NULL
-                OR defender_damage_modifier <> 0
-            )
-            AND (
-                attacker_tool_name IS NULL
-                OR damage_without_attacker_tool < defender_hp
+                OR damage_without_tools < effective_defender_hp
             )
         ORDER BY
             attacker_name COLLATE NOCASE ASC,

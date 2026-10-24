@@ -13,6 +13,27 @@ import parse_effects
 
 
 class ReferenceClassificationTests(unittest.TestCase):
+    def test_excludes_reactive_tool_effects_from_automatic_classification(self):
+        effect = {
+            "card_type": "Trainer",
+            "trainer_subtype": "Tool",
+            "effect_text": (
+                "If the [Darkness] Pokémon this card is attached to is in the "
+                "Active Spot and is damaged by an attack from your opponent's "
+                "Pokémon (even if this Pokémon is Knocked Out), place 4 damage "
+                "counters on the Attacking Pokémon."
+            ),
+        }
+
+        parse_effects.apply_decisions([effect], {})
+
+        self.assertEqual(effect["auto_classification"], "neither")
+        self.assertEqual(
+            effect["auto_rule"],
+            "unsupported_tool_opponent_attack_reaction",
+        )
+        self.assertIs(effect["supported"], False)
+
     def test_excludes_opponent_attack_reaction_tools_as_references(self):
         excluded_effects = [
             "If this Pokémon is damaged by an attack from your opponent's Pokémon, draw 3 cards.",

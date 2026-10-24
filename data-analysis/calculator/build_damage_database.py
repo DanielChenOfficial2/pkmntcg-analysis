@@ -66,6 +66,7 @@ CREATE TABLE pokemon (
     has_rule_box INTEGER NOT NULL DEFAULT 0,
     is_mega INTEGER NOT NULL DEFAULT 0,
     is_tera INTEGER NOT NULL DEFAULT 0,
+    has_ability INTEGER NOT NULL DEFAULT 0,
     evolution_stage TEXT,
     set_code TEXT,
     card_mark TEXT,
@@ -105,8 +106,18 @@ CREATE TABLE tools (
     supported INTEGER NOT NULL DEFAULT 0,
     effect_type TEXT,
     damage_modifier INTEGER,
+    damage_modifier_timing TEXT,
+    hp_modifier INTEGER,
+    prevents_knockout INTEGER NOT NULL DEFAULT 0,
     requires_attached_no_rule_box INTEGER,
-    requires_opponent_ex INTEGER
+    requires_attached_name TEXT,
+    requires_attached_type TEXT,
+    requires_attached_poisoned INTEGER NOT NULL DEFAULT 0,
+    requires_attached_full_hp INTEGER NOT NULL DEFAULT 0,
+    requires_opponent_name TEXT,
+    requires_opponent_type TEXT,
+    requires_opponent_ex INTEGER,
+    requires_opponent_ability INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE INDEX idx_pokemon_name
@@ -136,6 +147,13 @@ CREATE INDEX idx_tools_effect_lookup
 
 RULE_BOX_VARIANTS = {
     "ex",
+    "gx",
+    "legend",
+    "radiant",
+    "tag team",
+    "v",
+    "vmax",
+    "vstar",
 }
 
 
@@ -348,47 +366,228 @@ def load_tools(input_path):
 
 
 def parse_tool_effect(effect_text, tool=None):
-    """Parse modeled Tool damage effects and mark matching entries implemented."""
+    """Parse supported Tool effects into fields the calculator can query."""
     if not isinstance(effect_text, str):
         return None
 
     normalized = re.sub(r"\s+", " ", effect_text.strip())
     normalized = normalized.replace(" .", ".")
+    parsed = {
+        "effect_type": None,
+        "damage_modifier": None,
+        "damage_modifier_timing": None,
+        "hp_modifier": None,
+        "prevents_knockout": 0,
+        "requires_attached_no_rule_box": None,
+        "requires_attached_name": None,
+        "requires_attached_type": None,
+        "requires_attached_poisoned": 0,
+        "requires_attached_full_hp": 0,
+        "requires_opponent_name": None,
+        "requires_opponent_type": None,
+        "requires_opponent_ex": None,
+        "requires_opponent_ability": 0,
+    }
 
-    brave_bangle_pattern = re.compile(
-        r"^If the Pokémon this card is attached to doesn't have a Rule Box, "
-        r"the attacks it uses do (?P<amount>\d+) more damage to your "
-        r"opponent's Active Pokémon(?P<opponent_ex> ex)? "
-        r"\(before applying Weakness and Resistance\)",
-        re.IGNORECASE,
-    )
-    general_pattern = re.compile(
-        r"^Attacks used by the Pokémon this card is attached to do "
+    def set_attached_condition(subject):
+        subject = (subject or "").strip()
+        if not subject or subject.casefold() == "the":
+            return
+
+        if subject.casefold().endswith(" pokémon"):
+            subject = subject[:-len(" Pokémon")].strip()
+        elif subject.casefold().endswith(" pokemon"):
+            subject = subject[:-len(" Pokemon")].strip()
+
+        if subject.startswith("[") and subject.endswith("]"):
+            parsed["requires_attached_type"] = subject[1:-1].strip()
+        elif subject.casefold() == "poisoned":
+            parsed["requires_attached_poisoned"] = 1
+        elif subject:
+            parsed["requires_attached_name"] = subject
+
+    def set_opponent_conditions(opponent_text):
+        if re.search(r"\bex\b", opponent_text, re.IGNORECASE):
+            parsed["requires_opponent_ex"] = 1
+
+        ability_match = re.search(
+            r"Pokémon that have an Ability|Pokemon that have an Ability",
+            opponent_text,
+            re.IGNORECASE,
+        )
+        if ability_match:
+            parsed["requires_opponent_ability"] = 1
+
+        type_matches = re.findall(r"\[([^\]]+)\]", opponent_text)
+        if type_matches:
+            parsed["requires_opponent_type"] = "|" + "|".join(
+                value.strip() for value in type_matches
+            ) + "|"
+
+        name_match = re.search(
+            r"opponent's (.+?) Pokémon(?: ex)?\b",
+            opponent_text,
+            re.IGNORECASE,
+        )
+        if name_match:
+            opponent_name = name_match.group(1).strip()
+            if not opponent_name.startswith("[") and not type_matches:
+                parsed["requires_opponent_name"] = opponent_name
+
+    def damage_timing(amount, text):
+        if re.search(
+            r"\(before applying Weakness and Resistance\)",
+            text,
+            re.IGNORECASE,
+        ):
+            return "before_weakness"
+        if re.search(
+            r"\(after applying Weakness and Resistance\)",
+            text,
+            re.IGNORECASE,
+        ):
+            return "after_weakness"
+        return "before_weakness" if amount > 0 else "after_weakness"
+
+    no_rule_box_match = re.search(
+        r"doesn't have a Rule Box, the attacks it uses do "
         r"(?P<amount>\d+) more damage to your opponent's Active Pokémon"
-        r"(?P<opponent_ex> ex)? "
-        r"\(before applying Weakness and Resistance\)",
+        r"(?P<opponent>.*?)(?: \(before applying Weakness and Resistance\))",
+        normalized,
         re.IGNORECASE,
     )
+    if no_rule_box_match:
+        parsed["effect_type"] = "damage_modifier"
+        parsed["damage_modifier"] = int(no_rule_box_match.group("amount"))
+        parsed["damage_modifier_timing"] = "before_weakness"
+        parsed["requires_attached_no_rule_box"] = 1
+        set_opponent_conditions(no_rule_box_match.group("opponent"))
+    else:
+        attack_modifier_match = re.search(
+            r"Attacks used by the (?P<attached>.+?) this card is attached to "
+            r"(?:cost \[[^\]]+\] less and )?do "
+            r"(?P<amount>\d+) (?P<direction>more|less) damage"
+            r"(?: to your opponent's Active Pokémon(?P<opponent>.*?))?"
+            r"(?: \(before applying Weakness and Resistance\))?"
+            r"(?: \(after applying Weakness and Resistance\))?"
+            r"[.]?$",
+            normalized,
+            re.IGNORECASE,
+        )
+        if attack_modifier_match:
+            parsed["effect_type"] = "damage_modifier"
+            amount = int(attack_modifier_match.group("amount"))
+            parsed["damage_modifier"] = (
+                amount
+                if attack_modifier_match.group("direction").casefold() == "more"
+                else -amount
+            )
+            parsed["damage_modifier_timing"] = damage_timing(
+                parsed["damage_modifier"],
+                attack_modifier_match.group(0),
+            )
+            set_attached_condition(attack_modifier_match.group("attached"))
+            opponent_text = attack_modifier_match.group("opponent") or ""
+            set_opponent_conditions(opponent_text)
+        else:
+            hp_match = re.search(
+                r"The(?: (?P<attached>.*?))? Pokémon this card is attached to "
+                r"gets? \+(?P<amount>\d+) HP[.]?$",
+                normalized,
+                re.IGNORECASE,
+            )
+            if hp_match:
+                parsed["effect_type"] = "hp_modifier"
+                parsed["hp_modifier"] = int(hp_match.group("amount"))
+                set_attached_condition(hp_match.group("attached"))
+            elif re.search(
+                r"has full HP and would be Knocked Out by damage from an "
+                r"attack",
+                normalized,
+                re.IGNORECASE,
+            ):
+                parsed["effect_type"] = "knockout_prevention"
+                parsed["prevents_knockout"] = 1
+                parsed["requires_attached_full_hp"] = 1
+            else:
+                reduction_match = re.search(
+                    r"(?:The(?: (?P<attached>.*?))? )?Pokémon this card is attached to "
+                    r"takes (?P<amount>\d+) less damage from attacks from "
+                    r"your opponent's (?P<opponent>.+?) Pokémon"
+                    r"(?: that have an Ability)?"
+                    r"(?: \((?:before|after) applying Weakness and Resistance\))?[.]?$",
+                    normalized,
+                    re.IGNORECASE,
+                )
+                if reduction_match:
+                    parsed["effect_type"] = "damage_modifier"
+                    parsed["damage_modifier"] = -int(
+                        reduction_match.group("amount")
+                    )
+                    parsed["damage_modifier_timing"] = damage_timing(
+                        parsed["damage_modifier"],
+                        reduction_match.group(0),
+                    )
+                    set_attached_condition(
+                        reduction_match.group("attached")
+                    )
+                    set_opponent_conditions(
+                        reduction_match.group("opponent")
+                    )
+                else:
+                    generic_reduction_match = re.search(
+                        r"The Pokémon this card is attached to takes "
+                        r"(?P<amount>\d+) less damage from attacks from "
+                        r"your opponent's Pokémon that have an Ability"
+                        r"(?: \((?:before|after) applying Weakness and Resistance\))?[.]?$",
+                        normalized,
+                        re.IGNORECASE,
+                    )
+                    if generic_reduction_match:
+                        parsed["effect_type"] = "damage_modifier"
+                        parsed["damage_modifier"] = -int(
+                            generic_reduction_match.group("amount")
+                        )
+                        parsed["damage_modifier_timing"] = damage_timing(
+                            parsed["damage_modifier"],
+                            generic_reduction_match.group(0),
+                        )
+                        parsed["requires_opponent_ability"] = 1
+                    else:
+                        berry_match = re.search(
+                            r"it takes (?P<amount>\d+) less damage"
+                            r"(?: \((?:before|after) applying Weakness and Resistance\))?",
+                            normalized,
+                            re.IGNORECASE,
+                        )
+                        berry_type = re.search(
+                            r"your opponent's \[([^\]]+)\] Pokémon",
+                            normalized,
+                            re.IGNORECASE,
+                        )
+                        if berry_match and berry_type:
+                            parsed["effect_type"] = "damage_modifier"
+                            parsed["damage_modifier"] = -int(
+                                berry_match.group("amount")
+                            )
+                            parsed["damage_modifier_timing"] = damage_timing(
+                                parsed["damage_modifier"],
+                                normalized,
+                            )
+                            parsed["requires_opponent_type"] = (
+                                f"|{berry_type.group(1).strip()}|"
+                            )
 
-    match = brave_bangle_pattern.match(normalized)
-    requires_attached_no_rule_box = 1 if match is not None else None
-    if match is None:
-        match = general_pattern.match(normalized)
-
-    if match is None:
+    if parsed["effect_type"] is None:
         return None
 
     if tool is not None:
+        if tool.get("card_name") == "Cynthia's Power Weight":
+            # This requested matchup condition is not stated in the HP text.
+            parsed["requires_opponent_ability"] = 1
         tool["implemented"] = True
 
-    return {
-        "effect_type": "damage_modifier",
-        "damage_modifier": int(match.group("amount")),
-        "requires_attached_no_rule_box": requires_attached_no_rule_box,
-        "requires_opponent_ex": (
-            1 if match.group("opponent_ex") is not None else None
-        ),
-    }
+    return parsed
 
 
 def build_database(
@@ -455,6 +654,7 @@ def build_database(
                         has_rule_box,
                         is_mega,
                         is_tera,
+                        has_ability,
                         evolution_stage,
                         card_number,
                         set_code,
@@ -466,7 +666,7 @@ def build_database(
                         retreat_cost,
                         source_url
                     )
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         name,
@@ -475,6 +675,7 @@ def build_database(
                         int(has_rule_box(card)),
                         int(is_mega_pokemon(card)),
                         int(is_tera_pokemon(card)),
+                        int(bool(card.get("abilities"))),
                         card.get("evolution_stage"),
                         (
                             str(card["card_number"])
@@ -566,8 +767,18 @@ def build_database(
                         int(tool.get("supported") is True),
                         parsed.get("effect_type"),
                         parsed.get("damage_modifier"),
+                        parsed.get("damage_modifier_timing"),
+                        parsed.get("hp_modifier"),
+                        parsed.get("prevents_knockout", 0),
                         parsed.get("requires_attached_no_rule_box"),
+                        parsed.get("requires_attached_name"),
+                        parsed.get("requires_attached_type"),
+                        parsed.get("requires_attached_poisoned", 0),
+                        parsed.get("requires_attached_full_hp", 0),
+                        parsed.get("requires_opponent_name"),
+                        parsed.get("requires_opponent_type"),
                         parsed.get("requires_opponent_ex"),
+                        parsed.get("requires_opponent_ability", 0),
                     )
                 )
 
@@ -583,10 +794,20 @@ def build_database(
                     supported,
                     effect_type,
                     damage_modifier,
+                    damage_modifier_timing,
+                    hp_modifier,
+                    prevents_knockout,
                     requires_attached_no_rule_box,
-                    requires_opponent_ex
+                    requires_attached_name,
+                    requires_attached_type,
+                    requires_attached_poisoned,
+                    requires_attached_full_hp,
+                    requires_opponent_name,
+                    requires_opponent_type,
+                    requires_opponent_ex,
+                    requires_opponent_ability
                 )
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 tool_rows,
             )
@@ -606,7 +827,7 @@ def build_database(
             connection.executemany(
                 "INSERT INTO metadata (key, value) VALUES (?, ?)",
                 [
-                    ("schema_version", "5"),
+                    ("schema_version", "6"),
                     ("source_file", input_path.name),
                     ("pokemon_count", str(pokemon_count)),
                     ("move_count", str(move_count)),

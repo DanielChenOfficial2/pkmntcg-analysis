@@ -594,15 +594,18 @@ TOOL_OPPONENT_ATTACK_REACTION = re.compile(
 )
 
 
+def is_tool_opponent_attack_reaction(effect):
+    """Identify Tool effects triggered by an opponent's attack."""
+    return (
+        str(effect.get("card_type", "")).casefold() == "trainer"
+        and str(effect.get("trainer_subtype", "")).casefold() == "tool"
+        and bool(TOOL_OPPONENT_ATTACK_REACTION.search(effect["effect_text"]))
+    )
+
+
 def is_reference_classification_eligible(record):
-    """Exclude Tool effects triggered by taking damage or being Knocked Out."""
-    if (
-        str(record.get("card_type", "")).casefold() == "trainer"
-        and str(record.get("trainer_subtype", "")).casefold() == "tool"
-        and TOOL_OPPONENT_ATTACK_REACTION.search(record["effect_text"])
-    ):
-        return False
-    return True
+    """Exclude reactive Tool effects from authoritative reference matches."""
+    return not is_tool_opponent_attack_reaction(record)
 
 
 def load_reference_classifications():
@@ -870,9 +873,15 @@ def apply_decisions(effects, decisions):
             effect["classification_reviewed"] = False
             continue
 
-        automatic, rule = classify_effect_automatically(
-            effect["effect_text"]
-        )
+        if is_tool_opponent_attack_reaction(effect):
+            automatic, rule = (
+                "neither",
+                "unsupported_tool_opponent_attack_reaction",
+            )
+        else:
+            automatic, rule = classify_effect_automatically(
+                effect["effect_text"]
+            )
 
         if (
             automatic is None

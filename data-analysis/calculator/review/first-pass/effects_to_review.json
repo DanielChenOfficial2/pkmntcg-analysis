@@ -11744,8 +11744,8 @@
     "entry_index": 0,
     "entry_name": "Punk Helmet",
     "effect_text": "If the [Darkness] Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out) , place 4 damage counters on the Attacking Pokémon.",
-    "supported": true,
-    "classification": "offensive",
+    "supported": false,
+    "classification": "neither",
     "classification_reviewed": true,
     "auto_classification": "offensive",
     "auto_rule": "offensive_damage_and_knockout"

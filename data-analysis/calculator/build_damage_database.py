@@ -347,8 +347,8 @@ def load_tools(input_path):
     return tools
 
 
-def parse_tool_effect(effect_text):
-    """Parse the currently modeled, pre-Weakness Tool damage effects."""
+def parse_tool_effect(effect_text, tool=None):
+    """Parse modeled Tool damage effects and mark matching entries implemented."""
     if not isinstance(effect_text, str):
         return None
 
@@ -378,6 +378,9 @@ def parse_tool_effect(effect_text):
     if match is None:
         return None
 
+    if tool is not None:
+        tool["implemented"] = True
+
     return {
         "effect_type": "damage_modifier",
         "damage_modifier": int(match.group("amount")),
@@ -402,6 +405,7 @@ def build_database(
     tool_count = 0
     skipped_moves = 0
     skipped_cards = 0
+    tools_updated = False
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -543,7 +547,10 @@ def build_database(
 
             tool_rows = []
             for tool in tools:
-                parsed = parse_tool_effect(tool.get("effect_text")) or {}
+                was_implemented = tool.get("implemented") is True
+                parsed = parse_tool_effect(tool.get("effect_text"), tool) or {}
+                if not was_implemented and tool.get("implemented") is True:
+                    tools_updated = True
                 tool_rows.append(
                     (
                         tool["card_name"].strip(),
@@ -614,6 +621,11 @@ def build_database(
         raise
     else:
         connection.close()
+
+    if tools_updated:
+        with tools_path.open("w", encoding="utf-8", newline="\n") as file:
+            json.dump(tools, file, indent=2, ensure_ascii=False)
+            file.write("\n")
 
     print("SQLite database created successfully.")
     print(f"Input:          {input_path}")

@@ -14,7 +14,7 @@
     "classification_reviewed": true,
     "auto_classification": "offensive",
     "auto_rule": "classified_effect_reference",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Adversity Policy",
@@ -251,7 +251,7 @@
     "classification_reviewed": true,
     "auto_classification": "offensive",
     "auto_rule": "classified_effect_reference",
-    "implemented": false
+    "implemented": true
   },
   {
     "card_name": "Rescue Board",

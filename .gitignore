@@ -3,6 +3,7 @@ archive/
 capacitor/node_modules/
 
 capacitor/android/app/
+capacitor/android/.idea/
 !capacitor/android/app/build.gradle
 !capacitor/android/app/capacitor.build.gradle
 !capacitor/android/app/proguard-rules.pro
@@ -11,4 +12,10 @@ capacitor/android/build/
 
 data-building/scripts_return/
 data-building/webscraper/__pycache__/
+
 data-analysis/calculator/__pycache__/
+
+personal_notes/
+
+tests/__pycache__/
+capacitor/android/.idea/deploymentTargetSelector.xml

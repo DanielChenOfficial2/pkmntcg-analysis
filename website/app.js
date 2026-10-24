@@ -40,11 +40,43 @@ const attackCostTotalCount =
     document.getElementById("attack-cost-total-count");
 const clearAttackCostFilterButton =
     document.getElementById("clear-attack-cost-filter");
+const themeToggle = document.getElementById("theme-toggle");
 
 let allPokemon = [];
 let filteredPokemon = [];
 let currentMoves = [];
 let activeSuggestionIndex = -1;
+
+function updateThemeToggle(isDark) {
+    themeToggle.setAttribute("aria-pressed", String(isDark));
+    themeToggle.setAttribute(
+        "aria-label",
+        `Switch to ${isDark ? "light" : "dark"} mode`
+    );
+}
+
+updateThemeToggle(document.documentElement.dataset.theme === "dark");
+
+themeToggle.addEventListener("click", () => {
+    const isDark = document.documentElement.dataset.theme !== "dark";
+    const theme = isDark ? "dark" : "light";
+    const root = document.documentElement;
+
+    root.classList.add("theme-changing");
+    void root.offsetWidth;
+    root.dataset.theme = theme;
+    updateThemeToggle(isDark);
+    void root.offsetWidth;
+    requestAnimationFrame(() => {
+        root.classList.remove("theme-changing");
+    });
+
+    try {
+        localStorage.setItem("ptcg-ohko-theme", theme);
+    } catch (error) {
+        console.warn("Unable to save the theme preference.", error);
+    }
+});
 
 
 // ---------- Card labels and defender information ----------

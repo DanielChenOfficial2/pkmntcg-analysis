@@ -6,6 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PTCG OHKO Directory</title>
 
+    <script>
+        try {
+            const savedTheme = localStorage.getItem("ptcg-ohko-theme");
+            document.documentElement.dataset.theme =
+                savedTheme === "dark" || savedTheme === "light"
+                    ? savedTheme
+                    : matchMedia("(prefers-color-scheme: dark)").matches
+                      ? "dark"
+                      : "light";
+        } catch {
+            document.documentElement.dataset.theme =
+                matchMedia("(prefers-color-scheme: dark)").matches
+                    ? "dark"
+                    : "light";
+        }
+    </script>
     <link rel="stylesheet" href="./styles.css">
     <link rel="icon" href="./favicon.ico" sizes="any">
 
@@ -19,7 +35,32 @@
 
 <body>
     <main>
-        <h1>PTCG OHKO Directory</h1>
+        <header class="page-header">
+            <h1>PTCG OHKO Directory</h1>
+            <button
+                id="theme-toggle"
+                class="theme-toggle"
+                type="button"
+                aria-label="Switch to dark mode"
+                aria-pressed="false"
+            >
+                <svg
+                    class="theme-icon theme-icon-sun"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>
+                </svg>
+                <svg
+                    class="theme-icon theme-icon-moon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                >
+                    <path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"></path>
+                </svg>
+            </button>
+        </header>
         <div class="top-panels">
             <section class="search-panel">
                 <form id="search-form" class="search-form">

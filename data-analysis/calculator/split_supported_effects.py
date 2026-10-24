@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Write all supported effects to category-specific JSON files."""
+"""Write supported effects to category-specific JSON files."""
 
 import argparse
 import json
@@ -46,6 +46,8 @@ def select_effects(effects):
     for filename, (card_type, trainer_subtype) in CATEGORIES.items():
         for effect in effects:
             if not isinstance(effect, dict):
+                continue
+            if effect.get("supported") is False:
                 continue
 
             effect_card_type = effect.get("card_type")

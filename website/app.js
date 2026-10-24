@@ -476,6 +476,13 @@ function addPokemonCell(row, name, details) {
     return cell;
 }
 
+function addMobileCellLabel(cell, label) {
+    const labelElement = document.createElement("span");
+    labelElement.className = "mobile-cell-label";
+    labelElement.textContent = label;
+    cell.prepend(labelElement);
+}
+
 
 // Map recognized Energy names to local image filenames.
 const ENERGY_ICON_FILES = {
@@ -818,6 +825,7 @@ function renderResults(
             move.move_name,
             " "
         );
+        addMobileCellLabel(moveCell, "Move: ");
 
         const costDetails = moveCell.querySelector(".card-details");
 
@@ -830,6 +838,10 @@ function renderResults(
             move.is_summarized
                 ? move.attacker_tool_name
                 : move.attacker_tool_name || "No Poketool";
+        addMobileCellLabel(
+            attackerToolCell,
+            "Attacking Pokemon's Poketool: "
+        );
         row.appendChild(attackerToolCell);
 
         const defenderToolCell = document.createElement("td");
@@ -837,12 +849,18 @@ function renderResults(
             move.is_summarized
                 ? move.defender_tool_name
                 : move.defender_tool_name || "No Poketool";
+        addMobileCellLabel(
+            defenderToolCell,
+            "Defending Pokemon's Poketool: "
+        );
         row.appendChild(defenderToolCell);
 
         // Damage calculation and interaction type.
         const damageCell = document.createElement("td");
 
         if (calculation) {
+            addMobileCellLabel(damageCell, "Damage Calculation: ");
+
             const typeLabel = document.createElement("div");
             typeLabel.className =
                 `damage-type damage-type-${calculation.type.toLowerCase()}`;

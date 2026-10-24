@@ -160,8 +160,16 @@ th {
     white-space: nowrap;
 }
 
-tbody tr:hover {
+tbody:not(#results-body) tr:hover {
     background: #f8faff;
+}
+
+#results-body > tr:nth-child(even) {
+    background: #e8ebf0;
+}
+
+.mobile-cell-label {
+    display: none;
 }
 
 .top-panels {
@@ -682,6 +690,14 @@ tbody tr:hover {
         background: white;
     }
 
+    #results-body > tr {
+        background: white;
+    }
+
+    #results-body > tr:nth-child(even) {
+        background: white;
+    }
+
     .results-panel tbody tr:last-child {
         margin-bottom: 0;
     }
@@ -699,28 +715,14 @@ tbody tr:hover {
         font-size: var(--step-0);
     }
 
-    .results-panel tbody td:nth-child(2)::before {
-        content: "Move: ";
+    .results-panel tbody .mobile-cell-label {
+        display: inline;
         font-weight: 600;
     }
 
-    .results-panel tbody td:nth-child(3)::before {
-        content: "Attacking Pokemon's Poketool: ";
-        font-weight: 600;
-    }
-
-    .results-panel tbody td:nth-child(4)::before {
-        content: "Defending Pokemon's Poketool: ";
-        font-weight: 600;
-    }
-
-    .results-panel tbody td:nth-child(5)::before {
-        content: "Damage Calculation: ";
-        font-weight: 600;
-    }
-
-    .results-panel tbody tr.summarized-result td:last-child::before {
-        content: none;
+    .results-panel tbody td:nth-child(3) .mobile-cell-label,
+    .results-panel tbody td:nth-child(4) .mobile-cell-label {
+        display: block;
     }
 
     .results-panel tbody td[colspan] {
@@ -1231,8 +1233,14 @@ tbody tr:hover {
     border-color: #374151;
 }
 
-:root[data-theme="dark"] tbody tr:hover {
+:root[data-theme="dark"] tbody:not(#results-body) tr:hover {
     background: #263449;
+}
+
+:root[data-theme="dark"]
+    #results-body
+    > tr:nth-child(even) {
+    background: #304057;
 }
 
 :root[data-theme="dark"] .autocomplete-hint,
@@ -1309,5 +1317,13 @@ tbody tr:hover {
     :root[data-theme="dark"] .results-panel tbody tr {
         background: #1f2937;
         border-color: #374151;
+    }
+
+    :root[data-theme="dark"] #results-body > tr {
+        background: #1f2937;
+    }
+
+    :root[data-theme="dark"] #results-body > tr:nth-child(even) {
+        background: #1f2937;
     }
 }
